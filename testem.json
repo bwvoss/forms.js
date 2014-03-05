@@ -1,0 +1,8 @@
+{
+  "framework": "jasmine",
+  "before_tests": "grunt coffee",
+  "src_files": [
+    ".tmp/scripts/**/*.js",
+    ".tmp/spec/**/*.js"
+  ]
+}
