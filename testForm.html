@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+  <head>
+  <script src="/bower_components/underscore/underscore.js"></script>
+  <script src="/bower_components/jquery/dist/jquery.js"></script>
+  <script src="/dist/forms.min.js"></script>
+  <script src="/testConfig.js"></script>
+  <style>
+    body { font-family: Helvetica, Arial, sans-serif }
+    .error { color: red; font-weight: bold; padding: 20px }
+    input { margin: 0 7px }
+    form label { display: block; width: 250px; float: left}
+    h1 { color: #888; text-transform: uppercase }
+  </style>
+  </head>
+
+  <body>
+    <h1>Javascript Form Library Demo</h1>
+    <form action='#'>
+      <p>
+      <label for="firstName">First Name</label>
+      <input type='text' name='firstName' value=''>
+      <span name="firstName" class="error"></span>
+      </p>
+      <p>
+      <label for="lastName">Last Name</label>
+      <input type='text' name='lastName' value=''>
+      <span name="lastName" class="error"></span>
+      </p>
+      <p>
+      <label for="email">Email</label>
+      <input type='text' name='email' value=''>
+      <span name="email" class="error"></span>
+      </p>
+      <p>
+      <label for="phone">Phone</label>
+      <input type='text' name='phone' value=''>
+      <span name="phone" class="error"></span>
+      </p>
+      <p>
+      <label for="phoneType">Phone Type</label>
+      <select name='phoneType'>
+        <option value=''>-- Please Select --</option>
+        <option>Home</option>
+        <option>Work</option>
+        <option>Cell</option>
+      </select>
+      </p>
+      <p>
+      <label for="gender">Gender</label>
+      <input type='radio' name='gender' value='male'> Male
+      <input type='radio' name='gender' value='female'> Female
+      <span name="gender" class="error"></span>
+      </p>
+      <p>
+      <label for="interests">Interests (select all that apply)</label>
+      <input type='checkbox' name='interests' value='JavaScript'> JavaScript
+      <input type='checkbox' name='interests' value='Ruby'> Ruby
+      <input type='checkbox' name='interests' value='Python'> Python
+      <input type='checkbox' name='interests' value='C#'> C#
+      <input type='checkbox' name='interests' value='Java'> Java
+      <input type='checkbox' name='interests' value='Clojure'> Clojure
+      <span name="interests" class="error"></span>
+      </p>
+      <p>
+      <label for="browser">What's your favorite browser</label>
+      <select name='browser' >
+        <option value=''>-- Please Select --</option>
+        <option>Chrome</option>
+        <option>Firefox</option>
+        <option>Safari</option>
+        <option>Internet Explorer</option>
+      </select>
+      <span name="browser" class="error"></span>
+      </p>
+      <p>
+      <label for="contact">May we contact you?</label>
+      <input type='radio' name='contact' value='Yes'> Yes
+      <input type='radio' name='contact' value='No'> No
+      <span name="contact" class="error"></span>
+      </p>
+      <p>
+      <label for="password">Password</label>
+      <input type='password' name='password'>
+      <span name="password" class="error"></span>
+      </p>
+      <p>
+      <label for="passwordConfirmation">Confirm Password</label>
+      <input type='password' name='passwordConfirmation'>
+      <span name="passwordConfirmation" class="error"></span>
+      </p>
+    </form>
+    <div id="errors" class="error"></div>
+  </body>
+</html>
