@@ -3,7 +3,7 @@
 module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   grunt.initConfig({
-    coffee: {
+   coffee: {
       compileScripts: {
         expand: true,
         flatten: true,
