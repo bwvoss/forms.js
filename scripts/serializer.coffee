@@ -1,6 +1,6 @@
-# namespace('Forms.Serializer')
-#
-# class Forms.Serializer
+namespace('Form')
 
-@serialize = (formData) ->
-  $('form').serialize()
+class Form.Serializer
+
+  @serialize: (formData) ->
+    $('form').serialize()

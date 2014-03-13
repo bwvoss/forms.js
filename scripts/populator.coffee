@@ -1,9 +1,7 @@
-# namespace('Forms.Populator')
+namespace('Form')
 
-# class Forms.Populator
+class Form.Populator
 
-@populate = (elementData) ->
-  fieldName = elementData.name
-  $("[name=#{fieldName}]").val(elementData.value)
-
-
+  @populate: (elementData) ->
+    fieldName = elementData.name
+    $("[name=#{fieldName}]").val(elementData.value)

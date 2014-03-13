@@ -6,18 +6,18 @@ module.exports = function (grunt) {
    coffee: {
       compileScripts: {
         expand: true,
-        flatten: true,
+        flatten: false,
         cwd: 'scripts',
         src: '**/*.coffee',
-        dest: '.tmp/scripts',
+        dest: '.tmp/scripts/',
         ext: '.js'
       },
       compileSpecs: {
         expand: true,
-        flatten: true,
+        flatten: false,
         cwd: 'spec',
         src: '**/*.coffee',
-        dest: '.tmp/spec',
+        dest: '.tmp/spec/',
         ext: '.js'
       }
     },

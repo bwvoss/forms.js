@@ -1,40 +1,35 @@
 (function() {
-  describe('Validate', function() {
-    it('returns false when a field is required and value is blank', function() {
+  describe('Form.Validator', function() {
+    it('returns false if an email is required but empty', function() {
       var data;
-      setFixtures("<input type='text' name='textBox' value='' />");
-      data = {
-        name: 'textBox',
-        validations: ['required']
-      };
-      return expect(isValid(data)).toBe(false);
-    });
-    it('returns true when a field is required and value is not blank', function() {
-      var data;
-      setFixtures("<input type='text' name='textBox' value='Some Value' />");
-      data = {
-        name: 'textBox',
-        validations: ['required']
-      };
-      return expect(isValid(data)).toBe(true);
-    });
-    it('returns false when an email is expected but does not match', function() {
-      var data;
-      setFixtures("<input type='text' name='email' value='example.com' />");
+      setFixtures("<input type='text' name='email' value='' />");
       data = {
         name: 'email',
-        validations: ['email']
+        validations: [
+          {
+            type: 'email'
+          }, {
+            type: 'required'
+          }
+        ]
       };
-      return expect(isValid(data)).toBe(false);
+      return expect(Form.Validator.isValid(data)).toBeFalsy();
     });
-    return it('returns true when an email is expected and matches', function() {
+    return it('returns false if the minimum length is not met', function() {
       var data;
-      setFixtures("<input type='text' name='email' value='test@example.com' />");
+      setFixtures("<input type='text' name='text' value='minimum' />");
       data = {
-        name: 'email',
-        validations: ['email']
+        name: 'text',
+        validations: [
+          {
+            type: 'minLength',
+            length: 8
+          }, {
+            type: 'required'
+          }
+        ]
       };
-      return expect(isValid(data)).toBe(true);
+      return expect(Form.Validator.isValid(data)).toBeFalsy();
     });
   });
 

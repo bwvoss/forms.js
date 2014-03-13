@@ -4,8 +4,8 @@
   "on_exit": "rm .tmp/scripts/**/*.js",
   "on_exit": "rm .tmp/spec/**/*.js",
   "src_files": [
-    "namespace.js",
     "bower_components/underscore/underscore.js",
+    "namespace.js",
     "bower_components/jquery/dist/jquery.js",
     "bower_components/jasmine-jquery/lib/jasmine-jquery.js",
     ".tmp/scripts/**/*.js",

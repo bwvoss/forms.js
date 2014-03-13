@@ -5,5 +5,5 @@ describe 'Serializer', ->
       name: 'textBox'
     }
 
-    expect(serialize(data)).toEqual('textBox=some+value')
+    expect(Form.Serializer.serialize(data)).toEqual('textBox=some+value')
 

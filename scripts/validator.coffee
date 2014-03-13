@@ -1,22 +1,13 @@
-# namespace('Forms.Validator')
+namespace('Form')
 
-# class Forms.Validator
+class Form.Validator
 
-@isValid = (elementData) ->
-  validationTest = elementData.validations[0]
-  elementValue = $("[name=" + elementData.name + "]").val()
-  EMAILRE = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+  @isValid: (data) ->
+    validations = data.validations
+    value = $("[name=#{data.name}]").val()
+    validationFactory = new Form.Validator.Factory
 
-  if validationTest is 'email'
-    if EMAILRE.test(elementValue)
-      valid = true
-    else
-      valid = false
+    _.all validations, (validation) =>
+      (validationFactory.build(validation.type)).isValid(value, validation.length)
 
-  if validationTest is 'required'
-    if elementValue is ''
-      valid = false
-    else
-      valid = true
 
-  valid

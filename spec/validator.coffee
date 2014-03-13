@@ -1,37 +1,25 @@
-describe 'Validate', ->
+describe 'Form.Validator', ->
 
-  it 'returns false when a field is required and value is blank', ->
-    setFixtures("<input type='text' name='textBox' value='' />")
-    data = {
-      name: 'textBox'
-      validations: ['required']
-    }
-
-    expect(isValid(data)).toBe(false)
-
-  it 'returns true when a field is required and value is not blank', ->
-    setFixtures("<input type='text' name='textBox' value='Some Value' />")
-    data = {
-      name: 'textBox'
-      validations: ['required']
-    }
-
-    expect(isValid(data)).toBe(true)
-
-  it 'returns false when an email is expected but does not match', ->
-    setFixtures("<input type='text' name='email' value='example.com' />")
-    data = {
+  it 'returns false if an email is required but empty', ->
+    setFixtures("<input type='text' name='email' value='' />")
+    data = { 
       name: 'email'
-      validations: ['email']
+      validations: [
+        { type: 'email' },
+        { type: 'required' }
+      ]
     }
 
-    expect(isValid(data)).toBe(false)
+    expect(Form.Validator.isValid(data)).toBeFalsy()
 
-  it 'returns true when an email is expected and matches', ->
-    setFixtures("<input type='text' name='email' value='test@example.com' />")
-    data = {
-      name: 'email'
-      validations: ['email']
+  it 'returns false if the minimum length is not met', ->
+    setFixtures("<input type='text' name='text' value='minimum' />")
+    data = { 
+      name: 'text'
+      validations: [
+        { type: 'minLength', length: 8 },
+        { type: 'required' }
+      ]
     }
 
-    expect(isValid(data)).toBe(true)
+    expect(Form.Validator.isValid(data)).toBeFalsy()

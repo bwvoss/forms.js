@@ -1,24 +1,23 @@
 (function() {
-  this.isValid = function(elementData) {
-    var EMAILRE, elementValue, valid, validationTest;
-    validationTest = elementData.validations[0];
-    elementValue = $("[name=" + elementData.name + "]").val();
-    EMAILRE = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-    if (validationTest === 'email') {
-      if (EMAILRE.test(elementValue)) {
-        valid = true;
-      } else {
-        valid = false;
-      }
-    }
-    if (validationTest === 'required') {
-      if (elementValue === '') {
-        valid = false;
-      } else {
-        valid = true;
-      }
-    }
-    return valid;
-  };
+  namespace('Form');
+
+  Form.Validator = (function() {
+    function Validator() {}
+
+    Validator.isValid = function(data) {
+      var validationFactory, validations, value;
+      validations = data.validations;
+      value = $("[name=" + data.name + "]").val();
+      validationFactory = new Form.Validator.Factory;
+      return _.all(validations, (function(_this) {
+        return function(validation) {
+          return (validationFactory.build(validation.type)).isValid(value, validation.length);
+        };
+      })(this));
+    };
+
+    return Validator;
+
+  })();
 
 }).call(this);

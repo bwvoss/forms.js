@@ -6,7 +6,7 @@
       data = {
         name: 'textBox'
       };
-      return expect(serialize(data)).toEqual('textBox=some+value');
+      return expect(Form.Serializer.serialize(data)).toEqual('textBox=some+value');
     });
   });
 
