@@ -5,7 +5,7 @@
     function MinLength() {}
 
     MinLength.prototype.isValid = function(value, minChars) {
-      if (value.length >= minChars) {
+      if (value.length >= minChars || value === '') {
         return true;
       } else {
         return false;
