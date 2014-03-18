@@ -15,10 +15,18 @@ class Form.Validator
     error = { name: name, errorMessage: message }
     errorList.push error
 
-  @isValid: (data) ->  
+  getValue = (data) ->
+    switch data.type
+      when "text" then value = $("[name=#{data.name}]").val()
+      when "select" then value = $("[name=#{data.name}]").val()
+      when "radio" then value = $("[name=#{data.name}]:checked").val()
+      when "checkbox" then value = $("[name=#{data.name}]:checked").val()
+    value
+
+  @isValid: (data) ->
     errorList = []
     validations = data.validations
-    value = $("[name=#{data.name}]").val()
+    value = getValue(data)
     if allValidations(validations, value, data.name, errorList)
       true
     else

@@ -2,7 +2,7 @@
   namespace('Form');
 
   Form.Validator = (function() {
-    var addToErrorList, allValidations;
+    var addToErrorList, allValidations, getValue;
 
     function Validator() {}
 
@@ -30,11 +30,29 @@
       return errorList.push(error);
     };
 
+    getValue = function(data) {
+      var value;
+      switch (data.type) {
+        case "text":
+          value = $("[name=" + data.name + "]").val();
+          break;
+        case "select":
+          value = $("[name=" + data.name + "]").val();
+          break;
+        case "radio":
+          value = $("[name=" + data.name + "]:checked").val();
+          break;
+        case "checkbox":
+          value = $("[name=" + data.name + "]:checked").val();
+      }
+      return value;
+    };
+
     Validator.isValid = function(data) {
       var errorList, validations, value;
       errorList = [];
       validations = data.validations;
-      value = $("[name=" + data.name + "]").val();
+      value = getValue(data);
       if (allValidations(validations, value, data.name, errorList)) {
         return true;
       } else {
