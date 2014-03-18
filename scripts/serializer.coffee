@@ -5,8 +5,16 @@ class Form.Serializer
   formData = {}
 
   getNameValue = ->
-    formData["#{$(this).attr('name')}"] = $(this).attr('value')
+    name = $(this).attr('name')
+    if $(this).attr('type') is 'radio'
+      if this.checked
+        value = $(this).attr('value')
+    if $(this).attr('type') is 'text'
+        value = $(this).attr('value')
+    formData[name] = value
 
   @serialize: ->
-    $('input').each(getNameValue)
+    formData = {}
+    $('form *').filter(':input').each(getNameValue)
     JSON.stringify(formData)
+

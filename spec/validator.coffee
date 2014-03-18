@@ -45,10 +45,10 @@ describe 'Form.Validator', ->
 
     assertValidationEquals(data, [{ name: 'radioName', errorMessage: 'This field is required' }])
 
-  xit 'returns an array of error objects if a select is required and unselected', ->
-    setFixtures("<select name='selectList'><option>Option 1</option><option>Option 2</option></select>")
+  it 'returns true if a select is required and selected', ->
+    setFixtures("<select name='selectList'><option value=''>--Please Select One--</option><option selected='selected'>Option 1</option><option>Option 2</option></select>")
     data = createData('select','selectList', [
         { type: 'required', errorMessage: 'This field is required' }
       ])
 
-    assertValidationEquals(data, [{ name: 'selectList', errorMessage: 'This field is required' }])
+    assertValidationEquals(data, true)

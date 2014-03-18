@@ -9,11 +9,22 @@
     formData = {};
 
     getNameValue = function() {
-      return formData["" + ($(this).attr('name'))] = $(this).attr('value');
+      var name, value;
+      name = $(this).attr('name');
+      if ($(this).attr('type') === 'radio') {
+        if (this.checked) {
+          value = $(this).attr('value');
+        }
+      }
+      if ($(this).attr('type') === 'text') {
+        value = $(this).attr('value');
+      }
+      return formData[name] = value;
     };
 
     Serializer.serialize = function() {
-      $('input').each(getNameValue);
+      formData = {};
+      $('form *').filter(':input').each(getNameValue);
       return JSON.stringify(formData);
     };
 

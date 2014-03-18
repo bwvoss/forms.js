@@ -7,31 +7,53 @@
   <script src="/.tmp/scripts/populator.js"></script>
   <script src="/.tmp/scripts/validator.js"></script>
   <script src="/.tmp/scripts/serializer.js"></script>
+  <script src="/.tmp/scripts/errors.js"></script>
   <script src="/.tmp/scripts/validators/email.js"></script>
   <script src="/.tmp/scripts/validators/factory.js"></script>
   <script src="/.tmp/scripts/validators/maxLength.js"></script>
   <script src="/.tmp/scripts/validators/minLength.js"></script>
   <script src="/.tmp/scripts/validators/required.js"></script>
+  <style>
+    body { font-family: Helvetica, Arial, sans-serif }
+    .error { color: red; font-weight: bold; padding-left: 20px }
+    form label { display: block; width: 125px; float: left}
+    h1 { color: #888; text-transform: uppercase }
+  </style>
   </head>
 
   <body>
     <h1>Javascript Form Library Demo</h1>
     <form action='#'>
+      <p>
+      <label for="textName">Text Box</label>
       <input type='text' name='textName' value=''>
-      <br/>
+      <span name="textName" class="error"></span>
+      </p>
+      <p>
+      <label for="radioName">Radio Buttons</label>
       <input type='radio' name='radioName' value='Radio 1'> Radio 1
       <input type='radio' name='radioName' value='Radio 2'> Radio 2
       <input type='radio' name='radioName' value='Radio 3'> Radio 3
-      <br/>
+      <span name="radioName" class="error"></span>
+      </p>
+      <p>
+      <label for="checkName">Checkboxes</label>
       <input type='checkbox' name='checkName' value='Check 1'> Check 1
       <input type='checkbox' name='checkName' value='Check 2'> Check 2
       <input type='checkbox' name='checkName' value='Check 3'> Check 3
-      <br/>
+      <span name="checkName" class="error"></span>
+      </p>
+      <p>
+      <label for="SelectName">Select List</label>
       <select name='selectName' >
         <option>Select 1</option>
         <option>Select 2</option>
+        <option>Select 3</option>
+        <option>Select 4</option>
+        <option>Select 5</option>
       </select>
+      <span name="selectName" class="error"></span>
+      </p>
   </form>
-  <div id="testOutput"></div>
   </body>
 </html>
