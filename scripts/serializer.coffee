@@ -2,5 +2,11 @@ namespace('Form')
 
 class Form.Serializer
 
-  @serialize: (formData) ->
-    $('form').serialize()
+  formData = {}
+
+  getNameValue = ->
+    formData["#{$(this).attr('name')}"] = $(this).attr('value')
+
+  @serialize: ->
+    $('input').each(getNameValue)
+    JSON.stringify(formData)
