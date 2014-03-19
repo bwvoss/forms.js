@@ -4,17 +4,38 @@ class Form.Serializer
 
   formData = {}
 
-  getNameValue = ->
+  getRadioValue = (checked, name, value) ->
+    if checked
+      value = value
+    else
+      value = formData[name] || ''
+
+  getCheckedValues = (checked, name, value) ->
+    if checked
+      if formData[name]
+        checkboxValue = formData[name]
+      else
+        checkboxValue = []
+      checkboxValue.push value
+      value = checkboxValue
+    else
+      value = formData[name] || ''
+
+  setNameValue = ->
+    type = $(this).attr('type')
     name = $(this).attr('name')
-    if $(this).attr('type') is 'radio'
-      if this.checked
-        value = $(this).attr('value')
-    if $(this).attr('type') is 'text'
-        value = $(this).attr('value')
+    value = $(this).val()
+
+    if type is 'radio'
+      value = getRadioValue(this.checked, name, value)
+
+    if type is 'checkbox'
+      value = getCheckedValues(this.checked, name, value)
+
     formData[name] = value
 
   @serialize: ->
     formData = {}
-    $('form *').filter(':input').each(getNameValue)
+    $('form *').filter(':input').each(setNameValue)
     JSON.stringify(formData)
 

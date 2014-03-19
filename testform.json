@@ -1,0 +1,65 @@
+[
+  {
+    "type": "text",
+    "name": "Last Name",
+    "value": "Default Text",
+    "validations": [
+      {
+        "type": "required",
+        "errorMessage": "This field is required"
+      },
+      {
+        "type": "minLength",
+        "length": 3,
+        "errorMessage": "You must have at least 3 characters"
+      }
+    ]
+  },
+  {
+    "type": "text",
+    "name": "email",
+    "value": "example@me.com",
+    "validations": [
+      {
+        "type": "required",
+        "errorMessage": "This field is required"
+      },
+      {
+        "type": "email",
+        "errorMessage": "Please enter a valid email address"
+      }
+    ]
+  },
+  {
+    "type": "radio",
+    "name": "radioName",
+    "value": "Radio 1",
+    "validations": [
+      {
+        "type": "required",
+        "errorMessage": "This field is required"
+      }
+    ]
+  },
+  {
+    "type": "checkbox",
+    "name": "checkboxName",
+    "validations": [
+      {
+        "type": "required",
+        "errorMessage": "This field is required"
+      }
+    ]
+  },
+  {
+    "type": "select",
+    "name": "selectName",
+    "value": "Option 1",
+    "validations": [
+      {
+        "type": "required",
+        "errorMessage": "This field is required"
+      }
+    ]
+  }
+]
