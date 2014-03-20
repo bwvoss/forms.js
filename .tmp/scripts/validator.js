@@ -1,63 +1,26 @@
 (function() {
-  namespace('Form');
+  namespace('FormsJs.Form');
 
-  Form.Validator = (function() {
-    var addToErrorList, allValidations, getValue;
+  FormsJs.Form.Validator = (function() {
+    var allValidations;
 
     function Validator() {}
 
-    allValidations = function(validations, value, name, errorList) {
+    allValidations = function(validations, value, name) {
       var validationFactory;
       validationFactory = new Form.Validator.Factory;
       return _.all(validations, (function(_this) {
         return function(validation) {
-          if ((validationFactory.build(validation.type)).isValid(value, validation.length)) {
-            return true;
-          } else {
-            addToErrorList(errorList, name, validation.errorMessage);
-            return false;
-          }
+          return (validationFactory.build(validation.type)).isValid(value, validation.length);
         };
       })(this));
     };
 
-    addToErrorList = function(errorList, name, message) {
-      var error;
-      error = {
-        name: name,
-        errorMessage: message
-      };
-      return errorList.push(error);
-    };
-
-    getValue = function(data) {
-      var value;
-      switch (data.type) {
-        case "text":
-          value = $("[name=" + data.name + "]").val();
-          break;
-        case "select":
-          value = $("[name=" + data.name + "]").val();
-          break;
-        case "radio":
-          value = $("[name=" + data.name + "]:checked").val();
-          break;
-        case "checkbox":
-          value = $("[name=" + data.name + "]:checked").val();
-      }
-      return value;
-    };
-
     Validator.isValid = function(data) {
-      var errorList, validations, value;
-      errorList = [];
+      var validations, value;
       validations = data.validations;
-      value = getValue(data);
-      if (allValidations(validations, value, data.name, errorList)) {
-        return true;
-      } else {
-        return errorList;
-      }
+      value = FormsJs.Form.Values.get(data);
+      return allValidations(validations, value, data.name);
     };
 
     return Validator;

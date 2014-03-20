@@ -1,5 +1,5 @@
 (function() {
-  describe('Form.Errors', function() {
+  describe('FormsJs.Form.Errors', function() {
     return it('populates a span element with an error message', function() {
       var data;
       setFixtures("<span name='textError'></span>");
@@ -7,7 +7,7 @@
         name: 'textError',
         errorMessage: 'This field is required'
       };
-      Form.Errors.apply(data);
+      FormsJs.Form.Errors.apply(data);
       return expect($('span[name=textError]').text()).toEqual('This field is required');
     });
   });

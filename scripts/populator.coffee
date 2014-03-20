@@ -1,17 +1,17 @@
-namespace('Form')
+namespace('FormsJs.Form')
 
-class Form.Populator
+class FormsJs.Form.Populator
+
+  setValue = (data) ->
+    $("[name=#{data.name}]").val(data.value)
+
+  setChecked = (data) ->
+    $("[name=#{data.name}][value='#{data.value}']").prop('checked', true)
+
 
   @populate: (data) ->
-
-    setValue = ->
-      $("[name=#{data.name}]").val(data.value)
-
-    setChecked = ->
-      $("[name=#{data.name}][value='#{data.value}']").prop('checked', true)
-
     switch data.type
-      when 'text' then setValue()
-      when 'radio' then setChecked()
-      when 'checkbox' then setChecked()
-      when 'select' then setValue()
+      when FormsJs.Form.InputTypes.TEXT then setValue(data)
+      when FormsJs.Form.InputTypes.RADIO then setChecked(data)
+      when FormsJs.Form.InputTypes.CHECKBOX then setChecked(data)
+      when FormsJs.Form.InputTypes.SELECT then setValue(data)

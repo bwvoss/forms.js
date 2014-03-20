@@ -1,5 +1,5 @@
 (function() {
-  describe('Form.Validator', function() {
+  describe('FormsJs.Form.Validator', function() {
     var assertValidationEquals, createData;
     createData = function(type, name, validations) {
       var data;
@@ -10,9 +10,9 @@
       return data;
     };
     assertValidationEquals = function(data, value) {
-      return expect(Form.Validator.isValid(data)).toEqual(value);
+      return expect(FormsJs.Form.Validator.isValid(data)).toEqual(value);
     };
-    it('returns an array of error objects if an email is required but empty', function() {
+    it('returns false if an email is required but empty', function() {
       var data;
       setFixtures("<input type='text' name='email' value='' >");
       data = createData('text', 'email', [
@@ -24,14 +24,9 @@
           errorMessage: 'Email is required'
         }
       ]);
-      return assertValidationEquals(data, [
-        {
-          name: 'email',
-          errorMessage: 'Email is required'
-        }
-      ]);
+      return assertValidationEquals(data, false);
     });
-    it('returns an array of error objects if the minimum length is not met', function() {
+    it('returns false if the minimum length is not met', function() {
       var data;
       setFixtures("<input type='text' name='text' value='minimum' >");
       data = createData('text', 'text', [
@@ -44,12 +39,7 @@
           errorMessage: 'This field is required'
         }
       ]);
-      return assertValidationEquals(data, [
-        {
-          name: 'text',
-          errorMessage: 'Minimum length is 8 characters'
-        }
-      ]);
+      return assertValidationEquals(data, false);
     });
     it('returns true if no errors exist', function() {
       var data;
@@ -66,7 +56,7 @@
       ]);
       return assertValidationEquals(data, true);
     });
-    it('returns an array of error objects if a radio button is required and left unchecked', function() {
+    it('returns false if a radio button is required and left unchecked', function() {
       var data;
       setFixtures("<input type='radio' name='radioName' value='Option 1'><input type='radio' name='radioName' value='Option 2'>");
       data = createData('radio', 'radioName', [
@@ -75,12 +65,7 @@
           errorMessage: 'This field is required'
         }
       ]);
-      return assertValidationEquals(data, [
-        {
-          name: 'radioName',
-          errorMessage: 'This field is required'
-        }
-      ]);
+      return assertValidationEquals(data, false);
     });
     return it('returns true if a select is required and selected', function() {
       var data;

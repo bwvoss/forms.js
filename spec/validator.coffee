@@ -1,4 +1,4 @@
-describe 'Form.Validator', ->
+describe 'FormsJs.Form.Validator', ->
 
   createData = (type, name, validations) ->
     data = {}
@@ -8,25 +8,25 @@ describe 'Form.Validator', ->
     data
 
   assertValidationEquals = (data, value) ->
-    expect(Form.Validator.isValid(data)).toEqual(value)
+    expect(FormsJs.Form.Validator.isValid(data)).toEqual(value)
 
-  it 'returns an array of error objects if an email is required but empty', ->
+  it 'returns false if an email is required but empty', ->
     setFixtures("<input type='text' name='email' value='' >")
     data = createData('text', 'email', [
         { type: 'email', errorMessage: 'Please enter a valid email address' },
         { type: 'required', errorMessage: 'Email is required' }
       ])
 
-    assertValidationEquals(data, [{ name: 'email', errorMessage: 'Email is required' }])
+    assertValidationEquals(data, false)
 
-  it 'returns an array of error objects if the minimum length is not met', ->
+  it 'returns false if the minimum length is not met', ->
     setFixtures("<input type='text' name='text' value='minimum' >")
     data = createData('text', 'text', [
         { type: 'minLength', length: 8, errorMessage: 'Minimum length is 8 characters' },
         { type: 'required', errorMessage: 'This field is required' }
       ])
 
-    assertValidationEquals(data, [{ name: 'text', errorMessage: 'Minimum length is 8 characters' }])
+    assertValidationEquals(data, false)
 
   it 'returns true if no errors exist', ->
     setFixtures("<input type='text' name='noErrors' value='Some Text' >")
@@ -37,13 +37,13 @@ describe 'Form.Validator', ->
 
     assertValidationEquals(data, true)
 
-  it 'returns an array of error objects if a radio button is required and left unchecked', ->
+  it 'returns false if a radio button is required and left unchecked', ->
     setFixtures("<input type='radio' name='radioName' value='Option 1'><input type='radio' name='radioName' value='Option 2'>")
     data = createData('radio', 'radioName', [
         { type: 'required', errorMessage: 'This field is required' }
       ])
 
-    assertValidationEquals(data, [{ name: 'radioName', errorMessage: 'This field is required' }])
+    assertValidationEquals(data, false)
 
   it 'returns true if a select is required and selected', ->
     setFixtures("<select name='selectList'><option value=''>--Please Select One--</option><option selected='selected'>Option 1</option><option>Option 2</option></select>")

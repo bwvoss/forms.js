@@ -1,5 +1,5 @@
 (function() {
-  describe('Populator', function() {
+  describe('FormsJs.Form.Populator', function() {
     var assertCheckedEquals, assertValueEquals;
     assertValueEquals = function(name, value) {
       return expect($("[name=" + name + "]")).toHaveValue(value);
@@ -15,7 +15,7 @@
         name: 'textName',
         value: 'Default Text'
       };
-      Form.Populator.populate(data);
+      FormsJs.Form.Populator.populate(data);
       return assertValueEquals('textName', 'Default Text');
     });
     it('populates a radio button with a default value', function() {
@@ -26,7 +26,7 @@
         name: 'radioName',
         value: 'radio1'
       };
-      Form.Populator.populate(data);
+      FormsJs.Form.Populator.populate(data);
       return assertCheckedEquals('radioName', 'radio1');
     });
     it('populates a check box with a default value', function() {
@@ -37,7 +37,7 @@
         name: 'checkboxName',
         value: 'check1'
       };
-      Form.Populator.populate(data);
+      FormsJs.Form.Populator.populate(data);
       return assertCheckedEquals('checkboxName', 'check1');
     });
     return it('populates a select element with a default value', function() {
@@ -48,7 +48,7 @@
         name: 'selectName',
         value: 'Select 2'
       };
-      Form.Populator.populate(data);
+      FormsJs.Form.Populator.populate(data);
       return assertValueEquals('selectName', 'Select 2');
     });
   });

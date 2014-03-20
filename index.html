@@ -4,9 +4,11 @@
   <script src="/bower_components/underscore/underscore.js"></script>
   <script src="/namespace.js"></script>
   <script src="/bower_components/jquery/dist/jquery.js"></script>
+  <script src="/.tmp/scripts/form.js"></script>
   <script src="/.tmp/scripts/populator.js"></script>
   <script src="/.tmp/scripts/validator.js"></script>
   <script src="/.tmp/scripts/serializer.js"></script>
+  <script src="/.tmp/scripts/values.js"></script>
   <script src="/.tmp/scripts/errors.js"></script>
   <script src="/.tmp/scripts/validators/email.js"></script>
   <script src="/.tmp/scripts/validators/factory.js"></script>
@@ -16,7 +18,8 @@
   <style>
     body { font-family: Helvetica, Arial, sans-serif }
     .error { color: red; font-weight: bold; padding-left: 20px }
-    form label { display: block; width: 125px; float: left}
+    input { margin: 0 7px }
+    form label { display: block; width: 250px; float: left}
     h1 { color: #888; text-transform: uppercase }
   </style>
   </head>
@@ -25,65 +28,53 @@
     <h1>Javascript Form Library Demo</h1>
     <form action='#'>
       <p>
-      <label for="textName">Text Box</label>
-      <input type='text' name='textName' value=''>
-      <span name="textName" class="error"></span>
+      <label for="firstName">First Name</label>
+      <input type='text' name='firstName' value=''>
+      <span name="firstName" class="error"></span>
       </p>
       <p>
-      <label for="radioName">Radio Buttons</label>
-      <input type='radio' name='radioName' value='Radio 1'> Radio 1
-      <input type='radio' name='radioName' value='Radio 2'> Radio 2
-      <input type='radio' name='radioName' value='Radio 3'> Radio 3
-      <span name="radioName" class="error"></span>
+      <label for="lastName">Last Name</label>
+      <input type='text' name='lastName' value=''>
+      <span name="lastName" class="error"></span>
       </p>
       <p>
-      <label for="checkName">Checkboxes</label>
-      <input type='checkbox' name='checkName' value='Check 1'> Check 1
-      <input type='checkbox' name='checkName' value='Check 2'> Check 2
-      <input type='checkbox' name='checkName' value='Check 3'> Check 3
-      <span name="checkName" class="error"></span>
+      <label for="email">Email</label>
+      <input type='text' name='email' value=''>
+      <span name="email" class="error"></span>
       </p>
       <p>
-      <label for="SelectName">Select List</label>
-      <select name='selectName' >
-        <option>Select 1</option>
-        <option>Select 2</option>
-        <option>Select 3</option>
-        <option>Select 4</option>
-        <option>Select 5</option>
+      <label for="gender">Gender</label>
+      <input type='radio' name='gender' value='male'> Male
+      <input type='radio' name='gender' value='female'> Female
+      <span name="gender" class="error"></span>
+      </p>
+      <p>
+      <label for="interests">Interests (select all that apply)</label>
+      <input type='checkbox' name='interests' value='JavaScript'> JavaScript
+      <input type='checkbox' name='interests' value='Ruby'> Ruby
+      <input type='checkbox' name='interests' value='Python'> Python
+      <input type='checkbox' name='interests' value='C#'> C#
+      <input type='checkbox' name='interests' value='Java'> Java
+      <input type='checkbox' name='interests' value='Clojure'> Clojure
+      <span name="interests" class="error"></span>
+      </p>
+      <p>
+      <label for="browser">What's your favorite browser</label>
+      <select name='browser' >
+        <option value=''>-- Please Select --</option>
+        <option>Chrome</option>
+        <option>Firefox</option>
+        <option>Safari</option>
+        <option>Internet Explorer</option>
       </select>
-      <span name="selectName" class="error"></span>
-      </p>
-       <p>
-      <label for="textName2">Text Box 2</label>
-      <input type='text' name='textName2' value=''>
-      <span name="textName2" class="error"></span>
+      <span name="browser" class="error"></span>
       </p>
       <p>
-      <label for="radioName2">Radio Buttons 2</label>
-      <input type='radio' name='radioName2' value='Radio 4'> Radio 4
-      <input type='radio' name='radioName2' value='Radio 5'> Radio 5
-      <input type='radio' name='radioName2' value='Radio 6'> Radio 6
-      <span name="radioName2" class="error"></span>
+      <label for="contact">May we contact you?</label>
+      <input type='radio' name='contact' value='Yes'> Yes
+      <input type='radio' name='contact' value='No'> No
+      <span name="contact" class="error"></span>
       </p>
-      <p>
-      <label for="checkName2">Checkboxes 2</label>
-      <input type='checkbox' name='checkName2' value='Check 4'> Check 4
-      <input type='checkbox' name='checkName2' value='Check 5'> Check 5
-      <input type='checkbox' name='checkName2' value='Check 6'> Check 6
-      <span name="checkName2" class="error"></span>
-      </p>
-      <p>
-      <label for="SelectName2">Select List 2</label>
-      <select name='selectName2' >
-        <option>Select 6</option>
-        <option>Select 7</option>
-        <option>Select 8</option>
-        <option>Select 9</option>
-        <option>Select 10</option>
-      </select>
-      <span name="selectName2" class="error"></span>
-      </p>
- </form>
+   </form>
   </body>
 </html>

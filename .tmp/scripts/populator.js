@@ -1,26 +1,29 @@
 (function() {
-  namespace('Form');
+  namespace('FormsJs.Form');
 
-  Form.Populator = (function() {
+  FormsJs.Form.Populator = (function() {
+    var setChecked, setValue;
+
     function Populator() {}
 
+    setValue = function(data) {
+      return $("[name=" + data.name + "]").val(data.value);
+    };
+
+    setChecked = function(data) {
+      return $("[name=" + data.name + "][value='" + data.value + "']").prop('checked', true);
+    };
+
     Populator.populate = function(data) {
-      var setChecked, setValue;
-      setValue = function() {
-        return $("[name=" + data.name + "]").val(data.value);
-      };
-      setChecked = function() {
-        return $("[name=" + data.name + "][value='" + data.value + "']").prop('checked', true);
-      };
       switch (data.type) {
-        case 'text':
-          return setValue();
-        case 'radio':
-          return setChecked();
-        case 'checkbox':
-          return setChecked();
-        case 'select':
-          return setValue();
+        case FormsJs.Form.InputTypes.TEXT:
+          return setValue(data);
+        case FormsJs.Form.InputTypes.RADIO:
+          return setChecked(data);
+        case FormsJs.Form.InputTypes.CHECKBOX:
+          return setChecked(data);
+        case FormsJs.Form.InputTypes.SELECT:
+          return setValue(data);
       }
     };
 
