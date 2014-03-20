@@ -6,6 +6,5 @@ class FormsJs.Form.Serializer
     formData = {}
     value = FormsJs.Form.Values.get(element)
     formData[element.name] = value
-
-    JSON.stringify(formData)
+    formData
 

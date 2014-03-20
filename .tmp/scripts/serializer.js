@@ -9,7 +9,7 @@
       formData = {};
       value = FormsJs.Form.Values.get(element);
       formData[element.name] = value;
-      return JSON.stringify(formData);
+      return formData;
     };
 
     return Serializer;

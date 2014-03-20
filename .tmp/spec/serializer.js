@@ -1,13 +1,15 @@
 (function() {
   describe('FormsJs.Form.Serializer', function() {
-    it('converts a text element to a JSON object', function() {
+    it('converts a text element to an object', function() {
       var data;
       setFixtures("<form action='#'> <input type='text' name='text1' value='some value' /> </form>");
       data = {
         type: 'text',
         name: 'text1'
       };
-      return expect(FormsJs.Form.Serializer.serialize(data)).toEqual('{"text1":"some value"}');
+      return expect(FormsJs.Form.Serializer.serialize(data)).toEqual({
+        text1: "some value"
+      });
     });
     it('converts the checked value of a radio group to a JSON object', function() {
       var data;
@@ -16,7 +18,9 @@
         type: 'radio',
         name: 'radioName'
       };
-      return expect(FormsJs.Form.Serializer.serialize(data)).toEqual('{"radioName":"Radio 2"}');
+      return expect(FormsJs.Form.Serializer.serialize(data)).toEqual({
+        radioName: "Radio 2"
+      });
     });
     it('converts the selected value of a select list to a JSON object', function() {
       var data;
@@ -25,7 +29,9 @@
         type: 'select',
         name: 'selectName'
       };
-      return expect(FormsJs.Form.Serializer.serialize(data)).toEqual('{"selectName":"Option 3"}');
+      return expect(FormsJs.Form.Serializer.serialize(data)).toEqual({
+        selectName: "Option 3"
+      });
     });
     return it('converts the values of checked checkboxes to an array inside a JSON object', function() {
       var data;
@@ -34,7 +40,9 @@
         type: 'checkbox',
         name: 'checkName'
       };
-      return expect(FormsJs.Form.Serializer.serialize(data)).toEqual('{"checkName":["Checkbox 1","Checkbox 2"]}');
+      return expect(FormsJs.Form.Serializer.serialize(data)).toEqual({
+        checkName: ["Checkbox 1", "Checkbox 2"]
+      });
     });
   });
 
