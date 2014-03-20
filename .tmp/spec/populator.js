@@ -1,11 +1,11 @@
 (function() {
   describe('FormsJs.Form.Populator', function() {
-    var assertCheckedEquals, assertValueEquals;
+    var assertChecked, assertValueEquals;
     assertValueEquals = function(name, value) {
       return expect($("[name=" + name + "]")).toHaveValue(value);
     };
-    assertCheckedEquals = function(name, value) {
-      return expect($("[name=" + name + "]:checked")).toHaveValue(value);
+    assertChecked = function(name, value) {
+      return expect($("[name=" + name + "][value=" + value + "]")).toBeChecked();
     };
     it('populates a text element with a default value', function() {
       var data;
@@ -27,18 +27,30 @@
         value: 'radio1'
       };
       FormsJs.Form.Populator.populate(data);
-      return assertCheckedEquals('radioName', 'radio1');
+      return assertChecked('radioName', 'radio1');
     });
-    it('populates a check box with a default value', function() {
+    it('populates check boxes with default values', function() {
       var data;
-      setFixtures("<input type='checkbox' name='checkboxName' value='check1' />");
+      setFixtures("<input type='checkbox' name='checkboxName' value='check1' /> <input type='checkbox' name='checkboxName' value='check2' />");
+      data = {
+        type: 'checkbox',
+        name: 'checkboxName',
+        value: ['check1', 'check2']
+      };
+      FormsJs.Form.Populator.populate(data);
+      assertChecked('checkboxName', 'check1');
+      return assertChecked('checkboxName', 'check2');
+    });
+    it('populates check boxes when default value is a string', function() {
+      var data;
+      setFixtures("<input type='checkbox' name='checkboxName' value='check1' /> <input type='checkbox' name='checkboxName' value='check2' />");
       data = {
         type: 'checkbox',
         name: 'checkboxName',
         value: 'check1'
       };
       FormsJs.Form.Populator.populate(data);
-      return assertCheckedEquals('checkboxName', 'check1');
+      return assertChecked('checkboxName', 'check1');
     });
     return it('populates a select element with a default value', function() {
       var data;

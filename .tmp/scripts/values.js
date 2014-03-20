@@ -9,15 +9,15 @@
     Values.DEFAULTVALUE = '';
 
     textValue = function(name) {
-      return $("[name=" + name + "]").val();
+      return $("[name='" + name + "']").val();
     };
 
     checkedValue = function(name) {
-      return $("[name=" + name + "]:checked").val();
+      return $("[name='" + name + "']:checked").val();
     };
 
     checkedValues = function(name) {
-      return $("[name=" + name + "]:checked").map(function() {
+      return $("[name='" + name + "']:checked").map(function() {
         return this.value;
       }).get();
     };

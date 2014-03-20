@@ -1,8 +1,8 @@
 [
   {
     "type": "text",
-    "name": "Last Name",
-    "value": "Default Text",
+    "name": "lastName",
+    "value": "My Last Name",
     "validations": [
       {
         "type": "required",
@@ -18,7 +18,7 @@
   {
     "type": "text",
     "name": "email",
-    "value": "example@me.com",
+    "value": "me@example.com",
     "validations": [
       {
         "type": "required",
@@ -32,8 +32,8 @@
   },
   {
     "type": "radio",
-    "name": "radioName",
-    "value": "Radio 1",
+    "name": "gender",
+    "value": "male",
     "validations": [
       {
         "type": "required",
@@ -43,7 +43,8 @@
   },
   {
     "type": "checkbox",
-    "name": "checkboxName",
+    "name": "interests",
+    "value": ['Ruby','Python','Java'],
     "validations": [
       {
         "type": "required",
@@ -53,8 +54,8 @@
   },
   {
     "type": "select",
-    "name": "selectName",
-    "value": "Option 1",
+    "name": "browser",
+    "value": "",
     "validations": [
       {
         "type": "required",

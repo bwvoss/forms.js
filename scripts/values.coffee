@@ -5,13 +5,13 @@ class FormsJs.Form.Values
   @DEFAULTVALUE: ''
 
   textValue = (name) ->
-    $("[name=#{name}]").val()
+    $("[name='#{name}']").val()
 
   checkedValue = (name) ->
-    $("[name=#{name}]:checked").val()
+    $("[name='#{name}']:checked").val()
 
   checkedValues = (name) ->
-    $("[name=#{name}]:checked").map( -> this.value ).get()
+    $("[name='#{name}']:checked").map( -> this.value ).get()
 
   @get: (data) ->
     switch data.type
