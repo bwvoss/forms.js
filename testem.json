@@ -19,5 +19,6 @@
     ".tmp/scripts/validators/minLength.js",
     ".tmp/scripts/validators/required.js",
     ".tmp/spec/**/*.js"
-  ]
+  ],
+  "launcher": "PhantomJS"
 }
