@@ -1,23 +1,21 @@
 (function() {
-  describe('Form.Validator', function() {
-    var assertValidationEquals, createData, createFixtures;
-    createFixtures = function(name, value) {
-      return setFixtures("<input type='text' name='" + name + "' value='" + value + "' />");
-    };
-    createData = function(name, validations) {
+  describe('FormsJs.Form.Validator', function() {
+    var assertValidationEquals, createData;
+    createData = function(type, name, validations) {
       var data;
       data = {};
+      data.type = type;
       data.name = name;
       data.validations = validations;
       return data;
     };
     assertValidationEquals = function(data, value) {
-      return expect(Form.Validator.isValid(data)).toEqual(value);
+      return expect(FormsJs.Form.Validator.isValid(data)).toEqual(value);
     };
-    it('returns an array of error objects if an email is required but empty', function() {
+    it('returns false if an email is required but empty', function() {
       var data;
-      createFixtures('email', '');
-      data = createData('email', [
+      setFixtures("<input type='text' name='email' value='' >");
+      data = createData('text', 'email', [
         {
           type: 'email',
           errorMessage: 'Please enter a valid email address'
@@ -26,17 +24,12 @@
           errorMessage: 'Email is required'
         }
       ]);
-      return assertValidationEquals(data, [
-        {
-          name: 'email',
-          errorMessage: 'Email is required'
-        }
-      ]);
+      return assertValidationEquals(data, false);
     });
-    it('returns an array of error objects if the minimum length is not met', function() {
+    it('returns false if the minimum length is not met', function() {
       var data;
-      createFixtures('text', 'minimum');
-      data = createData('text', [
+      setFixtures("<input type='text' name='text' value='minimum' >");
+      data = createData('text', 'text', [
         {
           type: 'minLength',
           length: 8,
@@ -46,22 +39,39 @@
           errorMessage: 'This field is required'
         }
       ]);
-      return assertValidationEquals(data, [
-        {
-          name: 'text',
-          errorMessage: 'Minimum length is 8 characters'
-        }
-      ]);
+      return assertValidationEquals(data, false);
     });
-    return it('returns true if no errors exist', function() {
+    it('returns true if no errors exist', function() {
       var data;
-      createFixtures('noErrors', 'Some Text');
-      data = createData('noErrors', [
+      setFixtures("<input type='text' name='noErrors' value='Some Text' >");
+      data = createData('text', 'noErrors', [
         {
           type: 'maxLength',
           length: 10,
           errorMessage: 'Maximum length is 10 characters'
         }, {
+          type: 'required',
+          errorMessage: 'This field is required'
+        }
+      ]);
+      return assertValidationEquals(data, true);
+    });
+    it('returns false if a radio button is required and left unchecked', function() {
+      var data;
+      setFixtures("<input type='radio' name='radioName' value='Option 1'><input type='radio' name='radioName' value='Option 2'>");
+      data = createData('radio', 'radioName', [
+        {
+          type: 'required',
+          errorMessage: 'This field is required'
+        }
+      ]);
+      return assertValidationEquals(data, false);
+    });
+    return it('returns true if a select is required and selected', function() {
+      var data;
+      setFixtures("<select name='selectList'><option value=''>--Please Select One--</option><option selected='selected'>Option 1</option><option>Option 2</option></select>");
+      data = createData('select', 'selectList', [
+        {
           type: 'required',
           errorMessage: 'This field is required'
         }

@@ -1,6 +1,10 @@
-namespace('Form')
+namespace('FormsJs.Form')
 
-class Form.Serializer
+class FormsJs.Form.Serializer
 
-  @serialize: (formData) ->
-    $('form').serialize()
+  @serialize: (element) ->
+    formData = {}
+    value = FormsJs.Form.Values.get(element)
+    formData[element.name] = value
+    formData
+

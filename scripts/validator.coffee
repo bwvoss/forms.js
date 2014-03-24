@@ -1,26 +1,14 @@
-namespace('Form')
+namespace('FormsJs.Form')
 
-class Form.Validator
+class FormsJs.Form.Validator
 
-  allValidations = (validations, value, name, errorList) ->
+  allValidations = (validations, value, name) ->
     validationFactory = new Form.Validator.Factory
     _.all validations, (validation) =>
-      if (validationFactory.build(validation.type)).isValid(value, validation.length)
-        true
-      else
-        addToErrorList(errorList, name, validation.errorMessage)
-        false
+      (validationFactory.build(validation.type)).isValid(value, validation.length)
 
-  addToErrorList = (errorList, name, message) ->
-    error = { name: name, errorMessage: message }
-    errorList.push error
-
-  @isValid: (data) ->  
-    errorList = []
+  @isValid: (data) ->
     validations = data.validations
-    value = $("[name=#{data.name}]").val()
-    if allValidations(validations, value, data.name, errorList)
-      true
-    else
-      errorList
+    value = FormsJs.Form.Values.get(data)
+    allValidations(validations, value, data.name)
 
