@@ -60,7 +60,7 @@ describe 'Form', ->
     testForm = new FormsJs.Form(testData)
     loadFixtures('emptyFormFixtures.html')
 
-    expect(testForm.validate()).toBeFalsy()
+    expect(testForm.isValid()).toBeFalsy()
 
   it 'loops through all form elements and serializes them', ->
     testForm = new FormsJs.Form(testData)

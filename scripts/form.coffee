@@ -9,7 +9,7 @@ class FormsJs.Form
     _.all @data, (element) ->
       FormsJs.Form.Populator.populate(element)
 
-  validate: ->
+  isValid: ->
     _.all @data, (element) ->
       FormsJs.Form.Validator.isValid(element)
 

@@ -13,7 +13,7 @@
       });
     };
 
-    Form.prototype.validate = function() {
+    Form.prototype.isValid = function() {
       return _.all(this.data, function(element) {
         return FormsJs.Form.Validator.isValid(element);
       });

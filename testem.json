@@ -19,7 +19,7 @@
     ".tmp/scripts/validators/maxLength.js",
     ".tmp/scripts/validators/minLength.js",
     ".tmp/scripts/validators/required.js",
-    ".tmp/scripts/validators/custom.js",
+    ".tmp/scripts/validators/regexp.js",
     ".tmp/spec/**/*.js"
   ],
   "launch_in_ci": ["PhantomJS"],

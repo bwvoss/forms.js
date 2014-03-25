@@ -20,7 +20,7 @@ describe 'Form.Validator.Factory', ->
     minLengthValidator = new FormsJs.Form.Validator.MinLength
     assertNewValidator('minLength', minLengthValidator)
 
-  it 'build a new custom validator', ->
-    myCustomValidator = new FormsJs.Form.Validator.Custom
-    assertNewValidator('myValidator', myCustomValidator)
+  it 'build a new regexp validator', ->
+    regExpValidator = new FormsJs.Form.Validator.RegExp
+    assertNewValidator('regExp', regExpValidator)
 

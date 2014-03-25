@@ -14,6 +14,8 @@
           return new FormsJs.Form.Validator.MaxLength;
         case 'minLength':
           return new FormsJs.Form.Validator.MinLength;
+        case 'regExp':
+          return new FormsJs.Form.Validator.RegExp;
         default:
           return new FormsJs.Form.Validator.Custom;
       }

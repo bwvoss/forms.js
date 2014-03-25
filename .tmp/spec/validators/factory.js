@@ -26,10 +26,10 @@
       minLengthValidator = new FormsJs.Form.Validator.MinLength;
       return assertNewValidator('minLength', minLengthValidator);
     });
-    return it('build a new custom validator', function() {
-      var myCustomValidator;
-      myCustomValidator = new FormsJs.Form.Validator.Custom;
-      return assertNewValidator('myValidator', myCustomValidator);
+    return it('build a new regexp validator', function() {
+      var regExpValidator;
+      regExpValidator = new FormsJs.Form.Validator.RegExp;
+      return assertNewValidator('regExp', regExpValidator);
     });
   });
 

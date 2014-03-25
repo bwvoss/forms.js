@@ -58,7 +58,7 @@
       var testForm;
       testForm = new FormsJs.Form(testData);
       loadFixtures('emptyFormFixtures.html');
-      return expect(testForm.validate()).toBeFalsy();
+      return expect(testForm.isValid()).toBeFalsy();
     });
     return it('loops through all form elements and serializes them', function() {
       var testForm;
