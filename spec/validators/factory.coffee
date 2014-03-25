@@ -1,26 +1,31 @@
 describe 'Form.Validator.Factory', ->
 
-  assertNewValidator = (validatorString, validatorObject) ->
+  assertNewValidator = (validator, validatorObject) ->
     validationFactory = new FormsJs.Form.Validator.Factory
-    expect(validationFactory.build(validatorString)).toEqual(validatorObject)
+    expect(validationFactory.build(validator)).toEqual(validatorObject)
 
   it 'builds a new required validator', ->
-    requiredValidator = new FormsJs.Form.Validator.Required
-    assertNewValidator('required', requiredValidator)
+    validator = { type: 'required' }
+    requiredValidator = new FormsJs.Form.Validator.Required(validator)
+    assertNewValidator(validator, requiredValidator)
 
   it 'builds a new email validator', ->
-    emailValidator = new FormsJs.Form.Validator.Email
-    assertNewValidator('email', emailValidator)
+    validator = { type: 'email' }
+    emailValidator = new FormsJs.Form.Validator.Email(validator)
+    assertNewValidator(validator, emailValidator)
 
   it 'builds a new max length validator', ->
-    maxLengthValidator = new FormsJs.Form.Validator.MaxLength
-    assertNewValidator('maxLength', maxLengthValidator)
+    validator = { type: 'maxLength' }
+    maxLengthValidator = new FormsJs.Form.Validator.MaxLength(validator)
+    assertNewValidator(validator, maxLengthValidator)
 
   it 'builds a new min length validator', ->
-    minLengthValidator = new FormsJs.Form.Validator.MinLength
-    assertNewValidator('minLength', minLengthValidator)
+    validator = { type: 'minLength' }
+    minLengthValidator = new FormsJs.Form.Validator.MinLength(validator)
+    assertNewValidator(validator, minLengthValidator)
 
   it 'build a new regexp validator', ->
-    regExpValidator = new FormsJs.Form.Validator.RegExp
-    assertNewValidator('regExp', regExpValidator)
+    validator = { type: 'regExp' }
+    regExpValidator = new FormsJs.Form.Validator.RegExp(validator)
+    assertNewValidator(validator, regExpValidator)
 

@@ -2,5 +2,8 @@ namespace('FormsJs.Form.Validator')
 
 class FormsJs.Form.Validator.MinLength
 
-  isValid: (value, minChars) ->
-    value.length >= minChars or value is ''
+  constructor: (@options) ->
+    @options
+
+  isValid: (value) ->
+    value.length >= @options.length or value is ''

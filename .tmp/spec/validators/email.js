@@ -3,7 +3,7 @@
     var emailValidator;
     emailValidator = {};
     beforeEach(function() {
-      return emailValidator = new FormsJs.Form.Validator.Email;
+      return emailValidator = new FormsJs.Form.Validator.Email();
     });
     it('returns false when an email is expected but does not match', function() {
       return expect(emailValidator.isValid('example.com')).toBeFalsy();

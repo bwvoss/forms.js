@@ -2,5 +2,8 @@ namespace('FormsJs.Form.Validator')
 
 class FormsJs.Form.Validator.MaxLength
 
-  isValid: (value, maxChars) ->
-    value.length <= maxChars
+  constructor: (@options) ->
+    @options
+
+  isValid: (value) ->
+    value.length <= @options.length

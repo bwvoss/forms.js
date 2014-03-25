@@ -53,10 +53,10 @@ describe 'FormsJs.Form.Validator', ->
 
     assertValidationEquals(data, true)
 
-  it 'returns true if a custom validator is used for a phone number', ->
+  it 'returns true if a custom regexp validator is used for a phone number', ->
     setFixtures("<input type='text' name='phone' value='123-456-7890' >")
     data = createData('text', 'phone', [
-      { type: 'regExp', regEx: /(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/, errorMessage: 'Please enter a valid phone number as ###-###-####' }
+      { type: 'regExp', pattern: /(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/, errorMessage: 'Please enter a valid phone number as ###-###-####' }
       ])
 
     assertValidationEquals(data, true)

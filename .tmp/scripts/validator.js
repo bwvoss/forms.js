@@ -9,16 +9,15 @@
       validationFactory = new FormsJs.Form.Validator.Factory;
       return _.all(validations, (function(_this) {
         return function(validation) {
-          return (validationFactory.build(validation.type)).isValid(value, validation.length, validation.regEx);
+          return (validationFactory.build(validation)).isValid(value);
         };
       })(this));
     };
 
     Validator.isValid = function(data) {
-      var validations, value;
-      validations = data.validations;
+      var value;
       value = FormsJs.Form.Values.get(data);
-      return this.allValidations(validations, value, data.name);
+      return this.allValidations(data.validations, value);
     };
 
     return Validator;
