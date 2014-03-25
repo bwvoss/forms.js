@@ -1,9 +1,9 @@
-describe 'Form.Validator.Email', ->
+describe 'FormsJs.Form.Validator.Email', ->
 
   emailValidator = {}
 
   beforeEach ->
-    emailValidator = new Form.Validator.Email
+    emailValidator = new FormsJs.Form.Validator.Email
 
   it 'returns false when an email is expected but does not match', ->
     expect(emailValidator.isValid('example.com')).toBeFalsy()

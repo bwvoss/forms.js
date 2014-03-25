@@ -2,16 +2,14 @@
   namespace('FormsJs.Form');
 
   FormsJs.Form.Validator = (function() {
-    var allValidations;
-
     function Validator() {}
 
-    allValidations = function(validations, value, name) {
+    Validator.allValidations = function(validations, value, name) {
       var validationFactory;
-      validationFactory = new Form.Validator.Factory;
+      validationFactory = new FormsJs.Form.Validator.Factory;
       return _.all(validations, (function(_this) {
         return function(validation) {
-          return (validationFactory.build(validation.type)).isValid(value, validation.length);
+          return (validationFactory.build(validation.type)).isValid(value, validation.length, validation.regEx);
         };
       })(this));
     };
@@ -20,7 +18,7 @@
       var validations, value;
       validations = data.validations;
       value = FormsJs.Form.Values.get(data);
-      return allValidations(validations, value, data.name);
+      return this.allValidations(validations, value, data.name);
     };
 
     return Validator;

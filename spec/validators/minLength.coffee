@@ -2,7 +2,7 @@ describe 'Form.Validator.MinLength', ->
   minLengthValidator = {}
 
   beforeEach ->
-    minLengthValidator = new Form.Validator.MinLength
+    minLengthValidator = new FormsJs.Form.Validator.MinLength
 
   it 'should return true when the value is more than the minimum length', ->
     expect(minLengthValidator.isValid('More than min', 13)).toBeTruthy()

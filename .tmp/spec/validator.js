@@ -67,13 +67,25 @@
       ]);
       return assertValidationEquals(data, false);
     });
-    return it('returns true if a select is required and selected', function() {
+    it('returns true if a select is required and selected', function() {
       var data;
       setFixtures("<select name='selectList'><option value=''>--Please Select One--</option><option selected='selected'>Option 1</option><option>Option 2</option></select>");
       data = createData('select', 'selectList', [
         {
           type: 'required',
           errorMessage: 'This field is required'
+        }
+      ]);
+      return assertValidationEquals(data, true);
+    });
+    return it('returns true if a custom validator is used for a phone number', function() {
+      var data;
+      setFixtures("<input type='text' name='phone' value='123-456-7890' >");
+      data = createData('text', 'phone', [
+        {
+          type: 'phoneValidator',
+          regEx: /(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/,
+          errorMessage: 'Please enter a valid phone number as ###-###-####'
         }
       ]);
       return assertValidationEquals(data, true);

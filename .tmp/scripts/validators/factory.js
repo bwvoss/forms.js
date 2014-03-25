@@ -1,19 +1,21 @@
 (function() {
-  namespace('Form.Validator');
+  namespace('FormsJs.Form.Validator');
 
-  Form.Validator.Factory = (function() {
+  FormsJs.Form.Validator.Factory = (function() {
     function Factory() {}
 
     Factory.prototype.build = function(validation) {
       switch (validation) {
         case 'required':
-          return new Form.Validator.Required;
+          return new FormsJs.Form.Validator.Required;
         case 'email':
-          return new Form.Validator.Email;
+          return new FormsJs.Form.Validator.Email;
         case 'maxLength':
-          return new Form.Validator.MaxLength;
+          return new FormsJs.Form.Validator.MaxLength;
         case 'minLength':
-          return new Form.Validator.MinLength;
+          return new FormsJs.Form.Validator.MinLength;
+        default:
+          return new FormsJs.Form.Validator.Custom;
       }
     };
 

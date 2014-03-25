@@ -1,9 +1,6 @@
-namespace('Form.Validator')
+namespace('FormsJs.Form.Validator')
 
-class Form.Validator.MaxLength
+class FormsJs.Form.Validator.MaxLength
 
   isValid: (value, maxChars) ->
-    if value.length <= maxChars
-      true
-    else
-      false
+    value.length <= maxChars

@@ -1,9 +1,6 @@
-namespace('Form.Validator')
+namespace('FormsJs.Form.Validator')
 
-class Form.Validator.MinLength
+class FormsJs.Form.Validator.MinLength
 
   isValid: (value, minChars) ->
-    if value.length >= minChars || value is ''
-      true
-    else
-      false
+    value.length >= minChars or value is ''

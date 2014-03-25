@@ -1,15 +1,11 @@
 (function() {
-  namespace('Form.Validator');
+  namespace('FormsJs.Form.Validator');
 
-  Form.Validator.MinLength = (function() {
+  FormsJs.Form.Validator.MinLength = (function() {
     function MinLength() {}
 
     MinLength.prototype.isValid = function(value, minChars) {
-      if (value.length >= minChars || value === '') {
-        return true;
-      } else {
-        return false;
-      }
+      return value.length >= minChars || value === '';
     };
 
     return MinLength;

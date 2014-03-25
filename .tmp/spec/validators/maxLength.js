@@ -3,7 +3,7 @@
     var maxLengthValidator;
     maxLengthValidator = {};
     beforeEach(function() {
-      return maxLengthValidator = new Form.Validator.MaxLength;
+      return maxLengthValidator = new FormsJs.Form.Validator.MaxLength;
     });
     it('returns true if a text field has less characters than the max length', function() {
       return expect(maxLengthValidator.isValid('Less than max', 13)).toBeTruthy();
