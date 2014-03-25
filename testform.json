@@ -82,6 +82,6 @@
   {
     "type": "radio",
     "name": "contact",
-    "value": "Yes",
+    "value": "Yes"
   }
 ]

@@ -18,3 +18,6 @@ class FormsJs.Form
     _.each @data, (element) ->
       _.extend(formData, FormsJs.Form.Serializer.serialize(element))
     formData
+
+  clear: ->
+    FormsJs.Form.Clear.all()

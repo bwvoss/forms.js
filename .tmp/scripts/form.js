@@ -28,6 +28,10 @@
       return formData;
     };
 
+    Form.prototype.clear = function() {
+      return FormsJs.Form.Clear.all();
+    };
+
     return Form;
 
   })();
