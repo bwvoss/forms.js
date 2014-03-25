@@ -1,8 +1,8 @@
 [
   {
     "type": "text",
-    "name": "lastName",
-    "value": "My Last Name",
+    "name": "firstName",
+    "value": "My First Name",
     "validations": [
       {
         "type": "required",
@@ -12,6 +12,22 @@
         "type": "minLength",
         "length": 3,
         "errorMessage": "You must have at least 3 characters"
+      }
+    ]
+  },
+  {
+    "type": "text",
+    "name": "lastName",
+    "value": "My Last Name",
+    "validations": [
+      {
+        "type": "required",
+        "errorMessage": "This field is required"
+      },
+      {
+        "type": "maxLength",
+        "length": 15,
+        "errorMessage": "You cannot have more than 15 characters"
       }
     ]
   },
@@ -44,7 +60,7 @@
   {
     "type": "checkbox",
     "name": "interests",
-    "value": ['Ruby','Python','Java'],
+    "value": ["Ruby","Python","Java"],
     "validations": [
       {
         "type": "required",
@@ -62,5 +78,10 @@
         "errorMessage": "This field is required"
       }
     ]
+  },
+  {
+    "type": "radio",
+    "name": "contact",
+    "value": "Yes",
   }
 ]

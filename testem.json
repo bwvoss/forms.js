@@ -13,6 +13,7 @@
     ".tmp/scripts/validator.js",
     ".tmp/scripts/values.js",
     ".tmp/scripts/inputTypes.js",
+    ".tmp/scripts/clear.js",
     ".tmp/scripts/validators/factory.js",
     ".tmp/scripts/validators/email.js",
     ".tmp/scripts/validators/maxLength.js",
