@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/MikeDanaher/forms.js.svg?branch=master)](https://travis-ci.org/MikeDanaher/forms.js)
+
 # FormsJS
 
 Working with entire HTML forms can be tedius and time consuming. Many of the tools that exist today are built for individual form elements (text boxes, radio buttons, check boxes, etc). FormsJS is the tool that works across the entire form. Using FormsJS, entire forms can be populated with default data, validated across all fields, and serialized as an object to be passed to the server.
@@ -11,16 +13,16 @@ FormsJS is configured with the use of a config file. This file consists of an ar
 * value (optional): Any default value you would like to use when pre-populating the form.
 * validations (optional): An array of validation objects to specify how to validate each element. This can consist of zero or more objects.
   * type: The type of validation to be performed. Current options are:
-    * 'required' - Field must be filled out in some way
-    * 'email' - Value must match the email regular expression
-    * 'minLength' - Characters must meet a minimum length (specified with a 'length' attribute, see below)
-    * 'maxLength' - Characters must not exceed a maximum length (also specified with a 'length' attribute)
-    * 'regExp' - A custom regular expression to be used to validate the field (specified with a 'pattern' attribute)
+    * 'required' - Field must be filled out in some way.
+    * 'email' - Value must match the email regular expression.
+    * 'minLength' - Characters must meet a minimum length (specified with a 'length' attribute, see below).
+    * 'maxLength' - Characters must not exceed a maximum length (also specified with a 'length' attribute).
+    * 'regExp' - A custom regular expression to be used to validate the field (specified with a 'pattern' attribute).
     * 'customMatcher' - A custom function to be used for validation (specified with a 'matcher' attribute).
-  * length: A number to designate the length for use with min and max length
-  * pattern: A regular expression to match against (see phone example below)
-  * matcher: A function to use with a custom matcher. Will be passed the current value of the field (see phone type example below)
-  * errorMessage: A string to represent a customs error message to display to the user when validation is false
+  * length: A number to designate the length for use with min and max length.
+  * pattern: A regular expression to match against (see phone example below).
+  * matcher: A function to use with a custom matcher. Will be passed the current value of the field and should return true or false (see phone type example below).
+  * errorMessage: A string to represent a customs error message to display to the user when validation is false.
 
 ## Usage
 

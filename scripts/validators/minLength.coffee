@@ -2,8 +2,10 @@ namespace('FormsJs.Form.Validator')
 
 class FormsJs.Form.Validator.MinLength
 
+  DEFAULTLENGTH = 1
+
   constructor: (@options) ->
-    @options
 
   isValid: (value) ->
-    value.length >= @options.length or value is ''
+    length = @options.length or @DEFAULTLENGTH
+    value.length >= length or value is ''

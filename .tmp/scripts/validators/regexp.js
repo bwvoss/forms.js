@@ -2,13 +2,19 @@
   namespace('FormsJs.Form.Validators');
 
   FormsJs.Form.Validator.RegExp = (function() {
+    var DEFAULTREGEXP;
+
+    DEFAULTREGEXP = /[^]+/;
+
     function RegExp(options) {
       this.options = options;
-      this.options;
     }
 
     RegExp.prototype.isValid = function(value) {
-      return this.options.pattern.test(value) || value === '';
+      var anything, pattern;
+      anything = /[^]+/;
+      pattern = this.options.pattern || this.DEFAULTREGEXP;
+      return pattern.test(value) || value === '';
     };
 
     return RegExp;

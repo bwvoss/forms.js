@@ -2,8 +2,11 @@ namespace('FormsJs.Form.Validators')
 
 class FormsJs.Form.Validator.RegExp
 
+  DEFAULTREGEXP = /[^]+/
+
   constructor: (@options) ->
-    @options
 
   isValid: (value) ->
-    @options.pattern.test(value) or value is ''
+    anything = /[^]+/
+    pattern = @options.pattern or @DEFAULTREGEXP
+    pattern.test(value) or value is ''

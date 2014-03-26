@@ -6,10 +6,6 @@
 
     function Errors() {}
 
-    Errors.apply = function(data) {
-      return $("span[name=" + data.name + "]").text(data.errorMessage);
-    };
-
     addToErrorList = function(errorList, name, message) {
       var error;
       error = {
@@ -17,6 +13,11 @@
         errorMessage: message
       };
       return errorList.push(error);
+    };
+
+    Errors.get = function(data) {
+      var errorsList;
+      return errorsList = [];
     };
 
     return Errors;

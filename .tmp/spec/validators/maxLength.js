@@ -6,7 +6,7 @@
       var validator;
       validator = {
         type: 'maxLength',
-        length: 13
+        length: 14
       };
       return maxLengthValidator = new FormsJs.Form.Validator.MaxLength(validator);
     });

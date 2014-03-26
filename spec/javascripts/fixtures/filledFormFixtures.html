@@ -3,23 +3,32 @@
   <p>
   <label for="firstName">First Name</label>
   <input type='text' name='firstName' value=''>
-  <span name="firstName" class="error"></span>
   </p>
   <p>
   <label for="lastName">Last Name</label>
   <input type='text' name='lastName' value='My Last Name'>
-  <span name="lastName" class="error"></span>
   </p>
   <p>
   <label for="email">Email</label>
   <input type='text' name='email' value=''>
-  <span name="email" class="error"></span>
+  </p>
+  <p>
+  <label for="phone">Phone</label>
+  <input type='text' name='phone' value=''>
+  </p>
+  <p>
+  <label for="phoneType">Phone Type</label>
+  <select name='phoneType'>
+    <option value=''>-- Please Select --</option>
+    <option>Home</option>
+    <option>Cell</option>
+    <option>Work</option>
+  </select>
   </p>
   <p>
   <label for="gender">Gender</label>
   <input type='radio' name='gender' value='male' checked> Male
   <input type='radio' name='gender' value='female'> Female
-  <span name="gender" class="error"></span>
   </p>
   <p>
   <label for="interests">Interests (select all that apply)</label>
@@ -29,7 +38,6 @@
   <input type='checkbox' name='interests' value='C#'> C#
   <input type='checkbox' name='interests' value='Java'> Java
   <input type='checkbox' name='interests' value='Clojure'> Clojure
-  <span name="interests" class="error"></span>
   </p>
   <p>
   <label for="browser">What's your favorite browser</label>
@@ -40,12 +48,10 @@
     <option>Safari</option>
     <option>Internet Explorer</option>
   </select>
-  <span name="browser" class="error"></span>
   </p>
   <p>
   <label for="contact">May we contact you?</label>
   <input type='radio' name='contact' value='Yes'> Yes
   <input type='radio' name='contact' value='No'> No
-  <span name="contact" class="error"></span>
   </p>
 </form>

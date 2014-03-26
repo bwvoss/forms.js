@@ -2,7 +2,7 @@ describe 'Form.Validator.MaxLength', ->
   maxLengthValidator = {}
 
   beforeEach ->
-    validator = { type: 'maxLength', length: 13 }
+    validator = { type: 'maxLength', length: 14 }
     maxLengthValidator = new FormsJs.Form.Validator.MaxLength(validator)
 
   it 'returns true if a text field has less characters than the max length', ->

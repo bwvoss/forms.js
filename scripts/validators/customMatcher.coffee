@@ -3,7 +3,9 @@ namespace('FormsJs.Form.Validators')
 class FormsJs.Form.Validator.CustomMatcher
 
   constructor: (@options) ->
-    @options
+
+  defaultMatcher: (value) -> true
 
   isValid: (value) ->
-    @options.matcher(value)
+    matcher = @options.matcher or @defaultMatcher
+    matcher(value)
