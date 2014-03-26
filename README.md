@@ -8,8 +8,8 @@ FormsJS is configured with the use of a config file. This file consists of an ar
 
 * type: Designates the type of the element. Current values can be: 'text', 'radio', 'checkbox', or 'select'
 * name: The HTML name attribute of the field. Can be any string, but must be unique within the form.
-* value: Any default value you would like to use when pre-populating the form (optional)
-* validations: An array of validation objects to specify how to validate each element. This can consist of zero or more objects.
+* value (optional): Any default value you would like to use when pre-populating the form.
+* validations (optional): An array of validation objects to specify how to validate each element. This can consist of zero or more objects.
   * type: The type of validation to be performed. Current options are:
     * 'required' - Field must be filled out in some way
     * 'email' - Value must match the email regular expression
@@ -30,14 +30,15 @@ Initialize a new form object and pass in the config object: form = new FormsJs.F
 
 Call each of the following methods on the form object as necessary:
 
-* populate() - populates the form with the default values from the config file
-* isValid() - validates the form using the validations from the config and returns true or false
-* serialize() - loops through all the form elements and returns an object with the names and values of every element
+* populate() - Populates the form with the default values from the config file.
+* isValid() - Validates the form using the validations from the config and returns true or false.
+* serialize() - Loops through all the form elements and returns an object with the names and values of every element.
 * errors() - Returns an object with the names of each errored element and the custom error message related to the error. Returns an empty object if no errors exist.
+* clear() - Clears the form.
 
 ## Dependencies
 
-FormsJS requires jQuery and Underscore.
+FormsJS requires jQuery and Underscore and should be loaded before FormsJS.
 
 ## Sample Configuration Object
 

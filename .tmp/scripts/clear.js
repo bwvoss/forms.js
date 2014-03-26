@@ -5,8 +5,11 @@
     function Clear() {}
 
     Clear.clearValue = function() {
-      $(this).val('');
-      return $(this).prop('checked', false);
+      if (this.type === 'text' || this.type === 'select') {
+        return $(this).val('');
+      } else {
+        return $(this).prop('checked', false);
+      }
     };
 
     Clear.all = function() {
