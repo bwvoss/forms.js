@@ -1,12 +1,12 @@
 [![Build Status](https://travis-ci.org/MikeDanaher/forms.js.svg?branch=master)](https://travis-ci.org/MikeDanaher/forms.js)
 
-# FormsJS
+# forms.js
 
 Working with entire HTML forms can be tedius and time consuming. Many of the tools that exist today are built for individual form elements (text boxes, radio buttons, check boxes, etc). FormsJS is the tool that works across the entire form. Using FormsJS, entire forms can be populated with default data, validated with errors for all fields, and serialized as an object to be passed to the server.
 
 ## Configuration
 
-FormsJS is configured with an array of objects, with each object representing a different form element. Currently, each configuration object requires the following information:
+forms.js is configured with an array of objects, with each object representing a different form element. Currently, each configuration object requires the following information:
 
 * **type**: Designates the type of the element. Current values can be: 'text', 'radio', 'checkbox', or 'select'.
 * **name**: The HTML name attribute of the field. Can be any string, but must be unique within the form.
