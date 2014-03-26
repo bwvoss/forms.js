@@ -4,7 +4,6 @@
   FormsJs.Form = (function() {
     function Form(data) {
       this.data = data;
-      this.data;
     }
 
     Form.prototype.populate = function() {
@@ -15,8 +14,21 @@
 
     Form.prototype.isValid = function() {
       return _.all(this.data, function(element) {
-        return FormsJs.Form.Validator.isValid(element);
+        var value;
+        value = FormsJs.Form.Values.get(element);
+        return _.all(element.validations, function(validator) {
+          return FormsJs.Form.Validator.isValid(validator, value);
+        });
       });
+    };
+
+    Form.prototype.errors = function() {
+      var errors;
+      errors = [];
+      _.each(this.data, function(element) {
+        return errors.push.apply(errors, FormsJs.Form.Errors.get(element));
+      });
+      return errors;
     };
 
     Form.prototype.serialize = function() {

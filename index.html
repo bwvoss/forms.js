@@ -22,7 +22,7 @@
   <script src="/config.js"></script>
   <style>
     body { font-family: Helvetica, Arial, sans-serif }
-    .error { color: red; font-weight: bold; padding-left: 20px }
+    .error { color: red; font-weight: bold; padding: 20px }
     input { margin: 0 7px }
     form label { display: block; width: 250px; float: left}
     h1 { color: #888; text-transform: uppercase }
@@ -30,6 +30,7 @@
   </head>
 
   <body>
+    <div id="errors" class="error"></div>
     <h1>Javascript Form Library Demo</h1>
     <form action='#'>
       <p>
@@ -51,6 +52,15 @@
       <label for="phone">Phone</label>
       <input type='text' name='phone' value=''>
       <span name="phone" class="error"></span>
+      </p>
+      <p>
+      <label for="phoneType">Phone Type</label>
+      <select name='phoneType'>
+        <option value=''>-- Please Select --</option>
+        <option>Home</option>
+        <option>Work</option>
+        <option>Cell</option>
+      </select>
       </p>
       <p>
       <label for="gender">Gender</label>

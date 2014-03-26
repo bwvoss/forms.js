@@ -3,7 +3,6 @@ namespace('FormsJs')
 class FormsJs.Form
 
   constructor: (@data) ->
-    @data
 
   populate: ->
     _.all @data, (element) ->
@@ -11,7 +10,15 @@ class FormsJs.Form
 
   isValid: ->
     _.all @data, (element) ->
-      FormsJs.Form.Validator.isValid(element)
+      value = FormsJs.Form.Values.get(element)
+      _.all element.validations, (validator) ->
+        FormsJs.Form.Validator.isValid(validator, value)
+
+  errors: ->
+    errors = []
+    _.each @data, (element) ->
+      errors.push FormsJs.Form.Errors.get(element)...
+    errors
 
   serialize: ->
     formData = {}

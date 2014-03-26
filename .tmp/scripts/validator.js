@@ -4,20 +4,10 @@
   FormsJs.Form.Validator = (function() {
     function Validator() {}
 
-    Validator.allValidations = function(validations, value, name) {
+    Validator.isValid = function(validator, value) {
       var validationFactory;
       validationFactory = new FormsJs.Form.Validator.Factory;
-      return _.all(validations, (function(_this) {
-        return function(validation) {
-          return (validationFactory.build(validation)).isValid(value);
-        };
-      })(this));
-    };
-
-    Validator.isValid = function(data) {
-      var value;
-      value = FormsJs.Form.Values.get(data);
-      return this.allValidations(data.validations, value);
+      return validationFactory.build(validator).isValid(value);
     };
 
     return Validator;

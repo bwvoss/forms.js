@@ -1,117 +1,118 @@
 (function() {
   describe('FormsJs.Form.Validator', function() {
-    var assertValidationEquals, createData;
-    createData = function(type, name, validations) {
-      var data;
-      data = {};
-      data.type = type;
-      data.name = name;
-      data.validations = validations;
-      return data;
+    var validatorTest;
+    validatorTest = function(validator, value) {
+      return FormsJs.Form.Validator.isValid(validator, value);
     };
-    assertValidationEquals = function(data, value) {
-      return expect(FormsJs.Form.Validator.isValid(data)).toEqual(value);
-    };
-    it('returns false if an email is required but empty', function() {
-      var data;
-      setFixtures("<input type='text' name='email' value='' >");
-      data = createData('text', 'email', [
-        {
-          type: 'email',
-          errorMessage: 'Please enter a valid email address'
-        }, {
-          type: 'required',
-          errorMessage: 'Email is required'
-        }
-      ]);
-      return assertValidationEquals(data, false);
-    });
-    it('returns false if the minimum length is not met', function() {
-      var data;
-      setFixtures("<input type='text' name='text' value='minimum' >");
-      data = createData('text', 'text', [
-        {
-          type: 'minLength',
-          length: 8,
-          errorMessage: 'Minimum length is 8 characters'
-        }, {
-          type: 'required',
-          errorMessage: 'This field is required'
-        }
-      ]);
-      return assertValidationEquals(data, false);
-    });
-    it('returns true if no errors exist', function() {
-      var data;
-      setFixtures("<input type='text' name='noErrors' value='Some Text' >");
-      data = createData('text', 'noErrors', [
-        {
-          type: 'maxLength',
-          length: 10,
-          errorMessage: 'Maximum length is 10 characters'
-        }, {
-          type: 'required',
-          errorMessage: 'This field is required'
-        }
-      ]);
-      return assertValidationEquals(data, true);
-    });
-    it('returns false if a radio button is required and left unchecked', function() {
-      var data;
-      setFixtures("<input type='radio' name='radioName' value='Option 1'><input type='radio' name='radioName' value='Option 2'>");
-      data = createData('radio', 'radioName', [
-        {
-          type: 'required',
-          errorMessage: 'This field is required'
-        }
-      ]);
-      return assertValidationEquals(data, false);
-    });
-    it('returns true if a select is required and selected', function() {
-      var data;
-      setFixtures("<select name='selectList'><option value=''>--Please Select One--</option><option selected='selected'>Option 1</option><option>Option 2</option></select>");
-      data = createData('select', 'selectList', [
-        {
-          type: 'required',
-          errorMessage: 'This field is required'
-        }
-      ]);
-      return assertValidationEquals(data, true);
-    });
-    it('returns true if a custom regexp validator is used for a phone number', function() {
-      var data;
-      setFixtures("<input type='text' name='phone' value='123-456-7890' >");
-      data = createData('text', 'phone', [
-        {
-          type: 'regExp',
-          pattern: /(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/,
-          errorMessage: 'Please enter a valid phone number as ###-###-####'
-        }
-      ]);
-      return assertValidationEquals(data, true);
-    });
-    return it('returns true when a custom function is used as a validator', function() {
-      var customFunction, data;
-      setFixtures("<input type='text' name='phone' value='123-456-7890'><input type='text' name='phoneType' value='cell'>");
-      customFunction = function(value) {
-        var otherField;
-        otherField = $('[name=phone]').val();
-        if (otherField === '') {
-          return true;
-        } else if (value !== '') {
-          return true;
-        } else {
-          return false;
-        }
+    it('builds an email validator and returns false when value does not match email reg exp', function() {
+      var validator, value;
+      validator = {
+        type: 'email'
       };
-      data = createData('text', 'phoneType', [
-        {
-          type: 'customMatcher',
-          errorMessage: 'This field is more complex',
-          matcher: customFunction
-        }
-      ]);
-      return assertValidationEquals(data, true);
+      value = 'example.com';
+      return expect(validatorTest(validator, value)).toBeFalsy();
+    });
+    it('builds a required validator and returns false when value is undefined', function() {
+      var validator, value;
+      validator = {
+        type: 'required'
+      };
+      value = void 0;
+      return expect(validatorTest(validator, value)).toBeFalsy();
+    });
+    it('builds a min length validator and returns false when value is less than min', function() {
+      var validator, value;
+      validator = {
+        type: 'minLength',
+        length: 5
+      };
+      value = 'two';
+      return expect(validatorTest(validator, value)).toBeFalsy();
+    });
+    it('builds a max length validator and returns false when value is more than max', function() {
+      var validator, value;
+      validator = {
+        type: 'maxLength',
+        length: 5
+      };
+      value = 'eleven';
+      return expect(validatorTest(validator, value)).toBeFalsy();
+    });
+    it('builds a regexp validator and returns false when value does not match', function() {
+      var validator, value;
+      validator = {
+        type: 'regExp',
+        pattern: /[a-zA-z]+/
+      };
+      value = 12345;
+      return expect(validatorTest(validator, value)).toBeFalsy();
+    });
+    it('builds a custom validator and returns false when value does not pass function', function() {
+      var myFunction, validator, value;
+      myFunction = function(value) {
+        return false;
+      };
+      validator = {
+        type: 'customMatcher',
+        matcher: myFunction
+      };
+      value = 12345;
+      return expect(validatorTest(validator, value)).toBeFalsy();
+    });
+    it('builds an email validator and returns true when value does match email reg exp', function() {
+      var validator, value;
+      validator = {
+        type: 'email'
+      };
+      value = 'me@example.com';
+      return expect(validatorTest(validator, value)).toBeTruthy();
+    });
+    it('builds a required validator and returns true when value is something', function() {
+      var validator, value;
+      validator = {
+        type: 'required'
+      };
+      value = 'something';
+      return expect(validatorTest(validator, value)).toBeTruthy();
+    });
+    it('builds a min length validator and returns true when value is more than min', function() {
+      var validator, value;
+      validator = {
+        type: 'minLength',
+        length: 5
+      };
+      value = 'eleven';
+      return expect(validatorTest(validator, value)).toBeTruthy();
+    });
+    it('builds a max length validator and returns true when value is less than max', function() {
+      var validator, value;
+      validator = {
+        type: 'maxLength',
+        length: 5
+      };
+      value = 'four';
+      return expect(validatorTest(validator, value)).toBeTruthy();
+    });
+    it('builds a regexp validator and returns true when value does match', function() {
+      var validator, value;
+      validator = {
+        type: 'regExp',
+        pattern: /[a-zA-z]+/
+      };
+      value = 'abcde';
+      return expect(validatorTest(validator, value)).toBeTruthy();
+    });
+    return it('builds a custom validator and returns true when value passes a function', function() {
+      var myFunction, validator, value;
+      myFunction = function(value) {
+        return true;
+      };
+      validator = {
+        type: 'customMatcher',
+        matcher: myFunction
+      };
+      value = 12345;
+      return expect(validatorTest(validator, value)).toBeTruthy();
     });
   });
 

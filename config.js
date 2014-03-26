@@ -6,12 +6,12 @@ var config = [
     validations: [
       {
         type: "required",
-        errorMessage: "This field is required"
+        errorMessage: "Frist Name is Required"
       },
       {
         type: "minLength",
         length: 3,
-        errorMessage: "You must have at least 3 characters"
+        errorMessage: "First Name must have at least 3 characters"
       }
     ]
   },
@@ -22,12 +22,12 @@ var config = [
     validations: [
       {
         type: "required",
-        errorMessage: "This field is required"
+        errorMessage: "Last Name is Required"
       },
       {
         type: "maxLength",
         length: 15,
-        errorMessage: "You cannot have more than 15 characters"
+        errorMessage: "Last Name cannot have more than 15 characters"
       }
     ]
   },
@@ -38,11 +38,32 @@ var config = [
     validations: [
       {
         type: "required",
-        errorMessage: "This field is required"
+        errorMessage: "Email is Required"
       },
       {
         type: "email",
         errorMessage: "Please enter a valid email address"
+      }
+    ]
+  },
+  {
+    type: 'select',
+    name: 'phoneType',
+    value: 'Cell',
+    validations: [
+      {
+        type: 'customMatcher',
+        errorMessage: 'Phone type is required when phone is entered',
+        matcher: function(value) {
+          var phoneValue = $('[name=phone]').val();
+          if (phoneValue === '') {
+            return true;
+          } else if (value !== '') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
     ]
   },
@@ -65,7 +86,7 @@ var config = [
     validations: [
       {
         type: "required",
-        errorMessage: "This field is required"
+        errorMessage: "Gender is Required"
       }
     ]
   },
@@ -76,18 +97,18 @@ var config = [
     validations: [
       {
         type: "required",
-        errorMessage: "This field is required"
+        errorMessage: "An interest is Required"
       }
     ]
   },
   {
     type: "select",
     name: "browser",
-    value: "",
+    value: "Chrome",
     validations: [
       {
         type: "required",
-        errorMessage: "This field is required"
+        errorMessage: "Browser is Required"
       }
     ]
   },

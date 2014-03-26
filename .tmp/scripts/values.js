@@ -2,21 +2,19 @@
   namespace('FormsJs.Form');
 
   FormsJs.Form.Values = (function() {
-    var checkedValue, checkedValues, textValue;
-
     function Values() {}
 
     Values.DEFAULTVALUE = '';
 
-    textValue = function(name) {
+    Values.textValue = function(name) {
       return $("[name='" + name + "']").val();
     };
 
-    checkedValue = function(name) {
+    Values.checkedValue = function(name) {
       return $("[name='" + name + "']:checked").val();
     };
 
-    checkedValues = function(name) {
+    Values.checkedValues = function(name) {
       return $("[name='" + name + "']:checked").map(function() {
         return this.value;
       }).get();
@@ -26,16 +24,16 @@
       var value;
       switch (data.type) {
         case FormsJs.Form.InputTypes.TEXT:
-          value = textValue(data.name);
+          value = this.textValue(data.name);
           break;
         case FormsJs.Form.InputTypes.SELECT:
-          value = textValue(data.name);
+          value = this.textValue(data.name);
           break;
         case FormsJs.Form.InputTypes.RADIO:
-          value = checkedValue(data.name);
+          value = this.checkedValue(data.name);
           break;
         case FormsJs.Form.InputTypes.CHECKBOX:
-          value = checkedValues(data.name);
+          value = this.checkedValues(data.name);
       }
       return value = value || this.DEFAULTVALUE;
     };
