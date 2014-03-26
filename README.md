@@ -11,7 +11,7 @@ FormsJS is configured with an array of objects, with each object representing a 
 * **type**: Designates the type of the element. Current values can be: 'text', 'radio', 'checkbox', or 'select'.
 * **name**: The HTML name attribute of the field. Can be any string, but must be unique within the form.
 * **value** (optional): Any default value you would like to use when pre-populating the form.
-* **validations** (optional): An array of validation objects to specify how to validate each element. This can consist of zero or more objects.
+* **validations** (optional): An array of validation objects to specify how to validate each element. This can consist of zero or more objects with each object consisting of the following:
   * **type**: The type of validation to be performed. Current options are:
     * 'required' - Field must be filled out in some way.
     * 'email' - Value must match the email regular expression.
@@ -22,7 +22,7 @@ FormsJS is configured with an array of objects, with each object representing a 
   * **length**: A number to designate the length for use with min and max length.
   * **pattern**: A regular expression to match against (see phone example below).
   * **matcher**: A function to use with a custom matcher. Will be passed the current value of the field and should return true or false (see phone type example below).
-  * **errorMessage**: A string to represent a customs error message to display to the user when the field is invalid.
+  * **errorMessage**: A string to represent a custom error message to display to the user when the field is invalid.
 
 ## Usage
 
