@@ -9,4 +9,4 @@ class FormsJs.Form.Validator.Factory
       when 'maxLength' then new FormsJs.Form.Validator.MaxLength(validation)
       when 'minLength' then new FormsJs.Form.Validator.MinLength(validation)
       when 'regExp' then new FormsJs.Form.Validator.RegExp(validation)
-      else new FormsJs.Form.Validator.Custom(validation)
+      else new FormsJs.Form.Validator.CustomMatcher(validation)

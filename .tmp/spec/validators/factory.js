@@ -38,13 +38,21 @@
       minLengthValidator = new FormsJs.Form.Validator.MinLength(validator);
       return assertNewValidator(validator, minLengthValidator);
     });
-    return it('build a new regexp validator', function() {
+    it('builds a new regexp validator', function() {
       var regExpValidator, validator;
       validator = {
         type: 'regExp'
       };
       regExpValidator = new FormsJs.Form.Validator.RegExp(validator);
       return assertNewValidator(validator, regExpValidator);
+    });
+    return it('builds a new custom matcher validator', function() {
+      var customValidator, validator;
+      validator = {
+        type: 'customMatcher'
+      };
+      customValidator = new FormsJs.Form.Validator.CustomMatcher(validator);
+      return assertNewValidator(validator, customValidator);
     });
   });
 

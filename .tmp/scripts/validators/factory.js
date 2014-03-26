@@ -17,7 +17,7 @@
         case 'regExp':
           return new FormsJs.Form.Validator.RegExp(validation);
         default:
-          return new FormsJs.Form.Validator.Custom(validation);
+          return new FormsJs.Form.Validator.CustomMatcher(validation);
       }
     };
 

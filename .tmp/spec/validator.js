@@ -78,7 +78,7 @@
       ]);
       return assertValidationEquals(data, true);
     });
-    return it('returns true if a custom regexp validator is used for a phone number', function() {
+    it('returns true if a custom regexp validator is used for a phone number', function() {
       var data;
       setFixtures("<input type='text' name='phone' value='123-456-7890' >");
       data = createData('text', 'phone', [
@@ -86,6 +86,29 @@
           type: 'regExp',
           pattern: /(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/,
           errorMessage: 'Please enter a valid phone number as ###-###-####'
+        }
+      ]);
+      return assertValidationEquals(data, true);
+    });
+    return it('returns true when a custom function is used as a validator', function() {
+      var customFunction, data;
+      setFixtures("<input type='text' name='phone' value='123-456-7890'><input type='text' name='phoneType' value='cell'>");
+      customFunction = function(value) {
+        var otherField;
+        otherField = $('[name=phone]').val();
+        if (otherField === '') {
+          return true;
+        } else if (value !== '') {
+          return true;
+        } else {
+          return false;
+        }
+      };
+      data = createData('text', 'phoneType', [
+        {
+          type: 'customMatcher',
+          errorMessage: 'This field is more complex',
+          matcher: customFunction
         }
       ]);
       return assertValidationEquals(data, true);

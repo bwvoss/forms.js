@@ -24,8 +24,13 @@ describe 'Form.Validator.Factory', ->
     minLengthValidator = new FormsJs.Form.Validator.MinLength(validator)
     assertNewValidator(validator, minLengthValidator)
 
-  it 'build a new regexp validator', ->
+  it 'builds a new regexp validator', ->
     validator = { type: 'regExp' }
     regExpValidator = new FormsJs.Form.Validator.RegExp(validator)
     assertNewValidator(validator, regExpValidator)
+
+  it 'builds a new custom matcher validator', ->
+    validator = { type: 'customMatcher' }
+    customValidator = new FormsJs.Form.Validator.CustomMatcher(validator)
+    assertNewValidator(validator, customValidator)
 

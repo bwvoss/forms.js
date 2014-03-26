@@ -60,3 +60,20 @@ describe 'FormsJs.Form.Validator', ->
       ])
 
     assertValidationEquals(data, true)
+
+  it 'returns true when a custom function is used as a validator', ->
+    setFixtures("<input type='text' name='phone' value='123-456-7890'><input type='text' name='phoneType' value='cell'>")
+    customFunction = (value) ->
+      otherField = $('[name=phone]').val()
+      if otherField is ''
+        true
+      else if value isnt ''
+        true
+      else
+        false
+
+    data = createData('text','phoneType', [
+      { type: 'customMatcher', errorMessage: 'This field is more complex', matcher: customFunction }
+    ])
+
+    assertValidationEquals(data, true)
