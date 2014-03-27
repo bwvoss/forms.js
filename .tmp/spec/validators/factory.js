@@ -46,12 +46,20 @@
       regExpValidator = new FormsJs.Form.Validator.RegExp(validator);
       return assertNewValidator(validator, regExpValidator);
     });
-    return it('builds a new custom matcher validator', function() {
+    it('builds a new custom matcher validator', function() {
       var customValidator, validator;
       validator = {
         type: 'customMatcher'
       };
       customValidator = new FormsJs.Form.Validator.CustomMatcher(validator);
+      return assertNewValidator(validator, customValidator);
+    });
+    return it('builds a new matching input validator', function() {
+      var customValidator, validator;
+      validator = {
+        type: 'matchingInput'
+      };
+      customValidator = new FormsJs.Form.Validator.MatchingInput(validator);
       return assertNewValidator(validator, customValidator);
     });
   });

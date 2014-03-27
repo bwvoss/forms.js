@@ -7,7 +7,7 @@
     }
 
     Form.prototype.populate = function() {
-      return _.all(this.data, function(element) {
+      return _.each(this.data, function(element) {
         return FormsJs.Form.Populator.populate(element);
       });
     };

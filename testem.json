@@ -21,6 +21,7 @@
     ".tmp/scripts/validators/required.js",
     ".tmp/scripts/validators/regexp.js",
     ".tmp/scripts/validators/customMatcher.js",
+    ".tmp/scripts/validators/matchingInput.js",
     ".tmp/spec/**/*.js"
   ],
   "launch_in_ci": ["PhantomJS"],

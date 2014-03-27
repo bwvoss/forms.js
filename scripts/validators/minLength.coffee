@@ -2,7 +2,7 @@ namespace('FormsJs.Form.Validator')
 
 class FormsJs.Form.Validator.MinLength
 
-  DEFAULTLENGTH = 1
+  DEFAULTLENGTH: 1
 
   constructor: (@options) ->
 

@@ -6,3 +6,4 @@ class FormsJs.Form.InputTypes
   @RADIO     : 'radio'
   @CHECKBOX  : 'checkbox'
   @SELECT    : 'select'
+  @PASSWORD  : 'password'

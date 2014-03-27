@@ -59,6 +59,16 @@
       value = 12345;
       return expect(validatorTest(validator, value)).toBeFalsy();
     });
+    it('builds a matching input validator and returns false when value does match another field', function() {
+      var validator, value;
+      setFixtures("<input type='text' name='password' value='P@ssword'>");
+      validator = {
+        type: 'matchingInput',
+        matchField: 'password'
+      };
+      value = 12345;
+      return expect(validatorTest(validator, value)).toBeFalsy();
+    });
     it('builds an email validator and returns true when value does match email reg exp', function() {
       var validator, value;
       validator = {
@@ -102,7 +112,7 @@
       value = 'abcde';
       return expect(validatorTest(validator, value)).toBeTruthy();
     });
-    return it('builds a custom validator and returns true when value passes a function', function() {
+    it('builds a custom validator and returns true when value passes a function', function() {
       var myFunction, validator, value;
       myFunction = function(value) {
         return true;
@@ -112,6 +122,16 @@
         matcher: myFunction
       };
       value = 12345;
+      return expect(validatorTest(validator, value)).toBeTruthy();
+    });
+    return it('builds a matching input validator and returns true when value matchs another field', function() {
+      var validator, value;
+      setFixtures("<input type='text' name='password' value='P@ssword'>");
+      validator = {
+        type: 'matchingInput',
+        matchField: 'password'
+      };
+      value = 'P@ssword';
       return expect(validatorTest(validator, value)).toBeTruthy();
     });
   });

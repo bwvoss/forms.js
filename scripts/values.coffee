@@ -19,5 +19,6 @@ class FormsJs.Form.Values
       when FormsJs.Form.InputTypes.SELECT then value = @textValue(data.name)
       when FormsJs.Form.InputTypes.RADIO then value = @checkedValue(data.name)
       when FormsJs.Form.InputTypes.CHECKBOX then value = @checkedValues(data.name)
+      when FormsJs.Form.InputTypes.PASSWORD then value = @textValue(data.name)
 
     value = value || @DEFAULTVALUE

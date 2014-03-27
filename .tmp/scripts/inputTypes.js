@@ -12,6 +12,8 @@
 
     InputTypes.SELECT = 'select';
 
+    InputTypes.PASSWORD = 'password';
+
     return InputTypes;
 
   })();

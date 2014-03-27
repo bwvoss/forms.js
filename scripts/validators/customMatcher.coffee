@@ -1,4 +1,4 @@
-namespace('FormsJs.Form.Validators')
+namespace('FormsJs.Form.Validator')
 
 class FormsJs.Form.Validator.CustomMatcher
 

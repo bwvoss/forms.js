@@ -40,6 +40,13 @@ describe 'FormsJs.Form.Validator', ->
 
     expect(validatorTest(validator, value)).toBeFalsy()
 
+  it 'builds a matching input validator and returns false when value does match another field', ->
+    setFixtures("<input type='text' name='password' value='P@ssword'>")
+    validator = { type: 'matchingInput', matchField: 'password' }
+    value = 12345
+
+    expect(validatorTest(validator, value)).toBeFalsy()
+
   it 'builds an email validator and returns true when value does match email reg exp', ->
     validator = { type: 'email' }
     value = 'me@example.com'
@@ -74,6 +81,13 @@ describe 'FormsJs.Form.Validator', ->
     myFunction = (value) -> true
     validator = { type: 'customMatcher', matcher: myFunction }
     value = 12345
+
+    expect(validatorTest(validator, value)).toBeTruthy()
+
+  it 'builds a matching input validator and returns true when value matchs another field', ->
+    setFixtures("<input type='text' name='password' value='P@ssword'>")
+    validator = { type: 'matchingInput', matchField: 'password' }
+    value = 'P@ssword'
 
     expect(validatorTest(validator, value)).toBeTruthy()
 

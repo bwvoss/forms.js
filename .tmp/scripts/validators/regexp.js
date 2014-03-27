@@ -1,10 +1,8 @@
 (function() {
-  namespace('FormsJs.Form.Validators');
+  namespace('FormsJs.Form.Validator');
 
   FormsJs.Form.Validator.RegExp = (function() {
-    var DEFAULTREGEXP;
-
-    DEFAULTREGEXP = /[^]+/;
+    RegExp.prototype.DEFAULTREGEXP = /[^]+/;
 
     function RegExp(options) {
       this.options = options;

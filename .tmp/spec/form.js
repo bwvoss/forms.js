@@ -83,6 +83,32 @@
             errorMessage: 'Browser is required'
           }
         ]
+      }, {
+        type: 'password',
+        name: 'password',
+        validations: [
+          {
+            type: 'minLength',
+            errorMessage: 'Password must be 8 or more characters',
+            length: 8
+          }, {
+            type: 'required',
+            errorMessage: 'Password is required'
+          }
+        ]
+      }, {
+        type: 'password',
+        name: 'passwordConfirmation',
+        validations: [
+          {
+            type: 'matchingInput',
+            errorMessage: 'Passwords must match',
+            matchField: 'password'
+          }, {
+            type: 'required',
+            errorMessage: 'Password confirmation is required'
+          }
+        ]
       }
     ];
     it('creates a new form object when given an array of data objects', function() {
@@ -116,7 +142,7 @@
       var testForm;
       testForm = new FormsJs.Form(testData);
       loadFixtures('errorFormFixtures.html');
-      return expect(testForm.errors()).toEqual(['Please enter at least 5 characters', 'Gender is required', 'Please enter a valid email address', 'Please enter a valid phone number as ###-###-####', 'Phone type is required when phone is entered', 'Browser is required']);
+      return expect(testForm.errors()).toEqual(['Please enter at least 5 characters', 'Gender is required', 'Please enter a valid email address', 'Please enter a valid phone number as ###-###-####', 'Phone type is required when phone is entered', 'Browser is required', 'Password is required', 'Password confirmation is required']);
     });
     return it('serializes a filled form', function() {
       var testForm;
@@ -129,7 +155,9 @@
         phone: '555-555-5555',
         phoneType: 'Cell',
         interests: ['JavaScript', 'Ruby'],
-        browser: 'Chrome'
+        browser: 'Chrome',
+        password: 'P@ssword',
+        passwordConfirmation: 'P@ssword'
       });
     });
   });

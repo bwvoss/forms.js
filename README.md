@@ -18,9 +18,11 @@ forms.js is configured with an array of objects, with each object representing a
     * 'minLength' - Characters must meet a minimum length (specified with a 'length' attribute, see below).
     * 'maxLength' - Characters must not exceed a maximum length (also specified with a 'length' attribute).
     * 'regExp' - A custom regular expression to be used to validate the field (specified with a 'pattern' attribute).
+    * 'matchingInput' - A way to check whether two fields contain the same values (specified with a 'matchField' attribute).
     * 'customMatcher' - A custom function to be used for validation (specified with a 'matcher' attribute).
   * **length**: A number to designate the length for use with min and max length.
   * **pattern**: A regular expression to match against (see phone example below).
+  * **matchField**: A string representing the name of the field to match against (see password example below).
   * **matcher**: A function to use with a custom matcher. Will be passed the current value of the field and should return true or false (see phone type example below).
   * **errorMessage**: A string to represent a custom error message to display to the user when the field is invalid.
 
@@ -112,6 +114,27 @@ var config = [
       {
         type: "required",
         errorMessage: "This field is required"
+      }
+    ]
+  },
+  }
+    type: 'password',
+    name: 'password',
+    validations: [
+      {
+        type: "required",
+        errorMessage: "Please enter a password"
+      }
+    ]
+  },
+  {
+    type: "password",
+    name: "passwordConfirmation",
+    validations: [
+      {
+        type: "matchingInput",
+        matchField: "password",
+        errorMessage: "Passwords must match"
       }
     ]
   },

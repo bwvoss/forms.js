@@ -21,3 +21,5 @@ class FormsJs.Form.Populator
       when FormsJs.Form.InputTypes.RADIO then setChecked(data)
       when FormsJs.Form.InputTypes.CHECKBOX then setAllChecked(data)
       when FormsJs.Form.InputTypes.SELECT then setValue(data)
+      when FormsJs.Form.InputTypes.PASSWORD then setValue(data)
+      else setValue(data)

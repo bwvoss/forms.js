@@ -116,5 +116,35 @@ var config = [
     type: "radio",
     name: "contact",
     value: "Yes"
+  },
+  {
+    type: 'password',
+    name: 'password',
+    validations: [
+      {
+        type: 'minLength',
+        errorMessage: 'Password must be 8 or more characters',
+        length: 8
+      },
+      {
+        type: 'required',
+        errorMessage: 'Password is required'
+      }
+   ]
+  },
+  {
+    type: 'password',
+    name: 'passwordConfirmation',
+    validations: [
+      {
+        type: 'matchingInput',
+        errorMessage: 'Passwords must match',
+        matchField: 'password'
+      },
+      {
+        type: 'required',
+        errorMessage: 'Password confirmation is required'
+      }
+   ]
   }
 ]

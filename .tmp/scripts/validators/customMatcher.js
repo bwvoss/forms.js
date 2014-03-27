@@ -1,5 +1,5 @@
 (function() {
-  namespace('FormsJs.Form.Validators');
+  namespace('FormsJs.Form.Validator');
 
   FormsJs.Form.Validator.CustomMatcher = (function() {
     function CustomMatcher(options) {

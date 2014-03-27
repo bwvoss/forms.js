@@ -19,7 +19,8 @@
   <script src="/.tmp/scripts/validators/required.js"></script>
   <script src="/.tmp/scripts/validators/regexp.js"></script>
   <script src="/.tmp/scripts/validators/customMatcher.js"></script>
-  <script src="/config.js"></script>
+  <script src="/.tmp/scripts/validators/matchingInput.js"></script>
+  <script src="/testConfig.js"></script>
   <style>
     body { font-family: Helvetica, Arial, sans-serif }
     .error { color: red; font-weight: bold; padding: 20px }
@@ -30,7 +31,6 @@
   </head>
 
   <body>
-    <div id="errors" class="error"></div>
     <h1>Javascript Form Library Demo</h1>
     <form action='#'>
       <p>
@@ -95,6 +95,17 @@
       <input type='radio' name='contact' value='No'> No
       <span name="contact" class="error"></span>
       </p>
-   </form>
+      <p>
+      <label for="password">Password</label>
+      <input type='password' name='password'>
+      <span name="password" class="error"></span>
+      </p>
+      <p>
+      <label for="passwordConfirmation">Confirm Password</label>
+      <input type='password' name='passwordConfirmation'>
+      <span name="passwordConfirmation" class="error"></span>
+      </p>
+    </form>
+    <div id="errors" class="error"></div>
   </body>
 </html>

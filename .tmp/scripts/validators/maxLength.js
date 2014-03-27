@@ -2,9 +2,7 @@
   namespace('FormsJs.Form.Validator');
 
   FormsJs.Form.Validator.MaxLength = (function() {
-    var DEFAULTLENGTH;
-
-    DEFAULTLENGTH = 4096;
+    MaxLength.prototype.DEFAULTLENGTH = 1000000;
 
     function MaxLength(options) {
       this.options = options;

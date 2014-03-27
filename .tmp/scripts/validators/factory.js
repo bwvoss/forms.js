@@ -16,6 +16,8 @@
           return new FormsJs.Form.Validator.MinLength(validation);
         case 'regExp':
           return new FormsJs.Form.Validator.RegExp(validation);
+        case 'matchingInput':
+          return new FormsJs.Form.Validator.MatchingInput(validation);
         default:
           return new FormsJs.Form.Validator.CustomMatcher(validation);
       }

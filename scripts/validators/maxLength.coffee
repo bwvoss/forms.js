@@ -2,7 +2,7 @@ namespace('FormsJs.Form.Validator')
 
 class FormsJs.Form.Validator.MaxLength
 
-  DEFAULTLENGTH = 4096
+  DEFAULTLENGTH: 1000000
 
   constructor: (@options) ->
 

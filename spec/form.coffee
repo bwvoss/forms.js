@@ -85,6 +85,36 @@ describe 'Form', ->
           errorMessage: 'Browser is required'
         }
       ]
+    },
+    {
+      type: 'password',
+      name: 'password',
+      validations: [
+        {
+          type: 'minLength',
+          errorMessage: 'Password must be 8 or more characters',
+          length: 8
+        },
+        {
+          type: 'required',
+          errorMessage: 'Password is required'
+        }
+     ]
+    },
+    {
+      type: 'password',
+      name: 'passwordConfirmation',
+      validations: [
+        {
+          type: 'matchingInput',
+          errorMessage: 'Passwords must match',
+          matchField: 'password'
+        },
+        {
+          type: 'required',
+          errorMessage: 'Password confirmation is required'
+        }
+     ]
     }
   ]
 
@@ -119,10 +149,10 @@ describe 'Form', ->
     testForm = new FormsJs.Form(testData)
     loadFixtures('errorFormFixtures.html')
 
-    expect(testForm.errors()).toEqual(['Please enter at least 5 characters', 'Gender is required', 'Please enter a valid email address', 'Please enter a valid phone number as ###-###-####', 'Phone type is required when phone is entered', 'Browser is required' ])
+    expect(testForm.errors()).toEqual(['Please enter at least 5 characters', 'Gender is required', 'Please enter a valid email address', 'Please enter a valid phone number as ###-###-####', 'Phone type is required when phone is entered', 'Browser is required', 'Password is required', 'Password confirmation is required' ])
 
   it 'serializes a filled form', ->
     testForm = new FormsJs.Form(testData)
     loadFixtures('filledFormFixtures.html')
 
-    expect(testForm.serialize()).toEqual({ lastName : 'My Last Name', gender : 'male', email: 'me@example.com', phone: '555-555-5555', phoneType: 'Cell', interests : [ 'JavaScript', 'Ruby' ], browser : 'Chrome' })
+    expect(testForm.serialize()).toEqual({ lastName : 'My Last Name', gender : 'male', email: 'me@example.com', phone: '555-555-5555', phoneType: 'Cell', interests : [ 'JavaScript', 'Ruby' ], browser : 'Chrome', password: 'P@ssword', passwordConfirmation: 'P@ssword' })

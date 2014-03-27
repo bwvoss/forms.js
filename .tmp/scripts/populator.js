@@ -34,6 +34,10 @@
           return setAllChecked(data);
         case FormsJs.Form.InputTypes.SELECT:
           return setValue(data);
+        case FormsJs.Form.InputTypes.PASSWORD:
+          return setValue(data);
+        default:
+          return setValue(data);
       }
     };
 

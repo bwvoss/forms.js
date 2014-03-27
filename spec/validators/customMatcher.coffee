@@ -1,29 +1,25 @@
 describe 'FormsJs.Form.Validators.CustomMatcher', ->
-
-  it 'returns false using a custom validation function', ->
-    validation = {
+  validation = {
         type: 'customMatcher',
         errorMessage: 'This field is more complex',
-        matcher: (value) ->
-          false
-      }
+        matcher: (value) -> false
+  }
 
-    customValidator = new FormsJs.Form.Validator.CustomMatcher(validation)
+  newValidator = (validation) ->
+    new FormsJs.Form.Validator.CustomMatcher(validation)
 
+  it 'returns false using a custom validation function', ->
+    customValidator = newValidator(validation)
     expect(customValidator.isValid('test')).toBeFalsy()
 
   it 'returns true when using a custom validation function', ->
-    validation = {
-        type: 'customMatcher',
-        errorMessage: 'This field is more complex',
-        matcher: (value) ->
-          if value
-            true
-          else
-            false
-      }
-
-    customValidator = new FormsJs.Form.Validator.CustomMatcher(validation)
+    validation.matcher = (value) -> true
+    customValidator = newValidator(validation)
 
     expect(customValidator.isValid('test')).toBeTruthy()
 
+  it 'returns true when no custom function is defined', ->
+    validation.matcher = undefined
+    customValidator = newValidator(validation)
+
+    expect(customValidator.isValid('test')).toBeTruthy()

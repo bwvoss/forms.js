@@ -34,3 +34,8 @@ describe 'Form.Validator.Factory', ->
     customValidator = new FormsJs.Form.Validator.CustomMatcher(validator)
     assertNewValidator(validator, customValidator)
 
+  it 'builds a new matching input validator', ->
+    validator = { type: 'matchingInput' }
+    customValidator = new FormsJs.Form.Validator.MatchingInput(validator)
+    assertNewValidator(validator, customValidator)
+

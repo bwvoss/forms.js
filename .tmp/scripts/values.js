@@ -34,6 +34,9 @@
           break;
         case FormsJs.Form.InputTypes.CHECKBOX:
           value = this.checkedValues(data.name);
+          break;
+        case FormsJs.Form.InputTypes.PASSWORD:
+          value = this.textValue(data.name);
       }
       return value = value || this.DEFAULTVALUE;
     };

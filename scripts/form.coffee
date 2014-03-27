@@ -5,7 +5,7 @@ class FormsJs.Form
   constructor: (@data) ->
 
   populate: ->
-    _.all @data, (element) ->
+    _.each @data, (element) ->
       FormsJs.Form.Populator.populate(element)
 
   isValid: ->
