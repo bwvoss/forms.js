@@ -5,17 +5,21 @@
     function Errors() {}
 
     Errors.get = function(data) {
-      var errorsList, value;
-      errorsList = [];
+      var errorMessages, fieldErrors, value;
+      fieldErrors = {};
+      errorMessages = [];
       value = FormsJs.Form.Values.get(data);
       _.each(data.validations, function(validator) {
         var valid;
         valid = FormsJs.Form.Validator.isValid(validator, value);
         if (!valid) {
-          return errorsList.push(validator.errorMessage);
+          return errorMessages.push(validator.errorMessage);
         }
       });
-      return errorsList;
+      if (errorMessages.length !== 0) {
+        fieldErrors[data.name] = errorMessages;
+      }
+      return fieldErrors;
     };
 
     return Errors;

@@ -23,21 +23,17 @@
     };
 
     Form.prototype.errors = function() {
-      var errors;
-      errors = [];
-      _.each(this.data, function(element) {
-        return errors.push.apply(errors, FormsJs.Form.Errors.get(element));
-      });
-      return errors;
+      return _.reduce(this.data, function(errors, element) {
+        _.extend(errors, FormsJs.Form.Errors.get(element));
+        return errors;
+      }, {});
     };
 
     Form.prototype.serialize = function() {
-      var formData;
-      formData = {};
-      _.each(this.data, function(element) {
-        return _.extend(formData, FormsJs.Form.Serializer.serialize(element));
-      });
-      return formData;
+      return _.reduce(this.data, function(formData, element) {
+        _.extend(formData, FormsJs.Form.Serializer.serialize(element));
+        return formData;
+      }, {});
     };
 
     Form.prototype.clear = function() {

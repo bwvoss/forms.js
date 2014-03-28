@@ -16,11 +16,11 @@ describe 'FormsJs.Form.Errors', ->
     ]
   }
 
-  it 'returns an array with the error message if a field is invalid', ->
+  it 'returns an object with the field name and an array of error messages if a field is invalid', ->
     setFixtures("<input type='text' name='email' value='example.com'>")
-    expect(FormsJs.Form.Errors.get(data)).toEqual(['Please enter a valid email', 'Email should be a minimum of 15 characters'])
+    expect(FormsJs.Form.Errors.get(data)).toEqual({ email: ['Please enter a valid email', 'Email should be a minimum of 15 characters'] })
 
   it 'returns an empty array if all form elements are true', ->
     setFixtures("<input type='text' name='email' value='fiveteen@example.com'>")
-    expect(FormsJs.Form.Errors.get(data)).toEqual([])
+    expect(FormsJs.Form.Errors.get(data)).toEqual({ })
 

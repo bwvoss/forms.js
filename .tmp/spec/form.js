@@ -142,7 +142,16 @@
       var testForm;
       testForm = new FormsJs.Form(testData);
       loadFixtures('errorFormFixtures.html');
-      return expect(testForm.errors()).toEqual(['Please enter at least 5 characters', 'Gender is required', 'Please enter a valid email address', 'Please enter a valid phone number as ###-###-####', 'Phone type is required when phone is entered', 'Browser is required', 'Password is required', 'Password confirmation is required']);
+      return expect(testForm.errors()).toEqual({
+        lastName: ['Please enter at least 5 characters'],
+        gender: ['Gender is required'],
+        email: ['Please enter a valid email address'],
+        phone: ['Please enter a valid phone number as ###-###-####'],
+        phoneType: ['Phone type is required when phone is entered'],
+        browser: ['Browser is required'],
+        password: ['Password is required'],
+        passwordConfirmation: ['Password confirmation is required']
+      });
     });
     return it('serializes a filled form', function() {
       var testForm;

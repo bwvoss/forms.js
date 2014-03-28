@@ -3,9 +3,14 @@ namespace('FormsJs.Form')
 class FormsJs.Form.Errors
 
   @get: (data) ->
-    errorsList = []
+    fieldErrors = {}
+    errorMessages = []
     value = FormsJs.Form.Values.get(data)
+
     _.each data.validations, (validator) ->
       valid = FormsJs.Form.Validator.isValid(validator, value)
-      if not valid then errorsList.push validator.errorMessage
-    errorsList
+      errorMessages.push validator.errorMessage unless valid
+
+    unless errorMessages.length is 0
+      fieldErrors[data.name] = errorMessages
+    fieldErrors

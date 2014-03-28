@@ -4,16 +4,16 @@
   FormsJs.Form.Clear = (function() {
     function Clear() {}
 
-    Clear.clearValue = function() {
-      if (this.type === 'text' || this.type === 'select') {
-        return $(this).val('');
-      } else {
-        return $(this).prop('checked', false);
-      }
-    };
-
     Clear.all = function() {
       return $('form *').filter(':input').each(this.clearValue);
+    };
+
+    Clear.clearValue = function() {
+      if (this.type === 'radio' || this.type === 'checkbox') {
+        return $(this).prop('checked', false);
+      } else {
+        return $(this).val('');
+      }
     };
 
     return Clear;

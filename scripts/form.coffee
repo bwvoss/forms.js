@@ -15,16 +15,16 @@ class FormsJs.Form
         FormsJs.Form.Validator.isValid(validator, value)
 
   errors: ->
-    errors = []
-    _.each @data, (element) ->
-      errors.push FormsJs.Form.Errors.get(element)...
-    errors
+    _.reduce @data, (errors, element) ->
+      _.extend(errors, FormsJs.Form.Errors.get(element))
+      errors
+    , {}
 
   serialize: ->
-    formData = {}
-    _.each @data, (element) ->
+    _.reduce @data, (formData, element) ->
       _.extend(formData, FormsJs.Form.Serializer.serialize(element))
-    formData
+      formData
+    , {}
 
   clear: ->
     FormsJs.Form.Clear.all()

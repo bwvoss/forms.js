@@ -36,8 +36,8 @@ Call each of the following methods on the form object as necessary:
 
 * `populate()` - Populates the form with the default values from the config file.
 * `isValid()` - Validates the form using the validations from the config and returns true or false.
-* `serialize()` - Loops through all the form elements and returns an object with the names and values of every element.
-* `errors()` - Returns an array with each error message from the invalid fields. Returns an empty array if no errors exist.
+* `serialize()` - Returns an object with the field name and value of every element.
+* `errors()` - Returns an object with the field name and an array of error messages for each invalid field. Returns an empty object if no errors exist.
 * `clear()` - Clears the form.
 
 ## Dependencies

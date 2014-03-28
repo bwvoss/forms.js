@@ -6,20 +6,6 @@
 
     Values.DEFAULTVALUE = '';
 
-    Values.textValue = function(name) {
-      return $("[name='" + name + "']").val();
-    };
-
-    Values.checkedValue = function(name) {
-      return $("[name='" + name + "']:checked").val();
-    };
-
-    Values.checkedValues = function(name) {
-      return $("[name='" + name + "']:checked").map(function() {
-        return this.value;
-      }).get();
-    };
-
     Values.get = function(data) {
       var value;
       switch (data.type) {
@@ -30,7 +16,7 @@
           value = this.textValue(data.name);
           break;
         case FormsJs.Form.InputTypes.RADIO:
-          value = this.checkedValue(data.name);
+          value = this.radioValue(data.name);
           break;
         case FormsJs.Form.InputTypes.CHECKBOX:
           value = this.checkedValues(data.name);
@@ -39,6 +25,20 @@
           value = this.textValue(data.name);
       }
       return value = value || this.DEFAULTVALUE;
+    };
+
+    Values.textValue = function(name) {
+      return $("[name='" + name + "']").val();
+    };
+
+    Values.radioValue = function(name) {
+      return $("[name='" + name + "']:checked").val();
+    };
+
+    Values.checkedValues = function(name) {
+      return $("[name='" + name + "']:checked").map(function() {
+        return this.value;
+      }).get();
     };
 
     return Values;
