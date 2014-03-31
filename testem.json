@@ -13,11 +13,17 @@
     ".tmp/scripts/validator.js",
     ".tmp/scripts/values.js",
     ".tmp/scripts/inputTypes.js",
+    ".tmp/scripts/clear.js",
     ".tmp/scripts/validators/factory.js",
     ".tmp/scripts/validators/email.js",
     ".tmp/scripts/validators/maxLength.js",
     ".tmp/scripts/validators/minLength.js",
     ".tmp/scripts/validators/required.js",
+    ".tmp/scripts/validators/regexp.js",
+    ".tmp/scripts/validators/customMatcher.js",
+    ".tmp/scripts/validators/matchingInput.js",
     ".tmp/spec/**/*.js"
-  ]
+  ],
+  "launch_in_ci": ["PhantomJS"],
+  "launch_in_dev": ["Chrome"]
 }

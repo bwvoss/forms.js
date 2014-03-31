@@ -1,15 +1,17 @@
 (function() {
-  namespace('Form.Validator');
+  namespace('FormsJs.Form.Validator');
 
-  Form.Validator.MaxLength = (function() {
-    function MaxLength() {}
+  FormsJs.Form.Validator.MaxLength = (function() {
+    MaxLength.prototype.DEFAULTLENGTH = 1000000;
 
-    MaxLength.prototype.isValid = function(value, maxChars) {
-      if (value.length <= maxChars) {
-        return true;
-      } else {
-        return false;
-      }
+    function MaxLength(options) {
+      this.options = options;
+    }
+
+    MaxLength.prototype.isValid = function(value) {
+      var length;
+      length = this.options.length || this.DEFAULTLENGTH;
+      return value.length <= length;
     };
 
     return MaxLength;

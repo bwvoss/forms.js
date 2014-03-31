@@ -1,54 +1,93 @@
 describe 'FormsJs.Form.Validator', ->
 
-  createData = (type, name, validations) ->
-    data = {}
-    data.type = type
-    data.name = name
-    data.validations = validations
-    data
+  validatorTest = (validator, value) ->
+    FormsJs.Form.Validator.isValid(validator, value)
 
-  assertValidationEquals = (data, value) ->
-    expect(FormsJs.Form.Validator.isValid(data)).toEqual(value)
+  it 'builds an email validator and returns false when value does not match email reg exp', ->
+    validator = { type: 'email' }
+    value = 'example.com'
 
-  it 'returns false if an email is required but empty', ->
-    setFixtures("<input type='text' name='email' value='' >")
-    data = createData('text', 'email', [
-        { type: 'email', errorMessage: 'Please enter a valid email address' },
-        { type: 'required', errorMessage: 'Email is required' }
-      ])
+    expect(validatorTest(validator, value)).toBeFalsy()
 
-    assertValidationEquals(data, false)
+  it 'builds a required validator and returns false when value is undefined', ->
+    validator = { type: 'required' }
+    value = undefined
 
-  it 'returns false if the minimum length is not met', ->
-    setFixtures("<input type='text' name='text' value='minimum' >")
-    data = createData('text', 'text', [
-        { type: 'minLength', length: 8, errorMessage: 'Minimum length is 8 characters' },
-        { type: 'required', errorMessage: 'This field is required' }
-      ])
+    expect(validatorTest(validator, value)).toBeFalsy()
 
-    assertValidationEquals(data, false)
+  it 'builds a min length validator and returns false when value is less than min', ->
+    validator = { type: 'minLength', length: 5 }
+    value = 'two'
 
-  it 'returns true if no errors exist', ->
-    setFixtures("<input type='text' name='noErrors' value='Some Text' >")
-    data = createData('text', 'noErrors', [
-        { type: 'maxLength', length: 10, errorMessage: 'Maximum length is 10 characters' },
-        { type: 'required', errorMessage: 'This field is required' }
-      ])
+    expect(validatorTest(validator, value)).toBeFalsy()
 
-    assertValidationEquals(data, true)
+  it 'builds a max length validator and returns false when value is more than max', ->
+    validator = { type: 'maxLength', length: 5 }
+    value = 'eleven'
 
-  it 'returns false if a radio button is required and left unchecked', ->
-    setFixtures("<input type='radio' name='radioName' value='Option 1'><input type='radio' name='radioName' value='Option 2'>")
-    data = createData('radio', 'radioName', [
-        { type: 'required', errorMessage: 'This field is required' }
-      ])
+    expect(validatorTest(validator, value)).toBeFalsy()
 
-    assertValidationEquals(data, false)
+  it 'builds a regexp validator and returns false when value does not match', ->
+    validator = { type: 'regExp', pattern: /[a-zA-z]+/ }
+    value = 12345
 
-  it 'returns true if a select is required and selected', ->
-    setFixtures("<select name='selectList'><option value=''>--Please Select One--</option><option selected='selected'>Option 1</option><option>Option 2</option></select>")
-    data = createData('select','selectList', [
-        { type: 'required', errorMessage: 'This field is required' }
-      ])
+    expect(validatorTest(validator, value)).toBeFalsy()
 
-    assertValidationEquals(data, true)
+  it 'builds a custom validator and returns false when value does not pass function', ->
+    myFunction = (value) -> false
+    validator = { type: 'customMatcher', matcher: myFunction }
+    value = 12345
+
+    expect(validatorTest(validator, value)).toBeFalsy()
+
+  it 'builds a matching input validator and returns false when value does match another field', ->
+    setFixtures("<input type='text' name='password' value='P@ssword'>")
+    validator = { type: 'matchingInput', matchField: 'password' }
+    value = 12345
+
+    expect(validatorTest(validator, value)).toBeFalsy()
+
+  it 'builds an email validator and returns true when value does match email reg exp', ->
+    validator = { type: 'email' }
+    value = 'me@example.com'
+
+    expect(validatorTest(validator, value)).toBeTruthy()
+
+  it 'builds a required validator and returns true when value is something', ->
+    validator = { type: 'required' }
+    value = 'something'
+
+    expect(validatorTest(validator, value)).toBeTruthy()
+
+  it 'builds a min length validator and returns true when value is more than min', ->
+    validator = { type: 'minLength', length: 5 }
+    value = 'eleven'
+
+    expect(validatorTest(validator, value)).toBeTruthy()
+
+  it 'builds a max length validator and returns true when value is less than max', ->
+    validator = { type: 'maxLength', length: 5 }
+    value = 'four'
+
+    expect(validatorTest(validator, value)).toBeTruthy()
+
+  it 'builds a regexp validator and returns true when value does match', ->
+    validator = { type: 'regExp', pattern: /[a-zA-z]+/ }
+    value = 'abcde'
+
+    expect(validatorTest(validator, value)).toBeTruthy()
+
+  it 'builds a custom validator and returns true when value passes a function', ->
+    myFunction = (value) -> true
+    validator = { type: 'customMatcher', matcher: myFunction }
+    value = 12345
+
+    expect(validatorTest(validator, value)).toBeTruthy()
+
+  it 'builds a matching input validator and returns true when value matchs another field', ->
+    setFixtures("<input type='text' name='password' value='P@ssword'>")
+    validator = { type: 'matchingInput', matchField: 'password' }
+    value = 'P@ssword'
+
+    expect(validatorTest(validator, value)).toBeTruthy()
+

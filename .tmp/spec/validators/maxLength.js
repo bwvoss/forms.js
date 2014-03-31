@@ -1,15 +1,28 @@
 (function() {
   describe('Form.Validator.MaxLength', function() {
-    var maxLengthValidator;
-    maxLengthValidator = {};
-    beforeEach(function() {
-      return maxLengthValidator = new Form.Validator.MaxLength;
-    });
+    var newValidator, validation;
+    validation = {
+      type: 'maxLength',
+      length: 14
+    };
+    newValidator = function(validation) {
+      return new FormsJs.Form.Validator.MaxLength(validation);
+    };
     it('returns true if a text field has less characters than the max length', function() {
-      return expect(maxLengthValidator.isValid('Less than max', 13)).toBeTruthy();
+      var maxLengthValidator;
+      maxLengthValidator = newValidator(validation);
+      return expect(maxLengthValidator.isValid('Less than max')).toBeTruthy();
     });
-    return it('returns false if a text field has more characters than the max length', function() {
-      return expect(maxLengthValidator.isValid('More than max', 12)).toBeFalsy();
+    it('returns false if a text field has more characters than the max length', function() {
+      var maxLengthValidator;
+      maxLengthValidator = newValidator(validation);
+      return expect(maxLengthValidator.isValid('More than the max')).toBeFalsy();
+    });
+    return it('returns true if a length is undefined', function() {
+      var maxLengthValidator;
+      validation.length = void 0;
+      maxLengthValidator = newValidator(validation);
+      return expect(maxLengthValidator.isValid('More than the max')).toBeTruthy();
     });
   });
 

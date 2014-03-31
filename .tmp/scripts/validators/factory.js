@@ -1,19 +1,25 @@
 (function() {
-  namespace('Form.Validator');
+  namespace('FormsJs.Form.Validator');
 
-  Form.Validator.Factory = (function() {
+  FormsJs.Form.Validator.Factory = (function() {
     function Factory() {}
 
     Factory.prototype.build = function(validation) {
-      switch (validation) {
+      switch (validation.type) {
         case 'required':
-          return new Form.Validator.Required;
+          return new FormsJs.Form.Validator.Required(validation);
         case 'email':
-          return new Form.Validator.Email;
+          return new FormsJs.Form.Validator.Email(validation);
         case 'maxLength':
-          return new Form.Validator.MaxLength;
+          return new FormsJs.Form.Validator.MaxLength(validation);
         case 'minLength':
-          return new Form.Validator.MinLength;
+          return new FormsJs.Form.Validator.MinLength(validation);
+        case 'regExp':
+          return new FormsJs.Form.Validator.RegExp(validation);
+        case 'matchingInput':
+          return new FormsJs.Form.Validator.MatchingInput(validation);
+        default:
+          return new FormsJs.Form.Validator.CustomMatcher(validation);
       }
     };
 

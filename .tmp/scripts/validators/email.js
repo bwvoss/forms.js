@@ -1,19 +1,15 @@
 (function() {
-  namespace('Form.Validator');
+  namespace('FormsJs.Form.Validator');
 
-  Form.Validator.Email = (function() {
-    var EMAILRE;
+  FormsJs.Form.Validator.Email = (function() {
+    Email.prototype.EMAILREGEXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
-    function Email() {}
-
-    EMAILRE = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    function Email(options) {
+      this.options = options;
+    }
 
     Email.prototype.isValid = function(value) {
-      if (EMAILRE.test(value) || value === '') {
-        return true;
-      } else {
-        return false;
-      }
+      return this.EMAILREGEXP.test(value) || value === '';
     };
 
     return Email;

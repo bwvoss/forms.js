@@ -1,15 +1,17 @@
 (function() {
-  namespace('Form.Validator');
+  namespace('FormsJs.Form.Validator');
 
-  Form.Validator.MinLength = (function() {
-    function MinLength() {}
+  FormsJs.Form.Validator.MinLength = (function() {
+    MinLength.prototype.DEFAULTLENGTH = 1;
 
-    MinLength.prototype.isValid = function(value, minChars) {
-      if (value.length >= minChars || value === '') {
-        return true;
-      } else {
-        return false;
-      }
+    function MinLength(options) {
+      this.options = options;
+    }
+
+    MinLength.prototype.isValid = function(value) {
+      var length;
+      length = this.options.length || this.DEFAULTLENGTH;
+      return value.length >= length || value === '';
     };
 
     return MinLength;

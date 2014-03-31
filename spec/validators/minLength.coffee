@@ -1,15 +1,26 @@
 describe 'Form.Validator.MinLength', ->
-  minLengthValidator = {}
+  validation = { type: 'minLength', length: 14 }
 
-  beforeEach ->
-    minLengthValidator = new Form.Validator.MinLength
+  newValidator = (validation) ->
+    new FormsJs.Form.Validator.MinLength(validation)
 
   it 'should return true when the value is more than the minimum length', ->
-    expect(minLengthValidator.isValid('More than min', 13)).toBeTruthy()
+    minLengthValidator = newValidator(validation)
+
+    expect(minLengthValidator.isValid('More than the min')).toBeTruthy()
 
   it 'should return false when the value is less than the minimum length', ->
-    expect(minLengthValidator.isValid('Less than min', 14)).toBeFalsy()
+    minLengthValidator = newValidator(validation)
+
+    expect(minLengthValidator.isValid('Less than min')).toBeFalsy()
 
   it 'should return true when the value is blank and not required', ->
-    expect(minLengthValidator.isValid('', 5)).toBeTruthy()
+    minLengthValidator = newValidator(validation)
 
+    expect(minLengthValidator.isValid('')).toBeTruthy()
+
+  it 'should return true when the length is undefined', ->
+    validation.length = undefined
+    minLengthValidator = newValidator(validation)
+
+    expect(minLengthValidator.isValid('anything')).toBeTruthy()

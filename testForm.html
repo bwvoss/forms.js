@@ -11,14 +11,19 @@
   <script src="/.tmp/scripts/values.js"></script>
   <script src="/.tmp/scripts/errors.js"></script>
   <script src="/.tmp/scripts/inputTypes.js"></script>
+  <script src="/.tmp/scripts/clear.js"></script>
   <script src="/.tmp/scripts/validators/email.js"></script>
   <script src="/.tmp/scripts/validators/factory.js"></script>
   <script src="/.tmp/scripts/validators/maxLength.js"></script>
   <script src="/.tmp/scripts/validators/minLength.js"></script>
   <script src="/.tmp/scripts/validators/required.js"></script>
+  <script src="/.tmp/scripts/validators/regexp.js"></script>
+  <script src="/.tmp/scripts/validators/customMatcher.js"></script>
+  <script src="/.tmp/scripts/validators/matchingInput.js"></script>
+  <script src="/testConfig.js"></script>
   <style>
     body { font-family: Helvetica, Arial, sans-serif }
-    .error { color: red; font-weight: bold; padding-left: 20px }
+    .error { color: red; font-weight: bold; padding: 20px }
     input { margin: 0 7px }
     form label { display: block; width: 250px; float: left}
     h1 { color: #888; text-transform: uppercase }
@@ -42,6 +47,20 @@
       <label for="email">Email</label>
       <input type='text' name='email' value=''>
       <span name="email" class="error"></span>
+      </p>
+      <p>
+      <label for="phone">Phone</label>
+      <input type='text' name='phone' value=''>
+      <span name="phone" class="error"></span>
+      </p>
+      <p>
+      <label for="phoneType">Phone Type</label>
+      <select name='phoneType'>
+        <option value=''>-- Please Select --</option>
+        <option>Home</option>
+        <option>Work</option>
+        <option>Cell</option>
+      </select>
       </p>
       <p>
       <label for="gender">Gender</label>
@@ -76,6 +95,17 @@
       <input type='radio' name='contact' value='No'> No
       <span name="contact" class="error"></span>
       </p>
-   </form>
+      <p>
+      <label for="password">Password</label>
+      <input type='password' name='password'>
+      <span name="password" class="error"></span>
+      </p>
+      <p>
+      <label for="passwordConfirmation">Confirm Password</label>
+      <input type='password' name='passwordConfirmation'>
+      <span name="passwordConfirmation" class="error"></span>
+      </p>
+    </form>
+    <div id="errors" class="error"></div>
   </body>
 </html>

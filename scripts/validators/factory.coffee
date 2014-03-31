@@ -1,10 +1,13 @@
-namespace('Form.Validator')
+namespace('FormsJs.Form.Validator')
 
-class Form.Validator.Factory
+class FormsJs.Form.Validator.Factory
 
   build: (validation) ->
-    switch validation
-      when 'required' then new Form.Validator.Required
-      when 'email' then new Form.Validator.Email
-      when 'maxLength' then new Form.Validator.MaxLength
-      when 'minLength' then new Form.Validator.MinLength
+    switch validation.type
+      when 'required' then new FormsJs.Form.Validator.Required(validation)
+      when 'email' then new FormsJs.Form.Validator.Email(validation)
+      when 'maxLength' then new FormsJs.Form.Validator.MaxLength(validation)
+      when 'minLength' then new FormsJs.Form.Validator.MinLength(validation)
+      when 'regExp' then new FormsJs.Form.Validator.RegExp(validation)
+      when 'matchingInput' then new FormsJs.Form.Validator.MatchingInput(validation)
+      else new FormsJs.Form.Validator.CustomMatcher(validation)
