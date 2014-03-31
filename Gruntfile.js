@@ -3,7 +3,8 @@
 module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   grunt.initConfig({
-   coffee: {
+    pkg: grunt.file.readJSON('package.json'),
+    coffee: {
       compileScripts: {
         expand: true,
         flatten: false,
@@ -21,5 +22,24 @@ module.exports = function (grunt) {
         ext: '.js'
       }
     },
+    concat: {
+      options: {
+        seperator: ';'
+      },
+      dist: {
+        src: ['namespace.js', '.tmp/scripts/form.js', '.tmp/scripts/**/*.js'],
+        dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
+      }
+    },
+    uglify: {
+      dist: {
+        files: {
+          'dist/<%= pkg.name %>-<%= pkg.version %>.min.js': ['<%= concat.dist.dest %>']
+        }
+      }
+    }
   });
+
+  grunt.registerTask('default', ['coffee', 'concat', 'uglify']);
+
 }
