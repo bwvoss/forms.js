@@ -1,7 +1,7 @@
 {
   "name": "forms.js",
   "version": "0.0.1",
-  "main": "dist/forms.js",
+  "main": "dist/forms.min.js",
   "ignore": [
     ".tmp",
     "node_modules",
@@ -15,7 +15,7 @@
     "jquery": "~2.1.0",
   },
   "devDependencies": {
-    "jasmine-jquery": "2.0.3"
-    "coffee-script": "~1.7.1",
+    "jasmine-jquery": "2.0.3",
+    "coffee-script": "~1.7.1"
   }
 }
