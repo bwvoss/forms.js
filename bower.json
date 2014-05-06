@@ -1,6 +1,6 @@
 {
   "name": "forms.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/forms.min.js",
   "ignore": [
     ".tmp",
@@ -10,12 +10,11 @@
     "package.json",
     "testem.json"
   ],
-  "dependencies": {
-    "underscore": "~1.6.0",
-    "jquery": "~2.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "jasmine-jquery": "2.0.3",
+    "underscore": "~1.6.0",
+    "jquery": "~2.1.0",
     "coffee-script": "~1.7.1"
   }
 }
