@@ -1,4 +1,4 @@
-describe 'FormsJs.Form.Validator.MatchingInput', ->
+describe 'FormsJs.Validator.MatchingInput', ->
   validation = {
         type: 'matchingInput',
         matchField: 'password',
@@ -6,7 +6,7 @@ describe 'FormsJs.Form.Validator.MatchingInput', ->
   }
 
   newValidator = (validation) ->
-    new FormsJs.Form.Validator.MatchingInput(validation)
+    new FormsJs.Validator.MatchingInput(validation)
 
   it 'returns true when two fields have the same input', ->
     setFixtures("<input type='text' name='password' value='P@ssword' ><input type='text' name='passwordConfirm' value='P@ssword'>")

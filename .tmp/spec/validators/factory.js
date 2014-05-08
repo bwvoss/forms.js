@@ -1,9 +1,9 @@
 (function() {
-  describe('Form.Validator.Factory', function() {
+  describe('FormsJs.Validator.Factory', function() {
     var assertNewValidator;
     assertNewValidator = function(validator, validatorObject) {
       var validationFactory;
-      validationFactory = new FormsJs.Form.Validator.Factory;
+      validationFactory = new FormsJs.Validator.Factory;
       return expect(validationFactory.build(validator)).toEqual(validatorObject);
     };
     it('builds a new required validator', function() {
@@ -11,7 +11,7 @@
       validator = {
         type: 'required'
       };
-      requiredValidator = new FormsJs.Form.Validator.Required(validator);
+      requiredValidator = new FormsJs.Validator.Required(validator);
       return assertNewValidator(validator, requiredValidator);
     });
     it('builds a new email validator', function() {
@@ -19,7 +19,7 @@
       validator = {
         type: 'email'
       };
-      emailValidator = new FormsJs.Form.Validator.Email(validator);
+      emailValidator = new FormsJs.Validator.Email(validator);
       return assertNewValidator(validator, emailValidator);
     });
     it('builds a new max length validator', function() {
@@ -27,7 +27,7 @@
       validator = {
         type: 'maxLength'
       };
-      maxLengthValidator = new FormsJs.Form.Validator.MaxLength(validator);
+      maxLengthValidator = new FormsJs.Validator.MaxLength(validator);
       return assertNewValidator(validator, maxLengthValidator);
     });
     it('builds a new min length validator', function() {
@@ -35,7 +35,7 @@
       validator = {
         type: 'minLength'
       };
-      minLengthValidator = new FormsJs.Form.Validator.MinLength(validator);
+      minLengthValidator = new FormsJs.Validator.MinLength(validator);
       return assertNewValidator(validator, minLengthValidator);
     });
     it('builds a new regexp validator', function() {
@@ -43,7 +43,7 @@
       validator = {
         type: 'regExp'
       };
-      regExpValidator = new FormsJs.Form.Validator.RegExp(validator);
+      regExpValidator = new FormsJs.Validator.RegExp(validator);
       return assertNewValidator(validator, regExpValidator);
     });
     it('builds a new custom matcher validator', function() {
@@ -51,7 +51,7 @@
       validator = {
         type: 'customMatcher'
       };
-      customValidator = new FormsJs.Form.Validator.CustomMatcher(validator);
+      customValidator = new FormsJs.Validator.CustomMatcher(validator);
       return assertNewValidator(validator, customValidator);
     });
     return it('builds a new matching input validator', function() {
@@ -59,7 +59,7 @@
       validator = {
         type: 'matchingInput'
       };
-      customValidator = new FormsJs.Form.Validator.MatchingInput(validator);
+      customValidator = new FormsJs.Validator.MatchingInput(validator);
       return assertNewValidator(validator, customValidator);
     });
   });

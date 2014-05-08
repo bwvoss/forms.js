@@ -1,16 +1,16 @@
 namespace('FormsJs.Form')
 
-class FormsJs.Form.Values
+class FormsJs.Values
 
   @DEFAULTVALUE: ''
 
   @get: (data) ->
     switch data.type
-      when FormsJs.Form.InputTypes.TEXT then value = @textValue(data.name)
-      when FormsJs.Form.InputTypes.SELECT then value = @textValue(data.name)
-      when FormsJs.Form.InputTypes.RADIO then value = @radioValue(data.name)
-      when FormsJs.Form.InputTypes.CHECKBOX then value = @checkedValues(data.name)
-      when FormsJs.Form.InputTypes.PASSWORD then value = @textValue(data.name)
+      when FormsJs.InputTypes.TEXT then value = @textValue(data.name)
+      when FormsJs.InputTypes.SELECT then value = @textValue(data.name)
+      when FormsJs.InputTypes.RADIO then value = @radioValue(data.name)
+      when FormsJs.InputTypes.CHECKBOX then value = @checkedValues(data.name)
+      when FormsJs.InputTypes.PASSWORD then value = @textValue(data.name)
 
     value = value || @DEFAULTVALUE
 

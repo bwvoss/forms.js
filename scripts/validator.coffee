@@ -1,8 +1,8 @@
-namespace('FormsJs.Form')
+namespace('FormsJs')
 
-class FormsJs.Form.Validator
+class FormsJs.Validator
 
   @isValid: (validator, value) ->
-    validationFactory = new FormsJs.Form.Validator.Factory
+    validationFactory = new FormsJs.Validator.Factory
     validationFactory.build(validator).isValid(value)
 

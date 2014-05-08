@@ -1,10 +1,10 @@
-namespace('FormsJs.Form')
+namespace('FormsJs')
 
-class FormsJs.Form.Serializer
+class FormsJs.Serializer
 
   @serialize: (element) ->
     formData = {}
-    value = FormsJs.Form.Values.get(element)
+    value = FormsJs.Values.get(element)
     formData[element.name] = value
     formData
 

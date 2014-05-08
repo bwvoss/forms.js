@@ -1,5 +1,5 @@
 (function() {
-  describe('FormsJs.Form.Validator.MatchingInput', function() {
+  describe('FormsJs.Validator.MatchingInput', function() {
     var newValidator, validation;
     validation = {
       type: 'matchingInput',
@@ -7,7 +7,7 @@
       errorMessage: 'Must match password'
     };
     newValidator = function(validation) {
-      return new FormsJs.Form.Validator.MatchingInput(validation);
+      return new FormsJs.Validator.MatchingInput(validation);
     };
     it('returns true when two fields have the same input', function() {
       var matchingInputValidator;

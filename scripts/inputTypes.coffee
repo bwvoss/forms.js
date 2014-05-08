@@ -1,6 +1,6 @@
-namespace('FormsJs.Form')
+namespace('FormsJs')
 
-class FormsJs.Form.InputTypes
+class FormsJs.InputTypes
 
   @TEXT      : 'text'
   @RADIO     : 'radio'

@@ -1,6 +1,6 @@
-namespace('FormsJs.Form.Validator')
+namespace('FormsJs.Validator')
 
-class FormsJs.Form.Validator.Required
+class FormsJs.Validator.Required
 
   constructor: (@options) ->
 

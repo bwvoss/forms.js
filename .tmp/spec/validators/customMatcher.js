@@ -1,5 +1,5 @@
 (function() {
-  describe('FormsJs.Form.Validators.CustomMatcher', function() {
+  describe('FormsJs.Validators.CustomMatcher', function() {
     var newValidator, validation;
     validation = {
       type: 'customMatcher',
@@ -9,7 +9,7 @@
       }
     };
     newValidator = function(validation) {
-      return new FormsJs.Form.Validator.CustomMatcher(validation);
+      return new FormsJs.Validator.CustomMatcher(validation);
     };
     it('returns false using a custom validation function', function() {
       var customValidator;

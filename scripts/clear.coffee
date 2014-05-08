@@ -1,6 +1,6 @@
-namespace('FormsJs.Form')
+namespace('FormsJs')
 
-class FormsJs.Form.Clear
+class FormsJs.Clear
 
   @all: ->
     $('form *').filter(':input').each(@clearValue)

@@ -1,7 +1,7 @@
-describe 'FormsJs.Form.Validator', ->
+describe 'FormsJs.Validator', ->
 
   validatorTest = (validator, value) ->
-    FormsJs.Form.Validator.isValid(validator, value)
+    FormsJs.Validator.isValid(validator, value)
 
   it 'builds an email validator and returns false when value does not match email reg exp', ->
     validator = { type: 'email' }

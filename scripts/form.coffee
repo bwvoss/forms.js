@@ -6,25 +6,25 @@ class FormsJs.Form
 
   populate: ->
     _.each @data, (element) ->
-      FormsJs.Form.Populator.populate(element)
+      FormsJs.Populator.populate(element)
 
   isValid: ->
     _.all @data, (element) ->
-      value = FormsJs.Form.Values.get(element)
+      value = FormsJs.Values.get(element)
       _.all element.validations, (validator) ->
-        FormsJs.Form.Validator.isValid(validator, value)
+        FormsJs.Validator.isValid(validator, value)
 
   errors: ->
     _.reduce @data, (errors, element) ->
-      _.extend(errors, FormsJs.Form.Errors.get(element))
+      _.extend(errors, FormsJs.Errors.get(element))
       errors
     , {}
 
   serialize: ->
     _.reduce @data, (formData, element) ->
-      _.extend(formData, FormsJs.Form.Serializer.serialize(element))
+      _.extend(formData, FormsJs.Serializer.serialize(element))
       formData
     , {}
 
   clear: ->
-    FormsJs.Form.Clear.all()
+    FormsJs.Clear.all()

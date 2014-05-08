@@ -1,6 +1,6 @@
-namespace('FormsJs.Form.Validator')
+namespace('FormsJs.Validator')
 
-class FormsJs.Form.Validator.MinLength
+class FormsJs.Validator.MinLength
 
   DEFAULTLENGTH: 1
 

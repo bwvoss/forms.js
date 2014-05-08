@@ -1,8 +1,8 @@
 (function() {
-  describe('FormsJs.Form.Validator', function() {
+  describe('FormsJs.Validator', function() {
     var validatorTest;
     validatorTest = function(validator, value) {
-      return FormsJs.Form.Validator.isValid(validator, value);
+      return FormsJs.Validator.isValid(validator, value);
     };
     it('builds an email validator and returns false when value does not match email reg exp', function() {
       var validator, value;

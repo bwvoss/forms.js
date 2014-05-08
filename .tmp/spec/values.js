@@ -1,5 +1,5 @@
 (function() {
-  describe('Form.Values', function() {
+  describe('FormsJs.Values', function() {
     it('gets the value of a text box', function() {
       var data;
       setFixtures("<input type='text' name='email' value='me@example.com' >");
@@ -7,7 +7,7 @@
         type: 'text',
         name: 'email'
       };
-      return expect(FormsJs.Form.Values.get(data)).toEqual('me@example.com');
+      return expect(FormsJs.Values.get(data)).toEqual('me@example.com');
     });
     it('gets the value of a select list', function() {
       var data;
@@ -16,7 +16,7 @@
         type: 'select',
         name: 'interest'
       };
-      return expect(FormsJs.Form.Values.get(data)).toEqual('Option 1');
+      return expect(FormsJs.Values.get(data)).toEqual('Option 1');
     });
     it('gets the checked value of a radio button', function() {
       var data;
@@ -25,7 +25,7 @@
         type: 'radio',
         name: 'gender'
       };
-      return expect(FormsJs.Form.Values.get(data)).toEqual('female');
+      return expect(FormsJs.Values.get(data)).toEqual('female');
     });
     it('gets an array of the checked values of checkboxes', function() {
       var data;
@@ -34,7 +34,7 @@
         type: 'checkbox',
         name: 'options'
       };
-      return expect(FormsJs.Form.Values.get(data)).toEqual(['Option 2', 'Option 3']);
+      return expect(FormsJs.Values.get(data)).toEqual(['Option 2', 'Option 3']);
     });
     return it('should return an empty string if no value exists or none are checked', function() {
       var data;
@@ -43,7 +43,7 @@
         type: 'radio',
         name: 'gender'
       };
-      return expect(FormsJs.Form.Values.get(data)).toEqual('');
+      return expect(FormsJs.Values.get(data)).toEqual('');
     });
   });
 

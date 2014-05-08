@@ -1,6 +1,6 @@
 describe 'Form', ->
   getValues = (data) ->
-    FormsJs.Form.Values.get(data)
+    FormsJs.Values.get(data)
 
   testData = [
     {
@@ -118,13 +118,16 @@ describe 'Form', ->
     }
   ]
 
+  createTestForm = (data) ->
+    new FormsJs.Form(data)
+
   it 'creates a new form object when given an array of data objects', ->
-    testForm = new FormsJs.Form(testData)
+    testForm = createTestForm(testData)
 
     expect(testForm.data[0].type).toEqual('text')
 
   it 'populates all form elements with their default values', ->
-    testForm = new FormsJs.Form(testData)
+    testForm = createTestForm(testData)
     loadFixtures('emptyFormFixtures.html')
     testForm.populate()
 
@@ -134,19 +137,19 @@ describe 'Form', ->
     expect(getValues(testData[6])).toEqual('Chrome')
 
   it 'validates an empty form as false', ->
-    testForm = new FormsJs.Form(testData)
+    testForm = createTestForm(testData)
     loadFixtures('emptyFormFixtures.html')
 
     expect(testForm.isValid()).toBeFalsy()
 
   it 'validates a filled form as true', ->
-    testForm = new FormsJs.Form(testData)
+    testForm = createTestForm(testData)
     loadFixtures('filledFormFixtures.html')
 
     expect(testForm.isValid()).toBeTruthy()
 
   it 'gets a list of all the errors from an empty form', ->
-    testForm = new FormsJs.Form(testData)
+    testForm = createTestForm(testData)
     loadFixtures('errorFormFixtures.html')
 
     expect(testForm.errors()).toEqual(
@@ -162,7 +165,7 @@ describe 'Form', ->
       })
 
   it 'serializes a filled form', ->
-    testForm = new FormsJs.Form(testData)
+    testForm = createTestForm(testData)
     loadFixtures('filledFormFixtures.html')
 
     expect(testForm.serialize()).toEqual({ lastName : 'My Last Name', gender : 'male', email: 'me@example.com', phone: '555-555-5555', phoneType: 'Cell', interests : [ 'JavaScript', 'Ruby' ], browser : 'Chrome', password: 'P@ssword', passwordConfirmation: 'P@ssword' })

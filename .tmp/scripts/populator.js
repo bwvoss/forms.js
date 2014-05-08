@@ -1,7 +1,7 @@
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Populator = (function() {
+  FormsJs.Populator = (function() {
     var setAllChecked, setChecked, setValue;
 
     function Populator() {}
@@ -26,15 +26,15 @@
 
     Populator.populate = function(data) {
       switch (data.type) {
-        case FormsJs.Form.InputTypes.TEXT:
+        case FormsJs.InputTypes.TEXT:
           return setValue(data);
-        case FormsJs.Form.InputTypes.RADIO:
+        case FormsJs.InputTypes.RADIO:
           return setChecked(data);
-        case FormsJs.Form.InputTypes.CHECKBOX:
+        case FormsJs.InputTypes.CHECKBOX:
           return setAllChecked(data);
-        case FormsJs.Form.InputTypes.SELECT:
+        case FormsJs.InputTypes.SELECT:
           return setValue(data);
-        case FormsJs.Form.InputTypes.PASSWORD:
+        case FormsJs.InputTypes.PASSWORD:
           return setValue(data);
         default:
           return setValue(data);

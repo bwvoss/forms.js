@@ -1,7 +1,7 @@
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Clear = (function() {
+  FormsJs.Clear = (function() {
     function Clear() {}
 
     Clear.all = function() {

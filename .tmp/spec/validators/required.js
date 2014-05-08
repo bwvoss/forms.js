@@ -1,9 +1,9 @@
 (function() {
-  describe('Form.Validator.Required', function() {
+  describe('FormsJs.Validator.Required', function() {
     var requiredValidator;
     requiredValidator = {};
     beforeEach(function() {
-      return requiredValidator = new FormsJs.Form.Validator.Required;
+      return requiredValidator = new FormsJs.Validator.Required;
     });
     it('returns false when a text field or select list is required and value is blank', function() {
       return expect(requiredValidator.isValid('')).toBeFalsy();

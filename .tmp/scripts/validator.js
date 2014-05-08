@@ -1,12 +1,12 @@
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Validator = (function() {
+  FormsJs.Validator = (function() {
     function Validator() {}
 
     Validator.isValid = function(validator, value) {
       var validationFactory;
-      validationFactory = new FormsJs.Form.Validator.Factory;
+      validationFactory = new FormsJs.Validator.Factory;
       return validationFactory.build(validator).isValid(value);
     };
 

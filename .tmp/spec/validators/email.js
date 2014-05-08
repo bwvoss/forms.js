@@ -1,12 +1,12 @@
 (function() {
-  describe('FormsJs.Form.Validator.Email', function() {
+  describe('FormsJs.Validator.Email', function() {
     var newValidator, validation;
     validation = {
       type: 'email',
       errorMessage: 'Please enter a valid email address'
     };
     newValidator = function(validation) {
-      return new FormsJs.Form.Validator.Email(validation);
+      return new FormsJs.Validator.Email(validation);
     };
     it('returns false when an email is expected but does not match', function() {
       var emailValidator;

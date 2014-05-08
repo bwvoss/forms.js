@@ -1,13 +1,13 @@
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Serializer = (function() {
+  FormsJs.Serializer = (function() {
     function Serializer() {}
 
     Serializer.serialize = function(element) {
       var formData, value;
       formData = {};
-      value = FormsJs.Form.Values.get(element);
+      value = FormsJs.Values.get(element);
       formData[element.name] = value;
       return formData;
     };

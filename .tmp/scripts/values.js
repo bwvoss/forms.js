@@ -1,7 +1,7 @@
 (function() {
   namespace('FormsJs.Form');
 
-  FormsJs.Form.Values = (function() {
+  FormsJs.Values = (function() {
     function Values() {}
 
     Values.DEFAULTVALUE = '';
@@ -9,19 +9,19 @@
     Values.get = function(data) {
       var value;
       switch (data.type) {
-        case FormsJs.Form.InputTypes.TEXT:
+        case FormsJs.InputTypes.TEXT:
           value = this.textValue(data.name);
           break;
-        case FormsJs.Form.InputTypes.SELECT:
+        case FormsJs.InputTypes.SELECT:
           value = this.textValue(data.name);
           break;
-        case FormsJs.Form.InputTypes.RADIO:
+        case FormsJs.InputTypes.RADIO:
           value = this.radioValue(data.name);
           break;
-        case FormsJs.Form.InputTypes.CHECKBOX:
+        case FormsJs.InputTypes.CHECKBOX:
           value = this.checkedValues(data.name);
           break;
-        case FormsJs.Form.InputTypes.PASSWORD:
+        case FormsJs.InputTypes.PASSWORD:
           value = this.textValue(data.name);
       }
       return value = value || this.DEFAULTVALUE;

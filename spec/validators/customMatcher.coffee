@@ -1,4 +1,4 @@
-describe 'FormsJs.Form.Validators.CustomMatcher', ->
+describe 'FormsJs.Validators.CustomMatcher', ->
   validation = {
         type: 'customMatcher',
         errorMessage: 'This field is more complex',
@@ -6,7 +6,7 @@ describe 'FormsJs.Form.Validators.CustomMatcher', ->
   }
 
   newValidator = (validation) ->
-    new FormsJs.Form.Validator.CustomMatcher(validation)
+    new FormsJs.Validator.CustomMatcher(validation)
 
   it 'returns false using a custom validation function', ->
     customValidator = newValidator(validation)

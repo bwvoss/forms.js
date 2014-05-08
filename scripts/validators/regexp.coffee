@@ -1,6 +1,6 @@
-namespace('FormsJs.Form.Validator')
+namespace('FormsJs.Validator')
 
-class FormsJs.Form.Validator.RegExp
+class FormsJs.Validator.RegExp
 
   DEFAULTREGEXP: /[^]+/
 

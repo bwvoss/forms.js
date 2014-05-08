@@ -1,6 +1,6 @@
-namespace('FormsJs.Form.Validator')
+namespace('FormsJs.Validator')
 
-class FormsJs.Form.Validator.MatchingInput
+class FormsJs.Validator.MatchingInput
 
   constructor: (@options) ->
 

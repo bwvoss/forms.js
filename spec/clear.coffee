@@ -1,4 +1,4 @@
-describe 'FormJs.Form.Clear', ->
+describe 'FormJs.Clear', ->
 
   it 'clears the form', ->
     setFixtures(
@@ -12,7 +12,7 @@ describe 'FormJs.Form.Clear', ->
         </select>
       </form>")
 
-    FormsJs.Form.Clear.all()
+    FormsJs.Clear.all()
 
     expect($('[name=email]').val()).toEqual('')
     expect($('[name=gender]:checked').val()).toBe(undefined)

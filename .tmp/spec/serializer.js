@@ -1,5 +1,5 @@
 (function() {
-  describe('FormsJs.Form.Serializer', function() {
+  describe('FormsJs.Serializer', function() {
     it('converts a text element to an object', function() {
       var data;
       setFixtures("<form action='#'> <input type='text' name='text1' value='some value' /> </form>");
@@ -7,7 +7,7 @@
         type: 'text',
         name: 'text1'
       };
-      return expect(FormsJs.Form.Serializer.serialize(data)).toEqual({
+      return expect(FormsJs.Serializer.serialize(data)).toEqual({
         text1: "some value"
       });
     });
@@ -18,7 +18,7 @@
         type: 'radio',
         name: 'radioName'
       };
-      return expect(FormsJs.Form.Serializer.serialize(data)).toEqual({
+      return expect(FormsJs.Serializer.serialize(data)).toEqual({
         radioName: "Radio 2"
       });
     });
@@ -29,7 +29,7 @@
         type: 'select',
         name: 'selectName'
       };
-      return expect(FormsJs.Form.Serializer.serialize(data)).toEqual({
+      return expect(FormsJs.Serializer.serialize(data)).toEqual({
         selectName: "Option 3"
       });
     });
@@ -40,7 +40,7 @@
         type: 'checkbox',
         name: 'checkName'
       };
-      return expect(FormsJs.Form.Serializer.serialize(data)).toEqual({
+      return expect(FormsJs.Serializer.serialize(data)).toEqual({
         checkName: ["Checkbox 1", "Checkbox 2"]
       });
     });

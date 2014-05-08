@@ -1,7 +1,7 @@
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.MatchingInput = (function() {
+  FormsJs.Validator.MatchingInput = (function() {
     function MatchingInput(options) {
       this.options = options;
     }

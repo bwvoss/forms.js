@@ -1,14 +1,14 @@
-describe 'FormsJs.Form.InputTypes', ->
+describe 'FormsJs.InputTypes', ->
 
   it 'returns text as a string for TEXT', ->
-    expect(FormsJs.Form.InputTypes.TEXT).toEqual('text')
+    expect(FormsJs.InputTypes.TEXT).toEqual('text')
 
   it 'returns radio as a string for RADIO', ->
-    expect(FormsJs.Form.InputTypes.RADIO).toEqual('radio')
+    expect(FormsJs.InputTypes.RADIO).toEqual('radio')
 
   it 'returns checkbox as a string for CHECKBOX', ->
-    expect(FormsJs.Form.InputTypes.CHECKBOX).toEqual('checkbox')
+    expect(FormsJs.InputTypes.CHECKBOX).toEqual('checkbox')
 
   it 'returns select as a string for SELECT', ->
-    expect(FormsJs.Form.InputTypes.SELECT).toEqual('select')
+    expect(FormsJs.InputTypes.SELECT).toEqual('select')
 

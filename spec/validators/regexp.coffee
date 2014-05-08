@@ -1,7 +1,7 @@
-describe 'FormsJs.Form.Validator.RegExp', ->
+describe 'FormsJs.Validator.RegExp', ->
 
   newValidator = (validation) ->
-    new FormsJs.Form.Validator.RegExp(validation)
+    new FormsJs.Validator.RegExp(validation)
 
   it 'takes a custom regular expression and returns false when value does not match', ->
     validation = { pattern: /[^0-9]+/ }

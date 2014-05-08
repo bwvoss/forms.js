@@ -1,8 +1,8 @@
 (function() {
   describe('Form', function() {
-    var getValues, testData;
+    var createTestForm, getValues, testData;
     getValues = function(data) {
-      return FormsJs.Form.Values.get(data);
+      return FormsJs.Values.get(data);
     };
     testData = [
       {
@@ -111,14 +111,17 @@
         ]
       }
     ];
+    createTestForm = function(data) {
+      return new FormsJs.Form(data);
+    };
     it('creates a new form object when given an array of data objects', function() {
       var testForm;
-      testForm = new FormsJs.Form(testData);
+      testForm = createTestForm(testData);
       return expect(testForm.data[0].type).toEqual('text');
     });
     it('populates all form elements with their default values', function() {
       var testForm;
-      testForm = new FormsJs.Form(testData);
+      testForm = createTestForm(testData);
       loadFixtures('emptyFormFixtures.html');
       testForm.populate();
       expect(getValues(testData[0])).toEqual('My Last Name');
@@ -128,19 +131,19 @@
     });
     it('validates an empty form as false', function() {
       var testForm;
-      testForm = new FormsJs.Form(testData);
+      testForm = createTestForm(testData);
       loadFixtures('emptyFormFixtures.html');
       return expect(testForm.isValid()).toBeFalsy();
     });
     it('validates a filled form as true', function() {
       var testForm;
-      testForm = new FormsJs.Form(testData);
+      testForm = createTestForm(testData);
       loadFixtures('filledFormFixtures.html');
       return expect(testForm.isValid()).toBeTruthy();
     });
     it('gets a list of all the errors from an empty form', function() {
       var testForm;
-      testForm = new FormsJs.Form(testData);
+      testForm = createTestForm(testData);
       loadFixtures('errorFormFixtures.html');
       return expect(testForm.errors()).toEqual({
         lastName: ['Please enter at least 5 characters'],
@@ -155,7 +158,7 @@
     });
     return it('serializes a filled form', function() {
       var testForm;
-      testForm = new FormsJs.Form(testData);
+      testForm = createTestForm(testData);
       loadFixtures('filledFormFixtures.html');
       return expect(testForm.serialize()).toEqual({
         lastName: 'My Last Name',
