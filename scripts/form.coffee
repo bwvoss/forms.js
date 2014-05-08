@@ -27,4 +27,5 @@ class FormsJs.Form
     , {}
 
   clear: ->
-    FormsJs.Clear.all()
+    _.each @data, (element) ->
+      FormsJs.Clear.valueOf(element)

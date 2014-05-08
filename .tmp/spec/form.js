@@ -156,7 +156,7 @@
         passwordConfirmation: ['Password confirmation is required']
       });
     });
-    return it('serializes a filled form', function() {
+    it('serializes a filled form', function() {
       var testForm;
       testForm = createTestForm(testData);
       loadFixtures('filledFormFixtures.html');
@@ -171,6 +171,13 @@
         password: 'P@ssword',
         passwordConfirmation: 'P@ssword'
       });
+    });
+    return it('clears the form', function() {
+      var testForm;
+      testForm = createTestForm(testData);
+      loadFixtures('filledFormFixtures.html');
+      testForm.clear();
+      return expect($('[name=lastName]').val()).toEqual('');
     });
   });
 

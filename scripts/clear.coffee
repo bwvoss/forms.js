@@ -2,12 +2,9 @@ namespace('FormsJs')
 
 class FormsJs.Clear
 
-  @all: ->
-    $('form *').filter(':input').each(@clearValue)
-
-  @clearValue: ->
-    if this.type is 'radio' or this.type is 'checkbox'
-      $(this).prop('checked', false)
+  @valueOf: (element) ->
+    if element.type is 'radio' or element.type is 'checkbox'
+      $("[name=#{element.name}]").prop('checked', false)
     else
-      $(this).val('')
+      $("[name=#{element.name}]").val('')
 

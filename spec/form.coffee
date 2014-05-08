@@ -169,3 +169,11 @@ describe 'Form', ->
     loadFixtures('filledFormFixtures.html')
 
     expect(testForm.serialize()).toEqual({ lastName : 'My Last Name', gender : 'male', email: 'me@example.com', phone: '555-555-5555', phoneType: 'Cell', interests : [ 'JavaScript', 'Ruby' ], browser : 'Chrome', password: 'P@ssword', passwordConfirmation: 'P@ssword' })
+
+  it 'clears the form', ->
+    testForm = createTestForm(testData)
+    loadFixtures('filledFormFixtures.html')
+
+    testForm.clear()
+
+    expect($('[name=lastName]').val()).toEqual('')

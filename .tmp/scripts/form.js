@@ -37,7 +37,9 @@
     };
 
     Form.prototype.clear = function() {
-      return FormsJs.Clear.all();
+      return _.each(this.data, function(element) {
+        return FormsJs.Clear.valueOf(element);
+      });
     };
 
     return Form;
