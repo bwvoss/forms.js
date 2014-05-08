@@ -1,12 +1,12 @@
 (function() {
-  describe('Form.Validator.MinLength', function() {
+  describe('FormsJs.Validator.MinLength', function() {
     var newValidator, validation;
     validation = {
       type: 'minLength',
       length: 14
     };
     newValidator = function(validation) {
-      return new FormsJs.Form.Validator.MinLength(validation);
+      return new FormsJs.Validator.MinLength(validation);
     };
     it('should return true when the value is more than the minimum length', function() {
       var minLengthValidator;

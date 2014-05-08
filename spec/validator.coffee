@@ -1,7 +1,7 @@
-describe 'FormsJs.Form.Validator', ->
+describe 'FormsJs.Validator', ->
 
-  validatorTest = (validator, value) ->
-    FormsJs.Form.Validator.isValid(validator, value)
+  validatorTest = (validator, value, scope = '#jasmine-fixtures') ->
+    FormsJs.Validator.isValid(validator, value, scope)
 
   it 'builds an email validator and returns false when value does not match email reg exp', ->
     validator = { type: 'email' }
@@ -40,7 +40,7 @@ describe 'FormsJs.Form.Validator', ->
 
     expect(validatorTest(validator, value)).toBeFalsy()
 
-  it 'builds a matching input validator and returns false when value does match another field', ->
+  it 'builds a matching input validator and returns false when value does not match another field', ->
     setFixtures("<input type='text' name='password' value='P@ssword'>")
     validator = { type: 'matchingInput', matchField: 'password' }
     value = 12345

@@ -1,9 +1,9 @@
-describe 'Form.Validator.Required', ->
+describe 'FormsJs.Validator.Required', ->
 
   requiredValidator = {}
 
   beforeEach ->
-    requiredValidator = new FormsJs.Form.Validator.Required
+    requiredValidator = new FormsJs.Validator.Required
 
   it 'returns false when a text field or select list is required and value is blank', ->
     expect(requiredValidator.isValid('')).toBeFalsy()

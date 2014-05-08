@@ -1,17 +1,17 @@
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Errors = (function() {
+  FormsJs.Errors = (function() {
     function Errors() {}
 
-    Errors.get = function(data) {
+    Errors.get = function(data, scope) {
       var errorMessages, fieldErrors, value;
       fieldErrors = {};
       errorMessages = [];
-      value = FormsJs.Form.Values.get(data);
+      value = FormsJs.Values.get(data, scope);
       _.each(data.validations, function(validator) {
         var valid;
-        valid = FormsJs.Form.Validator.isValid(validator, value);
+        valid = FormsJs.Validator.isValid(validator, value);
         if (!valid) {
           return errorMessages.push(validator.errorMessage);
         }

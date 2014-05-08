@@ -1,7 +1,7 @@
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.Required = (function() {
+  FormsJs.Validator.Required = (function() {
     function Required(options) {
       this.options = options;
     }

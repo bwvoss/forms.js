@@ -1,18 +1,14 @@
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Clear = (function() {
+  FormsJs.Clear = (function() {
     function Clear() {}
 
-    Clear.all = function() {
-      return $('form *').filter(':input').each(this.clearValue);
-    };
-
-    Clear.clearValue = function() {
-      if (this.type === 'radio' || this.type === 'checkbox') {
-        return $(this).prop('checked', false);
+    Clear.valueOf = function(element, scope) {
+      if (element.type === 'radio' || element.type === 'checkbox') {
+        return FormsJs.Scope.clearChecked(element, scope);
       } else {
-        return $(this).val('');
+        return FormsJs.Scope.clearValue(element, scope);
       }
     };
 

@@ -1,6 +1,6 @@
 describe 'Form', ->
-  getValues = (data) ->
-    FormsJs.Form.Values.get(data)
+  getValues = (data, scope) ->
+    FormsJs.Values.get(data, scope)
 
   testData = [
     {
@@ -60,7 +60,7 @@ describe 'Form', ->
           type: 'customMatcher',
           errorMessage: 'Phone type is required when phone is entered',
           matcher: (value) ->
-            phoneValue = $('[name=phone]').val()
+            phoneValue = $('[name=phone]', '#form2').val()
             if phoneValue is ''
               true
             else if value isnt ''
@@ -118,13 +118,27 @@ describe 'Form', ->
     }
   ]
 
+  createTestForm = (data, scope) ->
+    new FormsJs.Form(data, scope)
+
   it 'creates a new form object when given an array of data objects', ->
-    testForm = new FormsJs.Form(testData)
+    testForm = createTestForm(testData)
 
     expect(testForm.data[0].type).toEqual('text')
 
+  it 'creates a new form object with a default scope of the document', ->
+    testForm = createTestForm(testData)
+
+    expect(testForm.scope).toEqual($(document))
+
+  it 'creates a new form object with a scope as a jQuery selector string', ->
+    scope = '#form1'
+    testForm = createTestForm(testData, scope)
+
+    expect(testForm.scope).toEqual('#form1')
+
   it 'populates all form elements with their default values', ->
-    testForm = new FormsJs.Form(testData)
+    testForm = createTestForm(testData)
     loadFixtures('emptyFormFixtures.html')
     testForm.populate()
 
@@ -133,21 +147,40 @@ describe 'Form', ->
     expect(getValues(testData[5])).toEqual(['JavaScript', 'Ruby'])
     expect(getValues(testData[6])).toEqual('Chrome')
 
+   it 'populates all form elements with their default values within a given scope', ->
+    inScope = '#form1'
+    outScope = '#form2'
+    testForm = createTestForm(testData, inScope)
+    loadFixtures('emptyFormFixturesWithScope.html')
+    testForm.populate()
+
+    expect(getValues(testData[0], inScope)).toEqual('My Last Name')
+    expect(getValues(testData[1], inScope)).toEqual('male')
+    expect(getValues(testData[5], inScope)).toEqual(['JavaScript', 'Ruby'])
+    expect(getValues(testData[6], inScope)).toEqual('Chrome')
+
+    expect(getValues(testData[0], outScope)).toEqual('')
+    expect(getValues(testData[1], outScope)).toEqual('')
+    expect(getValues(testData[5], outScope)).toEqual([])
+    expect(getValues(testData[6], outScope)).toEqual('')
+
   it 'validates an empty form as false', ->
-    testForm = new FormsJs.Form(testData)
+    testForm = createTestForm(testData)
     loadFixtures('emptyFormFixtures.html')
 
     expect(testForm.isValid()).toBeFalsy()
 
-  it 'validates a filled form as true', ->
-    testForm = new FormsJs.Form(testData)
-    loadFixtures('filledFormFixtures.html')
+  it 'validates a filled form as true within a scope', ->
+    scope = '#form2'
+    testForm = createTestForm(testData, scope)
+    loadFixtures('filledFormFixturesWithScope.html')
 
     expect(testForm.isValid()).toBeTruthy()
 
-  it 'gets a list of all the errors from an empty form', ->
-    testForm = new FormsJs.Form(testData)
-    loadFixtures('errorFormFixtures.html')
+  it 'gets a list of all the errors from a form within a scope', ->
+    scope = '#form2'
+    testForm = createTestForm(testData, scope)
+    loadFixtures('errorFormFixturesWithScope.html')
 
     expect(testForm.errors()).toEqual(
       {
@@ -161,8 +194,18 @@ describe 'Form', ->
         passwordConfirmation: ['Password confirmation is required']
       })
 
-  it 'serializes a filled form', ->
-    testForm = new FormsJs.Form(testData)
-    loadFixtures('filledFormFixtures.html')
+  it 'serializes a filled form within a given scope', ->
+    scope = '#form2'
+    testForm = createTestForm(testData, scope)
+    loadFixtures('filledFormFixturesWithScope.html')
 
     expect(testForm.serialize()).toEqual({ lastName : 'My Last Name', gender : 'male', email: 'me@example.com', phone: '555-555-5555', phoneType: 'Cell', interests : [ 'JavaScript', 'Ruby' ], browser : 'Chrome', password: 'P@ssword', passwordConfirmation: 'P@ssword' })
+
+  it 'clears the form within a scope', ->
+    scope = '#form2'
+    testForm = createTestForm(testData, scope)
+    loadFixtures('filledFormFixturesWithScope.html')
+
+    testForm.clear()
+
+    expect($('[name=lastName]').val()).toEqual('')

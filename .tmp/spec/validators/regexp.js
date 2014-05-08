@@ -1,8 +1,8 @@
 (function() {
-  describe('FormsJs.Form.Validator.RegExp', function() {
+  describe('FormsJs.Validator.RegExp', function() {
     var newValidator;
     newValidator = function(validation) {
-      return new FormsJs.Form.Validator.RegExp(validation);
+      return new FormsJs.Validator.RegExp(validation);
     };
     it('takes a custom regular expression and returns false when value does not match', function() {
       var regExpValidator, validation;

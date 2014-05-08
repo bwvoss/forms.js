@@ -1,6 +1,6 @@
-namespace('FormsJs.Form.Validator')
+namespace('FormsJs.Validator')
 
-class FormsJs.Form.Validator.MaxLength
+class FormsJs.Validator.MaxLength
 
   DEFAULTLENGTH: 1000000
 

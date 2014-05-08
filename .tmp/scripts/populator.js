@@ -1,43 +1,17 @@
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Populator = (function() {
-    var setAllChecked, setChecked, setValue;
-
+  FormsJs.Populator = (function() {
     function Populator() {}
 
-    setValue = function(data) {
-      return $("[name='" + data.name + "']").val(data.value);
-    };
-
-    setChecked = function(data) {
-      return $("[name='" + data.name + "'][value='" + data.value + "']").prop('checked', true);
-    };
-
-    setAllChecked = function(data) {
-      var value;
-      if (_.isArray(data.value)) {
-        value = data.value;
-      } else {
-        value = [data.value];
-      }
-      return $("[name='" + data.name + "']").val(value);
-    };
-
-    Populator.populate = function(data) {
+    Populator.populate = function(data, scope) {
       switch (data.type) {
-        case FormsJs.Form.InputTypes.TEXT:
-          return setValue(data);
-        case FormsJs.Form.InputTypes.RADIO:
-          return setChecked(data);
-        case FormsJs.Form.InputTypes.CHECKBOX:
-          return setAllChecked(data);
-        case FormsJs.Form.InputTypes.SELECT:
-          return setValue(data);
-        case FormsJs.Form.InputTypes.PASSWORD:
-          return setValue(data);
+        case FormsJs.InputTypes.RADIO:
+          return FormsJs.Scope.setRadioChecked(data, scope);
+        case FormsJs.InputTypes.CHECKBOX:
+          return FormsJs.Scope.setAllChecked(data, scope);
         default:
-          return setValue(data);
+          return FormsJs.Scope.setValue(data, scope);
       }
     };
 

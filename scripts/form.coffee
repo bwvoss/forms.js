@@ -2,29 +2,34 @@ namespace('FormsJs')
 
 class FormsJs.Form
 
-  constructor: (@data) ->
+  DEFAULT_SCOPE = $(document)
+
+  constructor: (data, scope = DEFAULT_SCOPE) ->
+    @data = data
+    @scope = scope
 
   populate: ->
-    _.each @data, (element) ->
-      FormsJs.Form.Populator.populate(element)
+    _.each @data, (element) =>
+      FormsJs.Populator.populate(element, @scope)
 
   isValid: ->
-    _.all @data, (element) ->
-      value = FormsJs.Form.Values.get(element)
-      _.all element.validations, (validator) ->
-        FormsJs.Form.Validator.isValid(validator, value)
+    _.all @data, (element) =>
+      value = FormsJs.Values.get(element, @scope)
+      _.all element.validations, (validator) =>
+        FormsJs.Validator.isValid(validator, value, @scope)
 
   errors: ->
-    _.reduce @data, (errors, element) ->
-      _.extend(errors, FormsJs.Form.Errors.get(element))
+    _.reduce @data, (errors, element) =>
+      _.extend(errors, FormsJs.Errors.get(element, @scope))
       errors
     , {}
 
   serialize: ->
-    _.reduce @data, (formData, element) ->
-      _.extend(formData, FormsJs.Form.Serializer.serialize(element))
+    _.reduce @data, (formData, element) =>
+      _.extend(formData, FormsJs.Serializer.serialize(element, @scope))
       formData
     , {}
 
   clear: ->
-    FormsJs.Form.Clear.all()
+    _.each @data, (element) =>
+      FormsJs.Clear.valueOf(element, @scope)

@@ -1,4 +1,4 @@
-describe 'FormsJs.Form.Serializer', ->
+describe 'FormsJs.Serializer', ->
 
   it 'converts a text element to an object', ->
     setFixtures(
@@ -7,7 +7,7 @@ describe 'FormsJs.Form.Serializer', ->
       </form>")
     data = { type: 'text', name: 'text1' }
 
-    expect(FormsJs.Form.Serializer.serialize(data)).toEqual({ text1: "some value"})
+    expect(FormsJs.Serializer.serialize(data)).toEqual({ text1: "some value"})
 
   it 'converts the checked value of a radio group to a JSON object', ->
     setFixtures(
@@ -19,7 +19,7 @@ describe 'FormsJs.Form.Serializer', ->
 
     data = { type: 'radio', name: 'radioName' }
 
-    expect(FormsJs.Form.Serializer.serialize(data)).toEqual({ radioName: "Radio 2"})
+    expect(FormsJs.Serializer.serialize(data)).toEqual({ radioName: "Radio 2"})
 
   it 'converts the selected value of a select list to a JSON object', ->
     setFixtures(
@@ -33,7 +33,7 @@ describe 'FormsJs.Form.Serializer', ->
 
     data = { type: 'select', name: 'selectName' }
 
-    expect(FormsJs.Form.Serializer.serialize(data)).toEqual({ selectName: "Option 3"})
+    expect(FormsJs.Serializer.serialize(data)).toEqual({ selectName: "Option 3"})
 
   it 'converts the values of checked checkboxes to an array inside a JSON object', ->
     setFixtures(
@@ -45,5 +45,5 @@ describe 'FormsJs.Form.Serializer', ->
 
     data = { type: 'checkbox', name: 'checkName' }
 
-    expect(FormsJs.Form.Serializer.serialize(data)).toEqual({ checkName: ["Checkbox 1","Checkbox 2"] })
+    expect(FormsJs.Serializer.serialize(data)).toEqual({ checkName: ["Checkbox 1","Checkbox 2"] })
 

@@ -1,7 +1,7 @@
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.MinLength = (function() {
+  FormsJs.Validator.MinLength = (function() {
     MinLength.prototype.DEFAULTLENGTH = 1;
 
     function MinLength(options) {

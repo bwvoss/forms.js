@@ -1,14 +1,14 @@
-namespace('FormsJs.Form')
+namespace('FormsJs')
 
-class FormsJs.Form.Errors
+class FormsJs.Errors
 
-  @get: (data) ->
+  @get: (data, scope) ->
     fieldErrors = {}
     errorMessages = []
-    value = FormsJs.Form.Values.get(data)
+    value = FormsJs.Values.get(data, scope)
 
     _.each data.validations, (validator) ->
-      valid = FormsJs.Form.Validator.isValid(validator, value)
+      valid = FormsJs.Validator.isValid(validator, value)
       errorMessages.push validator.errorMessage unless valid
 
     unless errorMessages.length is 0

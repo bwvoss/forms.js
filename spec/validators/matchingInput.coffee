@@ -1,4 +1,4 @@
-describe 'FormsJs.Form.Validator.MatchingInput', ->
+describe 'FormsJs.Validator.MatchingInput', ->
   validation = {
         type: 'matchingInput',
         matchField: 'password',
@@ -6,24 +6,30 @@ describe 'FormsJs.Form.Validator.MatchingInput', ->
   }
 
   newValidator = (validation) ->
-    new FormsJs.Form.Validator.MatchingInput(validation)
+    new FormsJs.Validator.MatchingInput(validation)
 
   it 'returns true when two fields have the same input', ->
-    setFixtures("<input type='text' name='password' value='P@ssword' ><input type='text' name='passwordConfirm' value='P@ssword'>")
+    scope = '#jasmine-fixtures'
+    value = 'P@ssword'
+    setFixtures("<input type='text' name='password' value='P@ssword' ><input type='text' name='passwordConfirm' value='#{value}'>")
     matchingInputValidator = newValidator(validation)
 
-    expect(matchingInputValidator.isValid('P@ssword')).toBeTruthy()
+    expect(matchingInputValidator.isValid(value, scope)).toBeTruthy()
 
   it 'returns false when two fields have different input', ->
-    setFixtures("<input type='text' name='password' value='P@ssword' ><input type='text' name='passwordConfirm' value='other'>")
+    scope = '#jasmine-fixtures'
+    value = 'other'
+    setFixtures("<input type='text' name='password' value='P@ssword' ><input type='text' name='passwordConfirm' value='#{value}>")
     matchingInputValidator = newValidator(validation)
 
-    expect(matchingInputValidator.isValid('other')).toBeFalsy()
+    expect(matchingInputValidator.isValid(value, scope)).toBeFalsy()
 
   it 'returns true if no additional field is defined', ->
-    setFixtures("<input type='text' name='password' value='P@ssword' ><input type='text' name='passwordConfirm' value='P@ssword'>")
+    scope = '#jasmine-fixtures'
+    value = 'P@ssword'
+    setFixtures("<input type='text' name='password' value='P@ssword' ><input type='text' name='passwordConfirm' value='#{value}'>")
     validation.matchField = undefined
     matchingInputValidator = newValidator(validation)
 
-    expect(matchingInputValidator.isValid('P@ssword')).toBeTruthy()
+    expect(matchingInputValidator.isValid(value, scope)).toBeTruthy()
 

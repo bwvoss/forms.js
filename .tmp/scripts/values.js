@@ -1,44 +1,26 @@
 (function() {
   namespace('FormsJs.Form');
 
-  FormsJs.Form.Values = (function() {
+  FormsJs.Values = (function() {
+    var DEFAULT_VALUE;
+
     function Values() {}
 
-    Values.DEFAULTVALUE = '';
+    DEFAULT_VALUE = '';
 
-    Values.get = function(data) {
+    Values.get = function(data, scope) {
       var value;
       switch (data.type) {
-        case FormsJs.Form.InputTypes.TEXT:
-          value = this.textValue(data.name);
+        case FormsJs.InputTypes.RADIO:
+          value = FormsJs.Scope.getCheckedRadioValue(data, scope);
           break;
-        case FormsJs.Form.InputTypes.SELECT:
-          value = this.textValue(data.name);
+        case FormsJs.InputTypes.CHECKBOX:
+          value = FormsJs.Scope.getCheckedValues(data, scope);
           break;
-        case FormsJs.Form.InputTypes.RADIO:
-          value = this.radioValue(data.name);
-          break;
-        case FormsJs.Form.InputTypes.CHECKBOX:
-          value = this.checkedValues(data.name);
-          break;
-        case FormsJs.Form.InputTypes.PASSWORD:
-          value = this.textValue(data.name);
+        default:
+          value = FormsJs.Scope.getValue(data, scope);
       }
-      return value = value || this.DEFAULTVALUE;
-    };
-
-    Values.textValue = function(name) {
-      return $("[name='" + name + "']").val();
-    };
-
-    Values.radioValue = function(name) {
-      return $("[name='" + name + "']:checked").val();
-    };
-
-    Values.checkedValues = function(name) {
-      return $("[name='" + name + "']:checked").map(function() {
-        return this.value;
-      }).get();
+      return value != null ? value : value = DEFAULT_VALUE;
     };
 
     return Values;

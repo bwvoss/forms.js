@@ -1,8 +1,8 @@
-describe 'FormsJs.Form.Validator.Email', ->
+describe 'FormsJs.Validator.Email', ->
   validation = { type: 'email', errorMessage: 'Please enter a valid email address' }
 
   newValidator = (validation) ->
-    new FormsJs.Form.Validator.Email(validation)
+    new FormsJs.Validator.Email(validation)
 
   it 'returns false when an email is expected but does not match', ->
     emailValidator = newValidator(validation)

@@ -1,8 +1,8 @@
 (function() {
   describe('Form', function() {
-    var getValues, testData;
-    getValues = function(data) {
-      return FormsJs.Form.Values.get(data);
+    var createTestForm, getValues, testData;
+    getValues = function(data, scope) {
+      return FormsJs.Values.get(data, scope);
     };
     testData = [
       {
@@ -58,7 +58,7 @@
             errorMessage: 'Phone type is required when phone is entered',
             matcher: function(value) {
               var phoneValue;
-              phoneValue = $('[name=phone]').val();
+              phoneValue = $('[name=phone]', '#form2').val();
               if (phoneValue === '') {
                 return true;
               } else if (value !== '') {
@@ -111,14 +111,28 @@
         ]
       }
     ];
+    createTestForm = function(data, scope) {
+      return new FormsJs.Form(data, scope);
+    };
     it('creates a new form object when given an array of data objects', function() {
       var testForm;
-      testForm = new FormsJs.Form(testData);
+      testForm = createTestForm(testData);
       return expect(testForm.data[0].type).toEqual('text');
+    });
+    it('creates a new form object with a default scope of the document', function() {
+      var testForm;
+      testForm = createTestForm(testData);
+      return expect(testForm.scope).toEqual($(document));
+    });
+    it('creates a new form object with a scope as a jQuery selector string', function() {
+      var scope, testForm;
+      scope = '#form1';
+      testForm = createTestForm(testData, scope);
+      return expect(testForm.scope).toEqual('#form1');
     });
     it('populates all form elements with their default values', function() {
       var testForm;
-      testForm = new FormsJs.Form(testData);
+      testForm = createTestForm(testData);
       loadFixtures('emptyFormFixtures.html');
       testForm.populate();
       expect(getValues(testData[0])).toEqual('My Last Name');
@@ -126,22 +140,40 @@
       expect(getValues(testData[5])).toEqual(['JavaScript', 'Ruby']);
       return expect(getValues(testData[6])).toEqual('Chrome');
     });
+    it('populates all form elements with their default values within a given scope', function() {
+      var inScope, outScope, testForm;
+      inScope = '#form1';
+      outScope = '#form2';
+      testForm = createTestForm(testData, inScope);
+      loadFixtures('emptyFormFixturesWithScope.html');
+      testForm.populate();
+      expect(getValues(testData[0], inScope)).toEqual('My Last Name');
+      expect(getValues(testData[1], inScope)).toEqual('male');
+      expect(getValues(testData[5], inScope)).toEqual(['JavaScript', 'Ruby']);
+      expect(getValues(testData[6], inScope)).toEqual('Chrome');
+      expect(getValues(testData[0], outScope)).toEqual('');
+      expect(getValues(testData[1], outScope)).toEqual('');
+      expect(getValues(testData[5], outScope)).toEqual([]);
+      return expect(getValues(testData[6], outScope)).toEqual('');
+    });
     it('validates an empty form as false', function() {
       var testForm;
-      testForm = new FormsJs.Form(testData);
+      testForm = createTestForm(testData);
       loadFixtures('emptyFormFixtures.html');
       return expect(testForm.isValid()).toBeFalsy();
     });
-    it('validates a filled form as true', function() {
-      var testForm;
-      testForm = new FormsJs.Form(testData);
-      loadFixtures('filledFormFixtures.html');
+    it('validates a filled form as true within a scope', function() {
+      var scope, testForm;
+      scope = '#form2';
+      testForm = createTestForm(testData, scope);
+      loadFixtures('filledFormFixturesWithScope.html');
       return expect(testForm.isValid()).toBeTruthy();
     });
-    it('gets a list of all the errors from an empty form', function() {
-      var testForm;
-      testForm = new FormsJs.Form(testData);
-      loadFixtures('errorFormFixtures.html');
+    it('gets a list of all the errors from a form within a scope', function() {
+      var scope, testForm;
+      scope = '#form2';
+      testForm = createTestForm(testData, scope);
+      loadFixtures('errorFormFixturesWithScope.html');
       return expect(testForm.errors()).toEqual({
         lastName: ['Please enter at least 5 characters'],
         gender: ['Gender is required'],
@@ -153,10 +185,11 @@
         passwordConfirmation: ['Password confirmation is required']
       });
     });
-    return it('serializes a filled form', function() {
-      var testForm;
-      testForm = new FormsJs.Form(testData);
-      loadFixtures('filledFormFixtures.html');
+    it('serializes a filled form within a given scope', function() {
+      var scope, testForm;
+      scope = '#form2';
+      testForm = createTestForm(testData, scope);
+      loadFixtures('filledFormFixturesWithScope.html');
       return expect(testForm.serialize()).toEqual({
         lastName: 'My Last Name',
         gender: 'male',
@@ -168,6 +201,14 @@
         password: 'P@ssword',
         passwordConfirmation: 'P@ssword'
       });
+    });
+    return it('clears the form within a scope', function() {
+      var scope, testForm;
+      scope = '#form2';
+      testForm = createTestForm(testData, scope);
+      loadFixtures('filledFormFixturesWithScope.html');
+      testForm.clear();
+      return expect($('[name=lastName]').val()).toEqual('');
     });
   });
 

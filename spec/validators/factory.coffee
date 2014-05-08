@@ -1,41 +1,41 @@
-describe 'Form.Validator.Factory', ->
+describe 'FormsJs.Validator.Factory', ->
 
   assertNewValidator = (validator, validatorObject) ->
-    validationFactory = new FormsJs.Form.Validator.Factory
+    validationFactory = new FormsJs.Validator.Factory
     expect(validationFactory.build(validator)).toEqual(validatorObject)
 
   it 'builds a new required validator', ->
     validator = { type: 'required' }
-    requiredValidator = new FormsJs.Form.Validator.Required(validator)
+    requiredValidator = new FormsJs.Validator.Required(validator)
     assertNewValidator(validator, requiredValidator)
 
   it 'builds a new email validator', ->
     validator = { type: 'email' }
-    emailValidator = new FormsJs.Form.Validator.Email(validator)
+    emailValidator = new FormsJs.Validator.Email(validator)
     assertNewValidator(validator, emailValidator)
 
   it 'builds a new max length validator', ->
     validator = { type: 'maxLength' }
-    maxLengthValidator = new FormsJs.Form.Validator.MaxLength(validator)
+    maxLengthValidator = new FormsJs.Validator.MaxLength(validator)
     assertNewValidator(validator, maxLengthValidator)
 
   it 'builds a new min length validator', ->
     validator = { type: 'minLength' }
-    minLengthValidator = new FormsJs.Form.Validator.MinLength(validator)
+    minLengthValidator = new FormsJs.Validator.MinLength(validator)
     assertNewValidator(validator, minLengthValidator)
 
   it 'builds a new regexp validator', ->
     validator = { type: 'regExp' }
-    regExpValidator = new FormsJs.Form.Validator.RegExp(validator)
+    regExpValidator = new FormsJs.Validator.RegExp(validator)
     assertNewValidator(validator, regExpValidator)
 
   it 'builds a new custom matcher validator', ->
     validator = { type: 'customMatcher' }
-    customValidator = new FormsJs.Form.Validator.CustomMatcher(validator)
+    customValidator = new FormsJs.Validator.CustomMatcher(validator)
     assertNewValidator(validator, customValidator)
 
   it 'builds a new matching input validator', ->
     validator = { type: 'matchingInput' }
-    customValidator = new FormsJs.Form.Validator.MatchingInput(validator)
+    customValidator = new FormsJs.Validator.MatchingInput(validator)
     assertNewValidator(validator, customValidator)
 

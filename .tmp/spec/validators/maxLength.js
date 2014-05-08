@@ -1,12 +1,12 @@
 (function() {
-  describe('Form.Validator.MaxLength', function() {
+  describe('FormsJs.Validator.MaxLength', function() {
     var newValidator, validation;
     validation = {
       type: 'maxLength',
       length: 14
     };
     newValidator = function(validation) {
-      return new FormsJs.Form.Validator.MaxLength(validation);
+      return new FormsJs.Validator.MaxLength(validation);
     };
     it('returns true if a text field has less characters than the max length', function() {
       var maxLengthValidator;

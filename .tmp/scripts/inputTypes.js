@@ -1,7 +1,7 @@
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.InputTypes = (function() {
+  FormsJs.InputTypes = (function() {
     function InputTypes() {}
 
     InputTypes.TEXT = 'text';

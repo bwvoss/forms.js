@@ -6,7 +6,7 @@ Working with entire HTML forms can be tedius and time consuming. Many of the too
 
 ## Configuration
 
-forms.js is configured with an array of objects, with each object representing a different form element. Currently, each configuration object requires the following information:
+forms.js is configured with an array of objects, with each object representing a different form element, and an optional scope parameter. Currently, each configuration object requires the following information:
 
 * **type**: Designates the type of the element. Current values can be: 'text', 'radio', 'checkbox', or 'select'.
 * **name**: The HTML name attribute of the field. Can be any string, but must be unique within the form.
@@ -26,19 +26,21 @@ forms.js is configured with an array of objects, with each object representing a
   * **matcher**: A function to use with a custom matcher. Will be passed the current value of the field and should return true or false (see phone type example below).
   * **errorMessage**: A string to represent a custom error message to display to the user when the field is invalid.
 
+The scope parameter is a jQuery context which can either be a string representing the selector '#form' or a jQuery object $('form'). If no scope is specified, it defaults to the document.
+
 ## Usage
 
 Download the forms.js file and add to the HTML form page.
 
-Initialize a new form object and pass in the config object: `form = new FormsJs.Form(config)`
+Initialize a new form object and pass in the config object and scope: `form = new FormsJs.Form(config, scope)`
 
 Call each of the following methods on the form object as necessary:
 
-* `populate()` - Populates the form with the default values from the config file.
-* `isValid()` - Validates the form using the validations from the config and returns true or false.
-* `serialize()` - Returns an object with the field name and value of every element.
-* `errors()` - Returns an object with the field name and an array of error messages for each invalid field. Returns an empty object if no errors exist.
-* `clear()` - Clears the form.
+* `populate()` - Populates the form with the default values from the config file, within the given scope.
+* `isValid()` - Validates the form within the given scope using the validations from the config and returns true or false.
+* `serialize()` - Returns an object with the field name and value of every element within the given scope.
+* `errors()` - Returns an object with the field name and an array of error messages for each invalid field within the given scope. Returns an empty object if no errors exist.
+* `clear()` - Clears the form within the given scope.
 
 ## Dependencies
 

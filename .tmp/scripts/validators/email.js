@@ -1,7 +1,7 @@
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.Email = (function() {
+  FormsJs.Validator.Email = (function() {
     Email.prototype.EMAILREGEXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
     function Email(options) {

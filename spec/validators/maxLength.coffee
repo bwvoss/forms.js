@@ -1,8 +1,8 @@
-describe 'Form.Validator.MaxLength', ->
+describe 'FormsJs.Validator.MaxLength', ->
   validation = { type: 'maxLength', length: 14 }
 
   newValidator = (validation) ->
-      new FormsJs.Form.Validator.MaxLength(validation)
+      new FormsJs.Validator.MaxLength(validation)
 
   it 'returns true if a text field has less characters than the max length', ->
     maxLengthValidator = newValidator(validation)

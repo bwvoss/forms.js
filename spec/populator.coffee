@@ -1,4 +1,4 @@
-describe 'FormsJs.Form.Populator', ->
+describe 'FormsJs.Populator', ->
 
   assertValueEquals = (name, value) ->
     expect($("[name=#{name}]")).toHaveValue(value)
@@ -10,7 +10,7 @@ describe 'FormsJs.Form.Populator', ->
     setFixtures("<input type='text' name='textName' value='' />")
     data = { type: 'text', name: 'textName', value: 'Default Text' }
 
-    FormsJs.Form.Populator.populate(data)
+    FormsJs.Populator.populate(data)
 
     assertValueEquals('textName', 'Default Text')
 
@@ -18,7 +18,7 @@ describe 'FormsJs.Form.Populator', ->
     setFixtures("<input type='radio' name='radioName' value='radio1' />")
     data = { type: 'radio', name: 'radioName', value: 'radio1' }
 
-    FormsJs.Form.Populator.populate(data)
+    FormsJs.Populator.populate(data)
 
     assertChecked('radioName', 'radio1')
 
@@ -29,7 +29,7 @@ describe 'FormsJs.Form.Populator', ->
       ")
     data = { type: 'checkbox', name: 'checkboxName', value: ['check1', 'check2'] }
 
-    FormsJs.Form.Populator.populate(data)
+    FormsJs.Populator.populate(data)
 
     assertChecked('checkboxName', 'check1')
     assertChecked('checkboxName', 'check2')
@@ -41,7 +41,7 @@ describe 'FormsJs.Form.Populator', ->
       ")
     data = { type: 'checkbox', name: 'checkboxName', value: 'check1' }
 
-    FormsJs.Form.Populator.populate(data)
+    FormsJs.Populator.populate(data)
 
     assertChecked('checkboxName', 'check1')
 
@@ -49,7 +49,7 @@ describe 'FormsJs.Form.Populator', ->
     setFixtures("<select name='selectName' ><option>Select 1</option><option>Select 2</option></select>")
     data = { type: 'select', name: 'selectName', value: 'Select 2' }
 
-    FormsJs.Form.Populator.populate(data)
+    FormsJs.Populator.populate(data)
 
     assertValueEquals('selectName', 'Select 2')
 

@@ -1,4 +1,4 @@
-describe 'FormsJs.Form.Errors', ->
+describe 'FormsJs.Errors', ->
 
   data = {
     type: 'text',
@@ -17,10 +17,12 @@ describe 'FormsJs.Form.Errors', ->
   }
 
   it 'returns an object with the field name and an array of error messages if a field is invalid', ->
-    setFixtures("<input type='text' name='email' value='example.com'>")
-    expect(FormsJs.Form.Errors.get(data)).toEqual({ email: ['Please enter a valid email', 'Email should be a minimum of 15 characters'] })
+    value = 'example.com'
+    setFixtures("<input type='text' name='email' value=#{value}>")
+    expect(FormsJs.Errors.get(data)).toEqual({ email: ['Please enter a valid email', 'Email should be a minimum of 15 characters'] })
 
   it 'returns an empty array if all form elements are true', ->
-    setFixtures("<input type='text' name='email' value='fiveteen@example.com'>")
-    expect(FormsJs.Form.Errors.get(data)).toEqual({ })
+    value = 'fiveteen@example.com'
+    setFixtures("<input type='text' name='email' value=#{value}>")
+    expect(FormsJs.Errors.get(data)).toEqual({ })
 

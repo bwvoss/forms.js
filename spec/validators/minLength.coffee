@@ -1,8 +1,8 @@
-describe 'Form.Validator.MinLength', ->
+describe 'FormsJs.Validator.MinLength', ->
   validation = { type: 'minLength', length: 14 }
 
   newValidator = (validation) ->
-    new FormsJs.Form.Validator.MinLength(validation)
+    new FormsJs.Validator.MinLength(validation)
 
   it 'should return true when the value is more than the minimum length', ->
     minLengthValidator = newValidator(validation)

@@ -21,42 +21,62 @@
   namespace('FormsJs');
 
   FormsJs.Form = (function() {
-    function Form(data) {
+    var DEFAULT_SCOPE;
+
+    DEFAULT_SCOPE = $(document);
+
+    function Form(data, scope) {
+      if (scope == null) {
+        scope = DEFAULT_SCOPE;
+      }
       this.data = data;
+      this.scope = scope;
     }
 
     Form.prototype.populate = function() {
-      return _.each(this.data, function(element) {
-        return FormsJs.Form.Populator.populate(element);
-      });
+      return _.each(this.data, (function(_this) {
+        return function(element) {
+          return FormsJs.Populator.populate(element, _this.scope);
+        };
+      })(this));
     };
 
     Form.prototype.isValid = function() {
-      return _.all(this.data, function(element) {
-        var value;
-        value = FormsJs.Form.Values.get(element);
-        return _.all(element.validations, function(validator) {
-          return FormsJs.Form.Validator.isValid(validator, value);
-        });
-      });
+      return _.all(this.data, (function(_this) {
+        return function(element) {
+          var value;
+          value = FormsJs.Values.get(element, _this.scope);
+          return _.all(element.validations, function(validator) {
+            return FormsJs.Validator.isValid(validator, value, _this.scope);
+          });
+        };
+      })(this));
     };
 
     Form.prototype.errors = function() {
-      return _.reduce(this.data, function(errors, element) {
-        _.extend(errors, FormsJs.Form.Errors.get(element));
-        return errors;
-      }, {});
+      return _.reduce(this.data, (function(_this) {
+        return function(errors, element) {
+          _.extend(errors, FormsJs.Errors.get(element, _this.scope));
+          return errors;
+        };
+      })(this), {});
     };
 
     Form.prototype.serialize = function() {
-      return _.reduce(this.data, function(formData, element) {
-        _.extend(formData, FormsJs.Form.Serializer.serialize(element));
-        return formData;
-      }, {});
+      return _.reduce(this.data, (function(_this) {
+        return function(formData, element) {
+          _.extend(formData, FormsJs.Serializer.serialize(element, _this.scope));
+          return formData;
+        };
+      })(this), {});
     };
 
     Form.prototype.clear = function() {
-      return FormsJs.Form.Clear.all();
+      return _.each(this.data, (function(_this) {
+        return function(element) {
+          return FormsJs.Clear.valueOf(element, _this.scope);
+        };
+      })(this));
     };
 
     return Form;
@@ -66,20 +86,16 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Clear = (function() {
+  FormsJs.Clear = (function() {
     function Clear() {}
 
-    Clear.all = function() {
-      return $('form *').filter(':input').each(this.clearValue);
-    };
-
-    Clear.clearValue = function() {
-      if (this.type === 'radio' || this.type === 'checkbox') {
-        return $(this).prop('checked', false);
+    Clear.valueOf = function(element, scope) {
+      if (element.type === 'radio' || element.type === 'checkbox') {
+        return FormsJs.Scope.clearChecked(element, scope);
       } else {
-        return $(this).val('');
+        return FormsJs.Scope.clearValue(element, scope);
       }
     };
 
@@ -90,19 +106,19 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Errors = (function() {
+  FormsJs.Errors = (function() {
     function Errors() {}
 
-    Errors.get = function(data) {
+    Errors.get = function(data, scope) {
       var errorMessages, fieldErrors, value;
       fieldErrors = {};
       errorMessages = [];
-      value = FormsJs.Form.Values.get(data);
+      value = FormsJs.Values.get(data, scope);
       _.each(data.validations, function(validator) {
         var valid;
-        valid = FormsJs.Form.Validator.isValid(validator, value);
+        valid = FormsJs.Validator.isValid(validator, value);
         if (!valid) {
           return errorMessages.push(validator.errorMessage);
         }
@@ -120,9 +136,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.InputTypes = (function() {
+  FormsJs.InputTypes = (function() {
     function InputTypes() {}
 
     InputTypes.TEXT = 'text';
@@ -142,45 +158,19 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Populator = (function() {
-    var setAllChecked, setChecked, setValue;
-
+  FormsJs.Populator = (function() {
     function Populator() {}
 
-    setValue = function(data) {
-      return $("[name='" + data.name + "']").val(data.value);
-    };
-
-    setChecked = function(data) {
-      return $("[name='" + data.name + "'][value='" + data.value + "']").prop('checked', true);
-    };
-
-    setAllChecked = function(data) {
-      var value;
-      if (_.isArray(data.value)) {
-        value = data.value;
-      } else {
-        value = [data.value];
-      }
-      return $("[name='" + data.name + "']").val(value);
-    };
-
-    Populator.populate = function(data) {
+    Populator.populate = function(data, scope) {
       switch (data.type) {
-        case FormsJs.Form.InputTypes.TEXT:
-          return setValue(data);
-        case FormsJs.Form.InputTypes.RADIO:
-          return setChecked(data);
-        case FormsJs.Form.InputTypes.CHECKBOX:
-          return setAllChecked(data);
-        case FormsJs.Form.InputTypes.SELECT:
-          return setValue(data);
-        case FormsJs.Form.InputTypes.PASSWORD:
-          return setValue(data);
+        case FormsJs.InputTypes.RADIO:
+          return FormsJs.Scope.setRadioChecked(data, scope);
+        case FormsJs.InputTypes.CHECKBOX:
+          return FormsJs.Scope.setAllChecked(data, scope);
         default:
-          return setValue(data);
+          return FormsJs.Scope.setValue(data, scope);
       }
     };
 
@@ -191,15 +181,67 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Serializer = (function() {
+  FormsJs.Scope = (function() {
+    function Scope() {}
+
+    Scope.setValue = function(data, scope) {
+      return $("[name=" + data.name + "]", scope).val(data.value);
+    };
+
+    Scope.setRadioChecked = function(data, scope) {
+      return $("[name='" + data.name + "'][value='" + data.value + "']", scope).prop('checked', true);
+    };
+
+    Scope.setAllChecked = function(data, scope) {
+      var value;
+      if (_.isArray(data.value)) {
+        value = data.value;
+      } else {
+        value = [data.value];
+      }
+      return $("[name='" + data.name + "']", scope).val(value);
+    };
+
+    Scope.getValue = function(data, scope) {
+      return $("[name=" + data.name + "]", scope).val();
+    };
+
+    Scope.getCheckedRadioValue = function(data, scope) {
+      return $("[name=" + data.name + "]:checked", scope).val();
+    };
+
+    Scope.getCheckedValues = function(data, scope) {
+      return $("[name=" + data.name + "]:checked", scope).map(function() {
+        return this.value;
+      }).get();
+    };
+
+    Scope.clearValue = function(data, scope) {
+      return $("[name=" + data.name + "]", scope).val('');
+    };
+
+    Scope.clearChecked = function(data, scope) {
+      return $("[name='" + data.name + "']", scope).prop('checked', false);
+    };
+
+    return Scope;
+
+  })();
+
+}).call(this);
+
+(function() {
+  namespace('FormsJs');
+
+  FormsJs.Serializer = (function() {
     function Serializer() {}
 
-    Serializer.serialize = function(element) {
+    Serializer.serialize = function(element, scope) {
       var formData, value;
       formData = {};
-      value = FormsJs.Form.Values.get(element);
+      value = FormsJs.Values.get(element, scope);
       formData[element.name] = value;
       return formData;
     };
@@ -211,15 +253,15 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Validator = (function() {
+  FormsJs.Validator = (function() {
     function Validator() {}
 
-    Validator.isValid = function(validator, value) {
+    Validator.isValid = function(validator, value, scope) {
       var validationFactory;
-      validationFactory = new FormsJs.Form.Validator.Factory;
-      return validationFactory.build(validator).isValid(value);
+      validationFactory = new FormsJs.Validator.Factory;
+      return validationFactory.build(validator).isValid(value, scope);
     };
 
     return Validator;
@@ -229,9 +271,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.CustomMatcher = (function() {
+  FormsJs.Validator.CustomMatcher = (function() {
     function CustomMatcher(options) {
       this.options = options;
     }
@@ -253,9 +295,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.Email = (function() {
+  FormsJs.Validator.Email = (function() {
     Email.prototype.EMAILREGEXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
     function Email(options) {
@@ -273,27 +315,27 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.Factory = (function() {
+  FormsJs.Validator.Factory = (function() {
     function Factory() {}
 
     Factory.prototype.build = function(validation) {
       switch (validation.type) {
         case 'required':
-          return new FormsJs.Form.Validator.Required(validation);
+          return new FormsJs.Validator.Required(validation);
         case 'email':
-          return new FormsJs.Form.Validator.Email(validation);
+          return new FormsJs.Validator.Email(validation);
         case 'maxLength':
-          return new FormsJs.Form.Validator.MaxLength(validation);
+          return new FormsJs.Validator.MaxLength(validation);
         case 'minLength':
-          return new FormsJs.Form.Validator.MinLength(validation);
+          return new FormsJs.Validator.MinLength(validation);
         case 'regExp':
-          return new FormsJs.Form.Validator.RegExp(validation);
+          return new FormsJs.Validator.RegExp(validation);
         case 'matchingInput':
-          return new FormsJs.Form.Validator.MatchingInput(validation);
+          return new FormsJs.Validator.MatchingInput(validation);
         default:
-          return new FormsJs.Form.Validator.CustomMatcher(validation);
+          return new FormsJs.Validator.CustomMatcher(validation);
       }
     };
 
@@ -304,17 +346,19 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.MatchingInput = (function() {
+  FormsJs.Validator.MatchingInput = (function() {
     function MatchingInput(options) {
       this.options = options;
     }
 
-    MatchingInput.prototype.isValid = function(value) {
+    MatchingInput.prototype.isValid = function(value, scope) {
       var fieldValue, matchField;
-      matchField = this.options.matchField;
-      fieldValue = $("[name=" + matchField + "]").val() || value;
+      matchField = {
+        name: this.options.matchField
+      };
+      fieldValue = FormsJs.Scope.getValue(matchField, scope) || value;
       return fieldValue === value;
     };
 
@@ -325,9 +369,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.MaxLength = (function() {
+  FormsJs.Validator.MaxLength = (function() {
     MaxLength.prototype.DEFAULTLENGTH = 1000000;
 
     function MaxLength(options) {
@@ -347,9 +391,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.MinLength = (function() {
+  FormsJs.Validator.MinLength = (function() {
     MinLength.prototype.DEFAULTLENGTH = 1;
 
     function MinLength(options) {
@@ -369,9 +413,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.RegExp = (function() {
+  FormsJs.Validator.RegExp = (function() {
     RegExp.prototype.DEFAULTREGEXP = /[^]+/;
 
     function RegExp(options) {
@@ -392,9 +436,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.Required = (function() {
+  FormsJs.Validator.Required = (function() {
     function Required(options) {
       this.options = options;
     }
@@ -412,44 +456,26 @@
 (function() {
   namespace('FormsJs.Form');
 
-  FormsJs.Form.Values = (function() {
+  FormsJs.Values = (function() {
+    var DEFAULT_VALUE;
+
     function Values() {}
 
-    Values.DEFAULTVALUE = '';
+    DEFAULT_VALUE = '';
 
-    Values.get = function(data) {
+    Values.get = function(data, scope) {
       var value;
       switch (data.type) {
-        case FormsJs.Form.InputTypes.TEXT:
-          value = this.textValue(data.name);
+        case FormsJs.InputTypes.RADIO:
+          value = FormsJs.Scope.getCheckedRadioValue(data, scope);
           break;
-        case FormsJs.Form.InputTypes.SELECT:
-          value = this.textValue(data.name);
+        case FormsJs.InputTypes.CHECKBOX:
+          value = FormsJs.Scope.getCheckedValues(data, scope);
           break;
-        case FormsJs.Form.InputTypes.RADIO:
-          value = this.radioValue(data.name);
-          break;
-        case FormsJs.Form.InputTypes.CHECKBOX:
-          value = this.checkedValues(data.name);
-          break;
-        case FormsJs.Form.InputTypes.PASSWORD:
-          value = this.textValue(data.name);
+        default:
+          value = FormsJs.Scope.getValue(data, scope);
       }
-      return value = value || this.DEFAULTVALUE;
-    };
-
-    Values.textValue = function(name) {
-      return $("[name='" + name + "']").val();
-    };
-
-    Values.radioValue = function(name) {
-      return $("[name='" + name + "']:checked").val();
-    };
-
-    Values.checkedValues = function(name) {
-      return $("[name='" + name + "']:checked").map(function() {
-        return this.value;
-      }).get();
+      return value != null ? value : value = DEFAULT_VALUE;
     };
 
     return Values;

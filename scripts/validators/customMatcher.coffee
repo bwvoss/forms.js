@@ -1,6 +1,6 @@
-namespace('FormsJs.Form.Validator')
+namespace('FormsJs.Validator')
 
-class FormsJs.Form.Validator.CustomMatcher
+class FormsJs.Validator.CustomMatcher
 
   constructor: (@options) ->
 
