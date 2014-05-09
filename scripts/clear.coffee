@@ -4,7 +4,7 @@ class FormsJs.Clear
 
   @valueOf: (element) ->
     if element.type is 'radio' or element.type is 'checkbox'
-      $("[name=#{element.name}]").prop('checked', false)
+      FormsJs.Scope.clearChecked(element)
     else
-      $("[name=#{element.name}]").val('')
+      FormsJs.Scope.clearValue(element)
 

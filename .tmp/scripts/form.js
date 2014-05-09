@@ -2,8 +2,12 @@
   namespace('FormsJs');
 
   FormsJs.Form = (function() {
-    function Form(data) {
+    function Form(data, context) {
+      if (context == null) {
+        context = 'body';
+      }
       this.data = data;
+      this.context = context;
     }
 
     Form.prototype.populate = function() {

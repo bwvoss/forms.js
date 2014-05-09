@@ -6,9 +6,9 @@
 
     Clear.valueOf = function(element) {
       if (element.type === 'radio' || element.type === 'checkbox') {
-        return $("[name=" + element.name + "]").prop('checked', false);
+        return FormsJs.Scope.clearChecked(element);
       } else {
-        return $("[name=" + element.name + "]").val('');
+        return FormsJs.Scope.clearValue(element);
       }
     };
 

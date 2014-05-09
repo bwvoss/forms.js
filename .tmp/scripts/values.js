@@ -9,36 +9,16 @@
     Values.get = function(data) {
       var value;
       switch (data.type) {
-        case FormsJs.InputTypes.TEXT:
-          value = this.textValue(data.name);
-          break;
-        case FormsJs.InputTypes.SELECT:
-          value = this.textValue(data.name);
-          break;
         case FormsJs.InputTypes.RADIO:
-          value = this.radioValue(data.name);
+          value = FormsJs.Scope.getCheckedRadioValue(data);
           break;
         case FormsJs.InputTypes.CHECKBOX:
-          value = this.checkedValues(data.name);
+          value = FormsJs.Scope.getCheckedValues(data);
           break;
-        case FormsJs.InputTypes.PASSWORD:
-          value = this.textValue(data.name);
+        default:
+          value = FormsJs.Scope.getValue(data);
       }
-      return value = value || this.DEFAULTVALUE;
-    };
-
-    Values.textValue = function(name) {
-      return $("[name='" + name + "']").val();
-    };
-
-    Values.radioValue = function(name) {
-      return $("[name='" + name + "']:checked").val();
-    };
-
-    Values.checkedValues = function(name) {
-      return $("[name='" + name + "']:checked").map(function() {
-        return this.value;
-      }).get();
+      return value != null ? value : value = this.DEFAULTVALUE;
     };
 
     return Values;

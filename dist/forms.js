@@ -21,42 +21,48 @@
   namespace('FormsJs');
 
   FormsJs.Form = (function() {
-    function Form(data) {
+    function Form(data, context) {
+      if (context == null) {
+        context = 'body';
+      }
       this.data = data;
+      this.context = context;
     }
 
     Form.prototype.populate = function() {
       return _.each(this.data, function(element) {
-        return FormsJs.Form.Populator.populate(element);
+        return FormsJs.Populator.populate(element);
       });
     };
 
     Form.prototype.isValid = function() {
       return _.all(this.data, function(element) {
         var value;
-        value = FormsJs.Form.Values.get(element);
+        value = FormsJs.Values.get(element);
         return _.all(element.validations, function(validator) {
-          return FormsJs.Form.Validator.isValid(validator, value);
+          return FormsJs.Validator.isValid(validator, value);
         });
       });
     };
 
     Form.prototype.errors = function() {
       return _.reduce(this.data, function(errors, element) {
-        _.extend(errors, FormsJs.Form.Errors.get(element));
+        _.extend(errors, FormsJs.Errors.get(element));
         return errors;
       }, {});
     };
 
     Form.prototype.serialize = function() {
       return _.reduce(this.data, function(formData, element) {
-        _.extend(formData, FormsJs.Form.Serializer.serialize(element));
+        _.extend(formData, FormsJs.Serializer.serialize(element));
         return formData;
       }, {});
     };
 
     Form.prototype.clear = function() {
-      return FormsJs.Form.Clear.all();
+      return _.each(this.data, function(element) {
+        return FormsJs.Clear.valueOf(element);
+      });
     };
 
     return Form;
@@ -66,20 +72,16 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Clear = (function() {
+  FormsJs.Clear = (function() {
     function Clear() {}
 
-    Clear.all = function() {
-      return $('form *').filter(':input').each(this.clearValue);
-    };
-
-    Clear.clearValue = function() {
-      if (this.type === 'radio' || this.type === 'checkbox') {
-        return $(this).prop('checked', false);
+    Clear.valueOf = function(element) {
+      if (element.type === 'radio' || element.type === 'checkbox') {
+        return $("[name=" + element.name + "]").prop('checked', false);
       } else {
-        return $(this).val('');
+        return $("[name=" + element.name + "]").val('');
       }
     };
 
@@ -90,19 +92,19 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Errors = (function() {
+  FormsJs.Errors = (function() {
     function Errors() {}
 
     Errors.get = function(data) {
       var errorMessages, fieldErrors, value;
       fieldErrors = {};
       errorMessages = [];
-      value = FormsJs.Form.Values.get(data);
+      value = FormsJs.Values.get(data);
       _.each(data.validations, function(validator) {
         var valid;
-        valid = FormsJs.Form.Validator.isValid(validator, value);
+        valid = FormsJs.Validator.isValid(validator, value);
         if (!valid) {
           return errorMessages.push(validator.errorMessage);
         }
@@ -120,9 +122,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.InputTypes = (function() {
+  FormsJs.InputTypes = (function() {
     function InputTypes() {}
 
     InputTypes.TEXT = 'text';
@@ -142,22 +144,31 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Populator = (function() {
-    var setAllChecked, setChecked, setValue;
-
+  FormsJs.Populator = (function() {
     function Populator() {}
 
-    setValue = function(data) {
+    Populator.populate = function(data) {
+      switch (data.type) {
+        case FormsJs.InputTypes.RADIO:
+          return this.setChecked(data);
+        case FormsJs.InputTypes.CHECKBOX:
+          return this.setAllChecked(data);
+        default:
+          return this.setValue(data);
+      }
+    };
+
+    Populator.setValue = function(data) {
       return $("[name='" + data.name + "']").val(data.value);
     };
 
-    setChecked = function(data) {
+    Populator.setChecked = function(data) {
       return $("[name='" + data.name + "'][value='" + data.value + "']").prop('checked', true);
     };
 
-    setAllChecked = function(data) {
+    Populator.setAllChecked = function(data) {
       var value;
       if (_.isArray(data.value)) {
         value = data.value;
@@ -167,23 +178,6 @@
       return $("[name='" + data.name + "']").val(value);
     };
 
-    Populator.populate = function(data) {
-      switch (data.type) {
-        case FormsJs.Form.InputTypes.TEXT:
-          return setValue(data);
-        case FormsJs.Form.InputTypes.RADIO:
-          return setChecked(data);
-        case FormsJs.Form.InputTypes.CHECKBOX:
-          return setAllChecked(data);
-        case FormsJs.Form.InputTypes.SELECT:
-          return setValue(data);
-        case FormsJs.Form.InputTypes.PASSWORD:
-          return setValue(data);
-        default:
-          return setValue(data);
-      }
-    };
-
     return Populator;
 
   })();
@@ -191,15 +185,15 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Serializer = (function() {
+  FormsJs.Serializer = (function() {
     function Serializer() {}
 
     Serializer.serialize = function(element) {
       var formData, value;
       formData = {};
-      value = FormsJs.Form.Values.get(element);
+      value = FormsJs.Values.get(element);
       formData[element.name] = value;
       return formData;
     };
@@ -211,14 +205,14 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form');
+  namespace('FormsJs');
 
-  FormsJs.Form.Validator = (function() {
+  FormsJs.Validator = (function() {
     function Validator() {}
 
     Validator.isValid = function(validator, value) {
       var validationFactory;
-      validationFactory = new FormsJs.Form.Validator.Factory;
+      validationFactory = new FormsJs.Validator.Factory;
       return validationFactory.build(validator).isValid(value);
     };
 
@@ -229,9 +223,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.CustomMatcher = (function() {
+  FormsJs.Validator.CustomMatcher = (function() {
     function CustomMatcher(options) {
       this.options = options;
     }
@@ -253,9 +247,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.Email = (function() {
+  FormsJs.Validator.Email = (function() {
     Email.prototype.EMAILREGEXP = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
     function Email(options) {
@@ -273,27 +267,27 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.Factory = (function() {
+  FormsJs.Validator.Factory = (function() {
     function Factory() {}
 
     Factory.prototype.build = function(validation) {
       switch (validation.type) {
         case 'required':
-          return new FormsJs.Form.Validator.Required(validation);
+          return new FormsJs.Validator.Required(validation);
         case 'email':
-          return new FormsJs.Form.Validator.Email(validation);
+          return new FormsJs.Validator.Email(validation);
         case 'maxLength':
-          return new FormsJs.Form.Validator.MaxLength(validation);
+          return new FormsJs.Validator.MaxLength(validation);
         case 'minLength':
-          return new FormsJs.Form.Validator.MinLength(validation);
+          return new FormsJs.Validator.MinLength(validation);
         case 'regExp':
-          return new FormsJs.Form.Validator.RegExp(validation);
+          return new FormsJs.Validator.RegExp(validation);
         case 'matchingInput':
-          return new FormsJs.Form.Validator.MatchingInput(validation);
+          return new FormsJs.Validator.MatchingInput(validation);
         default:
-          return new FormsJs.Form.Validator.CustomMatcher(validation);
+          return new FormsJs.Validator.CustomMatcher(validation);
       }
     };
 
@@ -304,9 +298,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.MatchingInput = (function() {
+  FormsJs.Validator.MatchingInput = (function() {
     function MatchingInput(options) {
       this.options = options;
     }
@@ -325,9 +319,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.MaxLength = (function() {
+  FormsJs.Validator.MaxLength = (function() {
     MaxLength.prototype.DEFAULTLENGTH = 1000000;
 
     function MaxLength(options) {
@@ -347,9 +341,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.MinLength = (function() {
+  FormsJs.Validator.MinLength = (function() {
     MinLength.prototype.DEFAULTLENGTH = 1;
 
     function MinLength(options) {
@@ -369,9 +363,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.RegExp = (function() {
+  FormsJs.Validator.RegExp = (function() {
     RegExp.prototype.DEFAULTREGEXP = /[^]+/;
 
     function RegExp(options) {
@@ -392,9 +386,9 @@
 }).call(this);
 
 (function() {
-  namespace('FormsJs.Form.Validator');
+  namespace('FormsJs.Validator');
 
-  FormsJs.Form.Validator.Required = (function() {
+  FormsJs.Validator.Required = (function() {
     function Required(options) {
       this.options = options;
     }
@@ -412,7 +406,7 @@
 (function() {
   namespace('FormsJs.Form');
 
-  FormsJs.Form.Values = (function() {
+  FormsJs.Values = (function() {
     function Values() {}
 
     Values.DEFAULTVALUE = '';
@@ -420,19 +414,13 @@
     Values.get = function(data) {
       var value;
       switch (data.type) {
-        case FormsJs.Form.InputTypes.TEXT:
-          value = this.textValue(data.name);
-          break;
-        case FormsJs.Form.InputTypes.SELECT:
-          value = this.textValue(data.name);
-          break;
-        case FormsJs.Form.InputTypes.RADIO:
+        case FormsJs.InputTypes.RADIO:
           value = this.radioValue(data.name);
           break;
-        case FormsJs.Form.InputTypes.CHECKBOX:
+        case FormsJs.InputTypes.CHECKBOX:
           value = this.checkedValues(data.name);
           break;
-        case FormsJs.Form.InputTypes.PASSWORD:
+        default:
           value = this.textValue(data.name);
       }
       return value = value || this.DEFAULTVALUE;

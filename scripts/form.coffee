@@ -2,7 +2,9 @@ namespace('FormsJs')
 
 class FormsJs.Form
 
-  constructor: (@data) ->
+  constructor: (data, scope) ->
+    @data = data
+    FormsJs.Scope.set(scope)
 
   populate: ->
     _.each @data, (element) ->
