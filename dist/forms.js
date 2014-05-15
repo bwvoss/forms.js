@@ -21,48 +21,62 @@
   namespace('FormsJs');
 
   FormsJs.Form = (function() {
-    function Form(data, context) {
-      if (context == null) {
-        context = 'body';
+    var DEFAULT_SCOPE;
+
+    DEFAULT_SCOPE = $(document);
+
+    function Form(data, scope) {
+      if (scope == null) {
+        scope = DEFAULT_SCOPE;
       }
       this.data = data;
-      this.context = context;
+      this.scope = scope;
     }
 
     Form.prototype.populate = function() {
-      return _.each(this.data, function(element) {
-        return FormsJs.Populator.populate(element);
-      });
+      return _.each(this.data, (function(_this) {
+        return function(element) {
+          return FormsJs.Populator.populate(element, _this.scope);
+        };
+      })(this));
     };
 
     Form.prototype.isValid = function() {
-      return _.all(this.data, function(element) {
-        var value;
-        value = FormsJs.Values.get(element);
-        return _.all(element.validations, function(validator) {
-          return FormsJs.Validator.isValid(validator, value);
-        });
-      });
+      return _.all(this.data, (function(_this) {
+        return function(element) {
+          var value;
+          value = FormsJs.Values.get(element, _this.scope);
+          return _.all(element.validations, function(validator) {
+            return FormsJs.Validator.isValid(validator, value);
+          });
+        };
+      })(this));
     };
 
     Form.prototype.errors = function() {
-      return _.reduce(this.data, function(errors, element) {
-        _.extend(errors, FormsJs.Errors.get(element));
-        return errors;
-      }, {});
+      return _.reduce(this.data, (function(_this) {
+        return function(errors, element) {
+          _.extend(errors, FormsJs.Errors.get(element, _this.scope));
+          return errors;
+        };
+      })(this), {});
     };
 
     Form.prototype.serialize = function() {
-      return _.reduce(this.data, function(formData, element) {
-        _.extend(formData, FormsJs.Serializer.serialize(element));
-        return formData;
-      }, {});
+      return _.reduce(this.data, (function(_this) {
+        return function(formData, element) {
+          _.extend(formData, FormsJs.Serializer.serialize(element, _this.scope));
+          return formData;
+        };
+      })(this), {});
     };
 
     Form.prototype.clear = function() {
-      return _.each(this.data, function(element) {
-        return FormsJs.Clear.valueOf(element);
-      });
+      return _.each(this.data, (function(_this) {
+        return function(element) {
+          return FormsJs.Clear.valueOf(element, _this.scope);
+        };
+      })(this));
     };
 
     return Form;
@@ -77,11 +91,11 @@
   FormsJs.Clear = (function() {
     function Clear() {}
 
-    Clear.valueOf = function(element) {
+    Clear.valueOf = function(element, scope) {
       if (element.type === 'radio' || element.type === 'checkbox') {
-        return $("[name=" + element.name + "]").prop('checked', false);
+        return FormsJs.Scope.clearChecked(element, scope);
       } else {
-        return $("[name=" + element.name + "]").val('');
+        return FormsJs.Scope.clearValue(element, scope);
       }
     };
 
@@ -97,11 +111,11 @@
   FormsJs.Errors = (function() {
     function Errors() {}
 
-    Errors.get = function(data) {
+    Errors.get = function(data, scope) {
       var errorMessages, fieldErrors, value;
       fieldErrors = {};
       errorMessages = [];
-      value = FormsJs.Values.get(data);
+      value = FormsJs.Values.get(data, scope);
       _.each(data.validations, function(validator) {
         var valid;
         valid = FormsJs.Validator.isValid(validator, value);
@@ -149,33 +163,15 @@
   FormsJs.Populator = (function() {
     function Populator() {}
 
-    Populator.populate = function(data) {
+    Populator.populate = function(data, scope) {
       switch (data.type) {
         case FormsJs.InputTypes.RADIO:
-          return this.setChecked(data);
+          return FormsJs.Scope.setRadioChecked(data, scope);
         case FormsJs.InputTypes.CHECKBOX:
-          return this.setAllChecked(data);
+          return FormsJs.Scope.setAllChecked(data, scope);
         default:
-          return this.setValue(data);
+          return FormsJs.Scope.setValue(data, scope);
       }
-    };
-
-    Populator.setValue = function(data) {
-      return $("[name='" + data.name + "']").val(data.value);
-    };
-
-    Populator.setChecked = function(data) {
-      return $("[name='" + data.name + "'][value='" + data.value + "']").prop('checked', true);
-    };
-
-    Populator.setAllChecked = function(data) {
-      var value;
-      if (_.isArray(data.value)) {
-        value = data.value;
-      } else {
-        value = [data.value];
-      }
-      return $("[name='" + data.name + "']").val(value);
     };
 
     return Populator;
@@ -187,13 +183,65 @@
 (function() {
   namespace('FormsJs');
 
+  FormsJs.Scope = (function() {
+    function Scope() {}
+
+    Scope.setValue = function(data, scope) {
+      return $("[name=" + data.name + "]", scope).val(data.value);
+    };
+
+    Scope.setRadioChecked = function(data, scope) {
+      return $("[name='" + data.name + "'][value='" + data.value + "']", scope).prop('checked', true);
+    };
+
+    Scope.setAllChecked = function(data, scope) {
+      var value;
+      if (_.isArray(data.value)) {
+        value = data.value;
+      } else {
+        value = [data.value];
+      }
+      return $("[name='" + data.name + "']", scope).val(value);
+    };
+
+    Scope.getValue = function(data, scope) {
+      return $("[name=" + data.name + "]", scope).val();
+    };
+
+    Scope.getCheckedRadioValue = function(data, scope) {
+      return $("[name=" + data.name + "]:checked", scope).val();
+    };
+
+    Scope.getCheckedValues = function(data, scope) {
+      return $("[name=" + data.name + "]:checked", scope).map(function() {
+        return this.value;
+      }).get();
+    };
+
+    Scope.clearValue = function(data, scope) {
+      return $("[name=" + data.name + "]", scope).val('');
+    };
+
+    Scope.clearChecked = function(data, scope) {
+      return $("[name='" + data.name + "']", scope).prop('checked', false);
+    };
+
+    return Scope;
+
+  })();
+
+}).call(this);
+
+(function() {
+  namespace('FormsJs');
+
   FormsJs.Serializer = (function() {
     function Serializer() {}
 
-    Serializer.serialize = function(element) {
+    Serializer.serialize = function(element, scope) {
       var formData, value;
       formData = {};
-      value = FormsJs.Values.get(element);
+      value = FormsJs.Values.get(element, scope);
       formData[element.name] = value;
       return formData;
     };
@@ -407,37 +455,25 @@
   namespace('FormsJs.Form');
 
   FormsJs.Values = (function() {
+    var DEFAULT_VALUE;
+
     function Values() {}
 
-    Values.DEFAULTVALUE = '';
+    DEFAULT_VALUE = '';
 
-    Values.get = function(data) {
+    Values.get = function(data, scope) {
       var value;
       switch (data.type) {
         case FormsJs.InputTypes.RADIO:
-          value = this.radioValue(data.name);
+          value = FormsJs.Scope.getCheckedRadioValue(data, scope);
           break;
         case FormsJs.InputTypes.CHECKBOX:
-          value = this.checkedValues(data.name);
+          value = FormsJs.Scope.getCheckedValues(data, scope);
           break;
         default:
-          value = this.textValue(data.name);
+          value = FormsJs.Scope.getValue(data, scope);
       }
-      return value = value || this.DEFAULTVALUE;
-    };
-
-    Values.textValue = function(name) {
-      return $("[name='" + name + "']").val();
-    };
-
-    Values.radioValue = function(name) {
-      return $("[name='" + name + "']:checked").val();
-    };
-
-    Values.checkedValues = function(name) {
-      return $("[name='" + name + "']:checked").map(function() {
-        return this.value;
-      }).get();
+      return value != null ? value : value = DEFAULT_VALUE;
     };
 
     return Values;

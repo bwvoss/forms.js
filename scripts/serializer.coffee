@@ -2,9 +2,9 @@ namespace('FormsJs')
 
 class FormsJs.Serializer
 
-  @serialize: (element) ->
+  @serialize: (element, scope) ->
     formData = {}
-    value = FormsJs.Values.get(element)
+    value = FormsJs.Values.get(element, scope)
     formData[element.name] = value
     formData
 

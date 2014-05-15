@@ -2,48 +2,62 @@
   namespace('FormsJs');
 
   FormsJs.Form = (function() {
-    function Form(data, context) {
-      if (context == null) {
-        context = 'body';
+    var DEFAULT_SCOPE;
+
+    DEFAULT_SCOPE = $(document);
+
+    function Form(data, scope) {
+      if (scope == null) {
+        scope = DEFAULT_SCOPE;
       }
       this.data = data;
-      this.context = context;
+      this.scope = scope;
     }
 
     Form.prototype.populate = function() {
-      return _.each(this.data, function(element) {
-        return FormsJs.Populator.populate(element);
-      });
+      return _.each(this.data, (function(_this) {
+        return function(element) {
+          return FormsJs.Populator.populate(element, _this.scope);
+        };
+      })(this));
     };
 
     Form.prototype.isValid = function() {
-      return _.all(this.data, function(element) {
-        var value;
-        value = FormsJs.Values.get(element);
-        return _.all(element.validations, function(validator) {
-          return FormsJs.Validator.isValid(validator, value);
-        });
-      });
+      return _.all(this.data, (function(_this) {
+        return function(element) {
+          var value;
+          value = FormsJs.Values.get(element, _this.scope);
+          return _.all(element.validations, function(validator) {
+            return FormsJs.Validator.isValid(validator, value);
+          });
+        };
+      })(this));
     };
 
     Form.prototype.errors = function() {
-      return _.reduce(this.data, function(errors, element) {
-        _.extend(errors, FormsJs.Errors.get(element));
-        return errors;
-      }, {});
+      return _.reduce(this.data, (function(_this) {
+        return function(errors, element) {
+          _.extend(errors, FormsJs.Errors.get(element, _this.scope));
+          return errors;
+        };
+      })(this), {});
     };
 
     Form.prototype.serialize = function() {
-      return _.reduce(this.data, function(formData, element) {
-        _.extend(formData, FormsJs.Serializer.serialize(element));
-        return formData;
-      }, {});
+      return _.reduce(this.data, (function(_this) {
+        return function(formData, element) {
+          _.extend(formData, FormsJs.Serializer.serialize(element, _this.scope));
+          return formData;
+        };
+      })(this), {});
     };
 
     Form.prototype.clear = function() {
-      return _.each(this.data, function(element) {
-        return FormsJs.Clear.valueOf(element);
-      });
+      return _.each(this.data, (function(_this) {
+        return function(element) {
+          return FormsJs.Clear.valueOf(element, _this.scope);
+        };
+      })(this));
     };
 
     return Form;

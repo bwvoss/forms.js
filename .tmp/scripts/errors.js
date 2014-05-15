@@ -4,11 +4,11 @@
   FormsJs.Errors = (function() {
     function Errors() {}
 
-    Errors.get = function(data) {
+    Errors.get = function(data, scope) {
       var errorMessages, fieldErrors, value;
       fieldErrors = {};
       errorMessages = [];
-      value = FormsJs.Values.get(data);
+      value = FormsJs.Values.get(data, scope);
       _.each(data.validations, function(validator) {
         var valid;
         valid = FormsJs.Validator.isValid(validator, value);

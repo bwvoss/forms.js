@@ -2,13 +2,13 @@ namespace('FormsJs.Form')
 
 class FormsJs.Values
 
-  @DEFAULTVALUE: ''
+  DEFAULT_VALUE = ''
 
-  @get: (data) ->
+  @get: (data, scope) ->
     switch data.type
-      when FormsJs.InputTypes.RADIO then value = FormsJs.Scope.getCheckedRadioValue(data)
-      when FormsJs.InputTypes.CHECKBOX then value = FormsJs.Scope.getCheckedValues(data)
-      else value = FormsJs.Scope.getValue(data)
+      when FormsJs.InputTypes.RADIO then value = FormsJs.Scope.getCheckedRadioValue(data, scope)
+      when FormsJs.InputTypes.CHECKBOX then value = FormsJs.Scope.getCheckedValues(data, scope)
+      else value = FormsJs.Scope.getValue(data, scope)
 
-    value ?= @DEFAULTVALUE
+    value ?= DEFAULT_VALUE
 

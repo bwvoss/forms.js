@@ -11,12 +11,16 @@
     input { margin: 0 7px }
     form label { display: block; width: 250px; float: left}
     h1 { color: #888; text-transform: uppercase }
+    #form1 { width: 47%; float: left }
+    #form2 { width: 47%; float: right }
   </style>
   </head>
 
   <body>
     <h1>Javascript Form Library Demo</h1>
-    <form action='#'>
+    <div id='form1'>
+      <h3>Form 1</h3>
+      <form action='#'>
       <p>
       <label for="firstName">First Name</label>
       <input type='text' name='firstName' value=''>
@@ -90,6 +94,57 @@
       <span name="passwordConfirmation" class="error"></span>
       </p>
     </form>
+  </div>
+  <div id='form2'>
+    <h3>Form 2</h3>
+      <form action='#'>
+      <p>
+      <label for="firstName">First Name</label>
+      <input type='text' name='firstName' value=''>
+      <span name="firstName" class="error"></span>
+      </p>
+      <p>
+      <label for="lastName">Last Name</label>
+      <input type='text' name='lastName' value=''>
+      <span name="lastName" class="error"></span>
+      </p>
+      <p>
+      <label for="email">Email</label>
+      <input type='text' name='email' value=''>
+      <span name="email" class="error"></span>
+      </p>
+      <p>
+      <label for="phone">Phone</label>
+      <input type='text' name='phone' value=''>
+      <span name="phone" class="error"></span>
+      </p>
+      <p>
+      <label for="phoneType">Phone Type</label>
+      <select name='phoneType'>
+        <option value=''>-- Please Select --</option>
+        <option>Home</option>
+        <option>Work</option>
+        <option>Cell</option>
+      </select>
+      </p>
+      <p>
+      <label for="gender">Gender</label>
+      <input type='radio' name='gender' value='male'> Male
+      <input type='radio' name='gender' value='female'> Female
+      <span name="gender" class="error"></span>
+      </p>
+      <p>
+      <label for="interests">Interests (select all that apply)</label>
+      <input type='checkbox' name='interests' value='JavaScript'> JavaScript
+      <input type='checkbox' name='interests' value='Ruby'> Ruby
+      <input type='checkbox' name='interests' value='Python'> Python
+      <input type='checkbox' name='interests' value='C#'> C#
+      <input type='checkbox' name='interests' value='Java'> Java
+      <input type='checkbox' name='interests' value='Clojure'> Clojure
+      <span name="interests" class="error"></span>
+      </p>
+    </form>
+  </div>
     <div id="errors" class="error"></div>
   </body>
 </html>

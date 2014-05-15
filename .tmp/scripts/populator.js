@@ -4,14 +4,14 @@
   FormsJs.Populator = (function() {
     function Populator() {}
 
-    Populator.populate = function(data) {
+    Populator.populate = function(data, scope) {
       switch (data.type) {
         case FormsJs.InputTypes.RADIO:
-          return FormsJs.Scope.setRadioChecked(data);
+          return FormsJs.Scope.setRadioChecked(data, scope);
         case FormsJs.InputTypes.CHECKBOX:
-          return FormsJs.Scope.setAllChecked(data);
+          return FormsJs.Scope.setAllChecked(data, scope);
         default:
-          return FormsJs.Scope.setValue(data);
+          return FormsJs.Scope.setValue(data, scope);
       }
     };
 

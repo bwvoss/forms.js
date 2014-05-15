@@ -2,38 +2,30 @@ namespace('FormsJs')
 
 class FormsJs.Scope
 
-  DEFAULT_SCOPE = $(document)
+  @setValue: (data, scope) ->
+    $("[name=#{data.name}]", scope).val(data.value)
 
-  @set: (scope) ->
-    @scope = scope
+  @setRadioChecked = (data, scope) ->
+    $("[name='#{data.name}'][value='#{data.value}']", scope).prop('checked', true)
 
-  @get: ->
-    @scope ?= DEFAULT_SCOPE
-
-  @setValue: (data) ->
-    $("[name=#{data.name}]", @get()).val(data.value)
-
-  @setRadioChecked = (data) ->
-    $("[name='#{data.name}'][value='#{data.value}']", @get()).prop('checked', true)
-
-  @setAllChecked = (data) ->
+  @setAllChecked = (data, scope) ->
     if _.isArray(data.value)
       value = data.value
     else
       value = [data.value]
-    $("[name='#{data.name}']", @get()).val(value)
+    $("[name='#{data.name}']", scope).val(value)
 
-  @getValue: (data) ->
-    $("[name=#{data.name}]", @get()).val()
+  @getValue: (data, scope) ->
+    $("[name=#{data.name}]", scope).val()
 
-  @getCheckedRadioValue: (data) ->
-    $("[name=#{data.name}]:checked", @get()).val()
+  @getCheckedRadioValue: (data, scope) ->
+    $("[name=#{data.name}]:checked", scope).val()
 
-  @getCheckedValues: (data) ->
-    $("[name=#{data.name}]:checked", @get()).map( -> this.value ).get()
+  @getCheckedValues: (data, scope) ->
+    $("[name=#{data.name}]:checked", scope).map( -> this.value ).get()
 
-  @clearValue: (data) ->
-    $("[name=#{data.name}]", @get()).val('')
+  @clearValue: (data, scope) ->
+    $("[name=#{data.name}]", scope).val('')
 
-  @clearChecked: (data) ->
-    $("[name='#{data.name}']", @get()).prop('checked', false)
+  @clearChecked: (data, scope) ->
+    $("[name='#{data.name}']", scope).prop('checked', false)

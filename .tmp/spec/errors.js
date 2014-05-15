@@ -19,7 +19,7 @@
       var value;
       value = 'example.com';
       setFixtures("<input type='text' name='email' value=" + value + ">");
-      return expect(FormsJs.Errors.get(data, value)).toEqual({
+      return expect(FormsJs.Errors.get(data)).toEqual({
         email: ['Please enter a valid email', 'Email should be a minimum of 15 characters']
       });
     });
@@ -27,7 +27,7 @@
       var value;
       value = 'fiveteen@example.com';
       setFixtures("<input type='text' name='email' value=" + value + ">");
-      return expect(FormsJs.Errors.get(data, value)).toEqual({});
+      return expect(FormsJs.Errors.get(data)).toEqual({});
     });
   });
 

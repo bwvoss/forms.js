@@ -2,10 +2,10 @@ namespace('FormsJs')
 
 class FormsJs.Errors
 
-  @get: (data) ->
+  @get: (data, scope) ->
     fieldErrors = {}
     errorMessages = []
-    value = FormsJs.Values.get(data)
+    value = FormsJs.Values.get(data, scope)
 
     _.each data.validations, (validator) ->
       valid = FormsJs.Validator.isValid(validator, value)
