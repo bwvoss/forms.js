@@ -1,8 +1,11 @@
 (function() {
   describe('FormsJs.Validator', function() {
     var validatorTest;
-    validatorTest = function(validator, value) {
-      return FormsJs.Validator.isValid(validator, value);
+    validatorTest = function(validator, value, scope) {
+      if (scope == null) {
+        scope = '#jasmine-fixtures';
+      }
+      return FormsJs.Validator.isValid(validator, value, scope);
     };
     it('builds an email validator and returns false when value does not match email reg exp', function() {
       var validator, value;
@@ -59,7 +62,7 @@
       value = 12345;
       return expect(validatorTest(validator, value)).toBeFalsy();
     });
-    it('builds a matching input validator and returns false when value does match another field', function() {
+    it('builds a matching input validator and returns false when value does not match another field', function() {
       var validator, value;
       setFixtures("<input type='text' name='password' value='P@ssword'>");
       validator = {

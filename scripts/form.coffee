@@ -15,8 +15,8 @@ class FormsJs.Form
   isValid: ->
     _.all @data, (element) =>
       value = FormsJs.Values.get(element, @scope)
-      _.all element.validations, (validator) ->
-        FormsJs.Validator.isValid(validator, value)
+      _.all element.validations, (validator) =>
+        FormsJs.Validator.isValid(validator, value, @scope)
 
   errors: ->
     _.reduce @data, (errors, element) =>

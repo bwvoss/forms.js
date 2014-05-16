@@ -6,10 +6,12 @@
       this.options = options;
     }
 
-    MatchingInput.prototype.isValid = function(value) {
+    MatchingInput.prototype.isValid = function(value, scope) {
       var fieldValue, matchField;
-      matchField = this.options.matchField;
-      fieldValue = $("[name=" + matchField + "]").val() || value;
+      matchField = {
+        name: this.options.matchField
+      };
+      fieldValue = FormsJs.Scope.getValue(matchField, scope) || value;
       return fieldValue === value;
     };
 

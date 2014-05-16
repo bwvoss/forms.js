@@ -28,7 +28,7 @@
           var value;
           value = FormsJs.Values.get(element, _this.scope);
           return _.all(element.validations, function(validator) {
-            return FormsJs.Validator.isValid(validator, value);
+            return FormsJs.Validator.isValid(validator, value, _this.scope);
           });
         };
       })(this));
