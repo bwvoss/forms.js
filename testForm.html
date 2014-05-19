@@ -143,6 +143,33 @@
       <input type='checkbox' name='interests' value='Clojure'> Clojure
       <span name="interests" class="error"></span>
       </p>
+      <p>
+      <label for="browser">What's your favorite browser</label>
+      <select name='browser' >
+        <option value=''>-- Please Select --</option>
+        <option>Chrome</option>
+        <option>Firefox</option>
+        <option>Safari</option>
+        <option>Internet Explorer</option>
+      </select>
+      <span name="browser" class="error"></span>
+      </p>
+      <p>
+      <label for="contact">May we contact you?</label>
+      <input type='radio' name='contact' value='Yes'> Yes
+      <input type='radio' name='contact' value='No'> No
+      <span name="contact" class="error"></span>
+      </p>
+      <p>
+      <label for="password">Password</label>
+      <input type='password' name='password'>
+      <span name="password" class="error"></span>
+      </p>
+      <p>
+      <label for="passwordConfirmation">Confirm Password</label>
+      <input type='password' name='passwordConfirmation'>
+      <span name="passwordConfirmation" class="error"></span>
+      </p>
     </form>
   </div>
     <div id="errors" class="error"></div>
