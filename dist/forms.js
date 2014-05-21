@@ -47,7 +47,7 @@
           var value;
           value = FormsJs.Values.get(element, _this.scope);
           return _.all(element.validations, function(validator) {
-            return FormsJs.Validator.isValid(validator, value);
+            return FormsJs.Validator.isValid(validator, value, _this.scope);
           });
         };
       })(this));
@@ -258,10 +258,10 @@
   FormsJs.Validator = (function() {
     function Validator() {}
 
-    Validator.isValid = function(validator, value) {
+    Validator.isValid = function(validator, value, scope) {
       var validationFactory;
       validationFactory = new FormsJs.Validator.Factory;
-      return validationFactory.build(validator).isValid(value);
+      return validationFactory.build(validator).isValid(value, scope);
     };
 
     return Validator;
@@ -353,10 +353,12 @@
       this.options = options;
     }
 
-    MatchingInput.prototype.isValid = function(value) {
+    MatchingInput.prototype.isValid = function(value, scope) {
       var fieldValue, matchField;
-      matchField = this.options.matchField;
-      fieldValue = $("[name=" + matchField + "]").val() || value;
+      matchField = {
+        name: this.options.matchField
+      };
+      fieldValue = FormsJs.Scope.getValue(matchField, scope) || value;
       return fieldValue === value;
     };
 
