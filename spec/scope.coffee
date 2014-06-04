@@ -112,4 +112,19 @@ describe 'FormsJs.Scope', ->
     FormsJs.Scope.clearChecked(data, scope)
     expect(FormsJs.Scope.getCheckedValues(data, scope)).toEqual([])
 
+  it 'returns the value of the first option for a dropdown when there is no default value', ->
+    setFixtures("
+      <div id='inner'>
+        <select name='text'>
+          <option value='0'>-- Please Select --</option>
+          <option value='1'>IL</option>
+          <option value='2>'WI</option>
+          <option value='3'>AR</option>
+        </select>
+      </div>")
 
+    scope = '#inner'
+    data = { type: 'select', name: 'text', value: undefined }
+    FormsJs.Scope.setValue(data, scope)
+
+    expect(FormsJs.Scope.getValue(data, scope)).toEqual('0')

@@ -187,7 +187,9 @@
     function Scope() {}
 
     Scope.setValue = function(data, scope) {
-      return $("[name=" + data.name + "]", scope).val(data.value);
+      if (data.value !== void 0) {
+        return $("[name=" + data.name + "]", scope).val(data.value);
+      }
     };
 
     Scope.setRadioChecked = function(data, scope) {

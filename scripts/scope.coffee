@@ -3,7 +3,7 @@ namespace('FormsJs')
 class FormsJs.Scope
 
   @setValue: (data, scope) ->
-    $("[name=#{data.name}]", scope).val(data.value)
+    $("[name=#{data.name}]", scope).val(data.value) unless data.value == undefined
 
   @setRadioChecked = (data, scope) ->
     $("[name='#{data.name}'][value='#{data.value}']", scope).prop('checked', true)
