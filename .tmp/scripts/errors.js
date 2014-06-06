@@ -11,7 +11,7 @@
       value = FormsJs.Values.get(data, scope);
       _.each(data.validations, function(validator) {
         var valid;
-        valid = FormsJs.Validator.isValid(validator, value);
+        valid = FormsJs.Validator.isValid(validator, value, scope);
         if (!valid) {
           return errorMessages.push(validator.errorMessage);
         }

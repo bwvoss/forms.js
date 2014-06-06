@@ -8,7 +8,7 @@ class FormsJs.Errors
     value = FormsJs.Values.get(data, scope)
 
     _.each data.validations, (validator) ->
-      valid = FormsJs.Validator.isValid(validator, value)
+      valid = FormsJs.Validator.isValid(validator, value, scope)
       errorMessages.push validator.errorMessage unless valid
 
     unless errorMessages.length is 0
