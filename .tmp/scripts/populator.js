@@ -25,14 +25,6 @@
       })(this));
     };
 
-    Populator.prototype.clear = function() {
-      return _.each(this.data, (function(_this) {
-        return function(element) {
-          return FormsJs.Clear.valueOf(element, _this.scope);
-        };
-      })(this));
-    };
-
     return Populator;
 
   })();

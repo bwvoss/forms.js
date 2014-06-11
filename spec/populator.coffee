@@ -107,12 +107,3 @@ describe 'FormsJs.Populator', ->
     expect(getValues(testData[1], outScope)).toEqual('')
     expect(getValues(testData[2], outScope)).toEqual([])
     expect(getValues(testData[3], outScope)).toEqual('')
-
-  it 'clears the form within a scope', ->
-    scope = '#form2'
-    populator = createPopulator(testData, scope)
-    loadFixtures('filledFormFixturesWithScope.html')
-
-    populator.clear()
-
-    expect($('[name=lastName]').val()).toEqual('')

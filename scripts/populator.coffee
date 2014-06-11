@@ -12,7 +12,3 @@ class FormsJs.Populator
         when FormsJs.InputTypes.RADIO then FormsJs.Scope.setRadioChecked(element, @scope)
         when FormsJs.InputTypes.CHECKBOX then FormsJs.Scope.setAllChecked(element, @scope)
         else FormsJs.Scope.setValue(element, @scope)
-
-  clear: ->
-    _.each @data, (element) =>
-      FormsJs.Clear.valueOf(element, @scope)

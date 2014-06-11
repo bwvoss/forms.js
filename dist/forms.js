@@ -20,26 +20,6 @@
 (function() {
   namespace('FormsJs');
 
-  FormsJs.Clear = (function() {
-    function Clear() {}
-
-    Clear.valueOf = function(element, scope) {
-      if (element.type === 'radio' || element.type === 'checkbox') {
-        return FormsJs.Scope.clearChecked(element, scope);
-      } else {
-        return FormsJs.Scope.clearValue(element, scope);
-      }
-    };
-
-    return Clear;
-
-  })();
-
-}).call(this);
-
-(function() {
-  namespace('FormsJs');
-
   FormsJs.Defaults = (function() {
     function Defaults() {}
 
@@ -96,14 +76,6 @@
             default:
               return FormsJs.Scope.setValue(element, _this.scope);
           }
-        };
-      })(this));
-    };
-
-    Populator.prototype.clear = function() {
-      return _.each(this.data, (function(_this) {
-        return function(element) {
-          return FormsJs.Clear.valueOf(element, _this.scope);
         };
       })(this));
     };

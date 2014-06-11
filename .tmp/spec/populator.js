@@ -108,7 +108,7 @@
       expect(getValues(testData[2])).toEqual(['JavaScript', 'Ruby']);
       return expect(getValues(testData[3])).toEqual('Chrome');
     });
-    it('populates all form elements with their default values within a given scope', function() {
+    return it('populates all form elements with their default values within a given scope', function() {
       var inScope, outScope, populator;
       inScope = '#form1';
       outScope = '#form2';
@@ -123,14 +123,6 @@
       expect(getValues(testData[1], outScope)).toEqual('');
       expect(getValues(testData[2], outScope)).toEqual([]);
       return expect(getValues(testData[3], outScope)).toEqual('');
-    });
-    return it('clears the form within a scope', function() {
-      var populator, scope;
-      scope = '#form2';
-      populator = createPopulator(testData, scope);
-      loadFixtures('filledFormFixturesWithScope.html');
-      populator.clear();
-      return expect($('[name=lastName]').val()).toEqual('');
     });
   });
 

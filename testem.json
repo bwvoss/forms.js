@@ -13,7 +13,6 @@
     ".tmp/scripts/populator.js",
     ".tmp/scripts/serializer.js",
     ".tmp/scripts/validator.js",
-    ".tmp/scripts/clear.js",
     ".tmp/scripts/validators/factory.js",
     ".tmp/scripts/validators/email.js",
     ".tmp/scripts/validators/maxLength.js",

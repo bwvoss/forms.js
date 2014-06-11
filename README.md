@@ -21,7 +21,6 @@ To create a new populator object, initialize it with the configuration object an
 `populator = new FormsJs.Populator(populatorConfig, scope)`
 
 Calling `populate()` on the populator will fill out the form.
-Calling `clear()` on the populator will clear the form.
 
 ### Serialization
 
