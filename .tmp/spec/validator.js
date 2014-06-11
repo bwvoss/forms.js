@@ -1,141 +1,148 @@
 (function() {
   describe('FormsJs.Validator', function() {
-    var validatorTest;
-    validatorTest = function(validator, value, scope) {
-      if (scope == null) {
-        scope = '#jasmine-fixtures';
+    var createTestValidator, testData;
+    testData = [
+      {
+        type: 'text',
+        elementSelector: '[name=lastName]',
+        validations: [
+          {
+            type: 'minLength',
+            length: 5,
+            errorMessage: 'Please enter at least 5 characters'
+          }
+        ]
+      }, {
+        type: 'radio',
+        elementSelector: '[name=gender]',
+        validations: [
+          {
+            type: 'required',
+            errorMessage: 'Gender is required'
+          }
+        ]
+      }, {
+        type: 'text',
+        elementSelector: '[name=email]',
+        validations: [
+          {
+            type: 'email',
+            errorMessage: 'Please enter a valid email address'
+          }, {
+            type: 'maxLength',
+            length: 15,
+            errorMessage: 'Email cannot be longer than 15 characters'
+          }
+        ]
+      }, {
+        type: 'text',
+        elementSelector: '[name=phone]',
+        validations: [
+          {
+            type: 'regExp',
+            pattern: /(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/,
+            errorMessage: 'Please enter a valid phone number as ###-###-####'
+          }
+        ]
+      }, {
+        type: 'text',
+        elementSelector: '[name=phoneType]',
+        validations: [
+          {
+            type: 'customMatcher',
+            errorMessage: 'Phone type is required when phone is entered',
+            matcher: function(value) {
+              var phoneValue;
+              phoneValue = $('[name=phone]', '#form2').val();
+              if (phoneValue === '') {
+                return true;
+              } else if (value !== '') {
+                return true;
+              } else {
+                return false;
+              }
+            }
+          }
+        ]
+      }, {
+        type: 'checkbox',
+        elementSelector: '[name=interests]'
+      }, {
+        type: 'select',
+        elementSelector: '[name=browser]',
+        value: 'Chrome',
+        validations: [
+          {
+            type: 'required',
+            errorMessage: 'Browser is required'
+          }
+        ]
+      }, {
+        type: 'password',
+        elementSelector: '[name=password]',
+        validations: [
+          {
+            type: 'minLength',
+            errorMessage: 'Password must be 8 or more characters',
+            length: 8
+          }, {
+            type: 'required',
+            errorMessage: 'Password is required'
+          }
+        ]
+      }, {
+        type: 'password',
+        elementSelector: '[name=passwordConfirmation]',
+        validations: [
+          {
+            type: 'matchingInput',
+            errorMessage: 'Passwords must match',
+            matchField: '[name=password]'
+          }, {
+            type: 'required',
+            errorMessage: 'Password confirmation is required'
+          }
+        ]
       }
-      return FormsJs.Validator.isValid(validator, value, scope);
+    ];
+    createTestValidator = function(data, scope) {
+      return new FormsJs.Validator(data, scope);
     };
-    it('builds an email validator and returns false when value does not match email reg exp', function() {
-      var validator, value;
-      validator = {
-        type: 'email'
-      };
-      value = 'example.com';
-      return expect(validatorTest(validator, value)).toBeFalsy();
+    it('validates an empty form as false', function() {
+      var testValidator;
+      testValidator = createTestValidator(testData);
+      loadFixtures('emptyFormFixtures.html');
+      return expect(testValidator.isValid()).toBeFalsy();
     });
-    it('builds a required validator and returns false when value is undefined', function() {
-      var validator, value;
-      validator = {
-        type: 'required'
-      };
-      value = void 0;
-      return expect(validatorTest(validator, value)).toBeFalsy();
+    it('validates a filled form as true within a scope', function() {
+      var scope, testValidator;
+      scope = '#form2';
+      testValidator = createTestValidator(testData, scope);
+      loadFixtures('filledFormFixturesWithScope.html');
+      return expect(testValidator.isValid()).toBeTruthy();
     });
-    it('builds a min length validator and returns false when value is less than min', function() {
-      var validator, value;
-      validator = {
-        type: 'minLength',
-        length: 5
-      };
-      value = 'two';
-      return expect(validatorTest(validator, value)).toBeFalsy();
+    it('returns an empty object if all form elements are true', function() {
+      var scope, testValidator;
+      scope = '#form2';
+      testValidator = createTestValidator(testData, scope);
+      loadFixtures('filledFormFixturesWithScope.html');
+      return expect(testValidator.errors()).toEqual({});
     });
-    it('builds a max length validator and returns false when value is more than max', function() {
-      var validator, value;
-      validator = {
-        type: 'maxLength',
-        length: 5
-      };
-      value = 'eleven';
-      return expect(validatorTest(validator, value)).toBeFalsy();
-    });
-    it('builds a regexp validator and returns false when value does not match', function() {
-      var validator, value;
-      validator = {
-        type: 'regExp',
-        pattern: /[a-zA-z]+/
-      };
-      value = 12345;
-      return expect(validatorTest(validator, value)).toBeFalsy();
-    });
-    it('builds a custom validator and returns false when value does not pass function', function() {
-      var myFunction, validator, value;
-      myFunction = function(value) {
-        return false;
-      };
-      validator = {
-        type: 'customMatcher',
-        matcher: myFunction
-      };
-      value = 12345;
-      return expect(validatorTest(validator, value)).toBeFalsy();
-    });
-    it('builds a matching input validator and returns false when value does not match another field', function() {
-      var validator, value;
-      setFixtures("<input type='text' name='password' value='P@ssword'>");
-      validator = {
-        type: 'matchingInput',
-        matchField: '[name=password]'
-      };
-      value = 12345;
-      return expect(validatorTest(validator, value)).toBeFalsy();
-    });
-    it('builds an email validator and returns true when value does match email reg exp', function() {
-      var validator, value;
-      validator = {
-        type: 'email'
-      };
-      value = 'me@example.com';
-      return expect(validatorTest(validator, value)).toBeTruthy();
-    });
-    it('builds a required validator and returns true when value is something', function() {
-      var validator, value;
-      validator = {
-        type: 'required'
-      };
-      value = 'something';
-      return expect(validatorTest(validator, value)).toBeTruthy();
-    });
-    it('builds a min length validator and returns true when value is more than min', function() {
-      var validator, value;
-      validator = {
-        type: 'minLength',
-        length: 5
-      };
-      value = 'eleven';
-      return expect(validatorTest(validator, value)).toBeTruthy();
-    });
-    it('builds a max length validator and returns true when value is less than max', function() {
-      var validator, value;
-      validator = {
-        type: 'maxLength',
-        length: 5
-      };
-      value = 'four';
-      return expect(validatorTest(validator, value)).toBeTruthy();
-    });
-    it('builds a regexp validator and returns true when value does match', function() {
-      var validator, value;
-      validator = {
-        type: 'regExp',
-        pattern: /[a-zA-z]+/
-      };
-      value = 'abcde';
-      return expect(validatorTest(validator, value)).toBeTruthy();
-    });
-    it('builds a custom validator and returns true when value passes a function', function() {
-      var myFunction, validator, value;
-      myFunction = function(value) {
-        return true;
-      };
-      validator = {
-        type: 'customMatcher',
-        matcher: myFunction
-      };
-      value = 12345;
-      return expect(validatorTest(validator, value)).toBeTruthy();
-    });
-    return it('builds a matching input validator and returns true when value matchs another field', function() {
-      var validator, value;
-      setFixtures("<input type='text' name='password' value='P@ssword'>");
-      validator = {
-        type: 'matchingInput',
-        matchField: '[name=password]'
-      };
-      value = 'P@ssword';
-      return expect(validatorTest(validator, value)).toBeTruthy();
+    return it('gets a list of all the errors from a form within a scope', function() {
+      var scope, testValidator;
+      scope = '#form2';
+      testValidator = createTestValidator(testData, scope);
+      loadFixtures('errorFormFixturesWithScope.html');
+      return expect(testValidator.errors()).toEqual({
+        '[name=lastName]': ['Please enter at least 5 characters'],
+        '[name=gender]': ['Gender is required'],
+        '[name=email]': ['Please enter a valid email address'],
+        '[name=phone]': ['Please enter a valid phone number as ###-###-####'],
+        '[name=phoneType]': ['Phone type is required when phone is entered'],
+        '[name=browser]': ['Browser is required'],
+        '[name=password]': ['Password is required'],
+        '[name=passwordConfirmation]': ['Password confirmation is required']
+      });
     });
   });
 

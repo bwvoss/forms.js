@@ -1,8 +1,7 @@
-var config = [
+var validatorConfig = [
   {
     type: "text",
-    name: "firstName",
-    value: "My First Name",
+    elementSelector: "[name=firstName]",
     validations: [
       {
         type: "required",
@@ -17,8 +16,7 @@ var config = [
   },
   {
     type: "text",
-    name: "lastName",
-    value: "My Last Name",
+    elementSelector: "[name=lastName]",
     validations: [
       {
         type: "required",
@@ -33,8 +31,7 @@ var config = [
   },
   {
     type: "text",
-    name: "email",
-    value: "me@example.com",
+    elementSelector: "[name=email]",
     validations: [
       {
         type: "required",
@@ -47,18 +44,17 @@ var config = [
     ]
   },
   {
-    type: 'select',
-    name: 'phoneType',
-    value: 'Cell',
+    type: "select",
+    elementSelector: "[name=phoneType]",
     validations: [
       {
-        type: 'customMatcher',
-        errorMessage: 'Phone type is required when phone is entered',
+        type: "customMatcher",
+        errorMessage: "Phone type is required when phone is entered",
         matcher: function(value) {
-          var phoneValue = $('[name=phone]').val();
-          if (phoneValue === '') {
+          var phoneValue = $("[name=phone]").val();
+          if (phoneValue === "") {
             return true;
-          } else if (value !== '') {
+          } else if (value !== "") {
             return true;
           } else {
             return false;
@@ -69,8 +65,7 @@ var config = [
   },
   {
     type: "text",
-    name: "phone",
-    value: "123-456-7890",
+    elementSelector: "[name=phone]",
     validations: [
       {
         type: "regExp",
@@ -81,8 +76,7 @@ var config = [
   },
   {
     type: "radio",
-    name: "gender",
-    value: "male",
+    elementSelector: "[name=gender]",
     validations: [
       {
         type: "required",
@@ -92,8 +86,7 @@ var config = [
   },
   {
     type: "checkbox",
-    name: "interests",
-    value: ["Ruby","Python","Java"],
+    elementSelector: "[name=interests]",
     validations: [
       {
         type: "required",
@@ -103,8 +96,7 @@ var config = [
   },
   {
     type: "select",
-    name: "browser",
-    value: "Chrome",
+    elementSelector: "[name=browser]",
     validations: [
       {
         type: "required",
@@ -113,37 +105,32 @@ var config = [
     ]
   },
   {
-    type: "radio",
-    name: "contact",
-    value: "Yes"
-  },
-  {
-    type: 'password',
-    name: 'password',
+    type: "password",
+    elementSelector: "[name=password]",
     validations: [
       {
-        type: 'minLength',
-        errorMessage: 'Password must be 8 or more characters',
+        type: "minLength",
+        errorMessage: "Password must be 8 or more characters",
         length: 8
       },
       {
-        type: 'required',
-        errorMessage: 'Password is required'
+        type: "required",
+        errorMessage: "Password is required"
       }
    ]
   },
   {
-    type: 'password',
-    name: 'passwordConfirmation',
+    type: "password",
+    elementSelector: "[name=passwordConfirmation]",
     validations: [
       {
-        type: 'matchingInput',
-        errorMessage: 'Passwords must match',
-        matchField: 'password'
+        type: "matchingInput",
+        errorMessage: "Passwords must match",
+        matchField: "[name=password]"
       },
       {
-        type: 'required',
-        errorMessage: 'Password confirmation is required'
+        type: "required",
+        errorMessage: "Password confirmation is required"
       }
    ]
   }
