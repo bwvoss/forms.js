@@ -9,7 +9,7 @@
     MatchingInput.prototype.isValid = function(value, scope) {
       var fieldValue, matchField;
       matchField = {
-        name: this.options.matchField
+        elementSelector: this.options.matchField
       };
       fieldValue = FormsJs.Scope.getValue(matchField, scope) || value;
       return fieldValue === value;

@@ -2,17 +2,27 @@
   namespace('FormsJs');
 
   FormsJs.Populator = (function() {
-    function Populator() {}
-
-    Populator.populate = function(data, scope) {
-      switch (data.type) {
-        case FormsJs.InputTypes.RADIO:
-          return FormsJs.Scope.setRadioChecked(data, scope);
-        case FormsJs.InputTypes.CHECKBOX:
-          return FormsJs.Scope.setAllChecked(data, scope);
-        default:
-          return FormsJs.Scope.setValue(data, scope);
+    function Populator(data, scope) {
+      if (scope == null) {
+        scope = FormsJs.Defaults.SCOPE;
       }
+      this.data = data;
+      this.scope = scope;
+    }
+
+    Populator.prototype.populate = function() {
+      return _.each(this.data, (function(_this) {
+        return function(element) {
+          switch (element.type) {
+            case FormsJs.InputTypes.RADIO:
+              return FormsJs.Scope.setRadioChecked(element, _this.scope);
+            case FormsJs.InputTypes.CHECKBOX:
+              return FormsJs.Scope.setAllChecked(element, _this.scope);
+            default:
+              return FormsJs.Scope.setValue(element, _this.scope);
+          }
+        };
+      })(this));
     };
 
     return Populator;

@@ -1,6 +1,6 @@
 {
   "name": "forms.js",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "main": "dist/forms.min.js",
   "ignore": [
     ".tmp",

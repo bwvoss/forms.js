@@ -1,47 +1,73 @@
 (function() {
   describe('FormsJs.Serializer', function() {
-    it('converts a text element to an object', function() {
-      var data;
-      setFixtures("<form action='#'> <input type='text' name='text1' value='some value' /> </form>");
-      data = {
+    var testData;
+    testData = [
+      {
         type: 'text',
-        name: 'text1'
-      };
-      return expect(FormsJs.Serializer.serialize(data)).toEqual({
-        text1: "some value"
-      });
-    });
-    it('converts the checked value of a radio group to a JSON object', function() {
-      var data;
-      setFixtures("<form action='#'> <input type='radio' name='radioName' value='Radio 1' > <input type='radio' name='radioName' value='Radio 2' checked > <input type='radio' name='radioName' value='Radio 3' > </form>");
-      data = {
+        elementSelector: '[name=lastName]',
+        dataKey: 'last_name'
+      }, {
         type: 'radio',
-        name: 'radioName'
-      };
-      return expect(FormsJs.Serializer.serialize(data)).toEqual({
-        radioName: "Radio 2"
-      });
-    });
-    it('converts the selected value of a select list to a JSON object', function() {
-      var data;
-      setFixtures("<form action='#'> <select name='selectName'> <option>Option 1</option> <option>Option 2</option> <option selected>Option 3</option> </select> </form>");
-      data = {
-        type: 'select',
-        name: 'selectName'
-      };
-      return expect(FormsJs.Serializer.serialize(data)).toEqual({
-        selectName: "Option 3"
-      });
-    });
-    return it('converts the values of checked checkboxes to an array inside a JSON object', function() {
-      var data;
-      setFixtures("<form action='#'> <input type='checkbox' name='checkName' value='Checkbox 1' checked> <input type='checkbox' name='checkName' value='Checkbox 2' checked> <input type='checkbox' name='checkName' value='Checkbox 3'> </form>");
-      data = {
+        elementSelector: '[name=gender]'
+      }, {
+        type: 'text',
+        elementSelector: '[name=email]'
+      }, {
+        type: 'text',
+        elementSelector: '[name=phone]'
+      }, {
+        type: 'text',
+        elementSelector: '[name=phoneType]',
+        dataKey: 'phone_type'
+      }, {
         type: 'checkbox',
-        name: 'checkName'
-      };
-      return expect(FormsJs.Serializer.serialize(data)).toEqual({
-        checkName: ["Checkbox 1", "Checkbox 2"]
+        elementSelector: '[name=interests]'
+      }, {
+        type: 'select',
+        elementSelector: '[name=browser]'
+      }, {
+        type: 'password',
+        elementSelector: '[name=password]'
+      }, {
+        type: 'password',
+        elementSelector: '[name=passwordConfirmation]',
+        dataKey: 'password_confirmation'
+      }
+    ];
+    it('uses the dataKey attribute if available when converting a text element to an object, otherwise uses name', function() {
+      var data, testSerializer;
+      setFixtures("<input type='text' name='text1' value='some value' /><input type='text' data-id='text2' name='text2' value='other value' />");
+      data = [
+        {
+          type: 'text',
+          elementSelector: '[name=text1]',
+          dataKey: 'textData'
+        }, {
+          type: 'text',
+          elementSelector: '[data-id=text2]'
+        }
+      ];
+      testSerializer = new FormsJs.Serializer(data);
+      return expect(testSerializer.serialize()).toEqual({
+        textData: "some value",
+        text2: "other value"
+      });
+    });
+    return it('serializes a filled form within a given scope', function() {
+      var scope, testSerializer;
+      scope = '#form2';
+      testSerializer = new FormsJs.Serializer(testData, scope);
+      loadFixtures('filledFormFixturesWithScope.html');
+      return expect(testSerializer.serialize()).toEqual({
+        last_name: 'My Last Name',
+        gender: 'male',
+        email: 'me@example.com',
+        phone: '555-555-5555',
+        phone_type: 'Cell',
+        interests: ['JavaScript', 'Ruby'],
+        browser: 'Chrome',
+        password: 'P@ssword',
+        password_confirmation: 'P@ssword'
       });
     });
   });

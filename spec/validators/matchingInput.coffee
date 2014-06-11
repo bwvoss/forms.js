@@ -1,7 +1,7 @@
 describe 'FormsJs.Validator.MatchingInput', ->
   validation = {
         type: 'matchingInput',
-        matchField: 'password',
+        matchField: '[name=password]',
         errorMessage: 'Must match password'
   }
 
