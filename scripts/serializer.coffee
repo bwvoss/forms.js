@@ -5,6 +5,13 @@ class FormsJs.Serializer
   @serialize: (element, scope) ->
     formData = {}
     value = FormsJs.Values.get(element, scope)
-    formData[element.name] = value
+    key = @getKey(element)
+    formData[key] = value
     formData
+
+  @getKey: (element) ->
+    if element.dataKey
+      element.dataKey
+    else
+      element.name
 

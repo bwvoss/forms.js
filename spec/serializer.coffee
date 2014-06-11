@@ -9,6 +9,16 @@ describe 'FormsJs.Serializer', ->
 
     expect(FormsJs.Serializer.serialize(data)).toEqual({ text1: "some value"})
 
+  it 'uses the dataKey attribute if available when converting a text element to an object', ->
+    setFixtures(
+      "<form action='#'>
+        <input type='text' name='text1' value='some value' />
+      </form>")
+    data = { type: 'text', name: 'text1', dataKey: 'textData' }
+
+    expect(FormsJs.Serializer.serialize(data)).toEqual({ textData: "some value"})
+
+
   it 'converts the checked value of a radio group to a JSON object', ->
     setFixtures(
       "<form action='#'>

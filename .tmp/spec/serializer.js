@@ -11,6 +11,18 @@
         text1: "some value"
       });
     });
+    it('uses the dataKey attribute if available when converting a text element to an object', function() {
+      var data;
+      setFixtures("<form action='#'> <input type='text' name='text1' value='some value' /> </form>");
+      data = {
+        type: 'text',
+        name: 'text1',
+        dataKey: 'textData'
+      };
+      return expect(FormsJs.Serializer.serialize(data)).toEqual({
+        textData: "some value"
+      });
+    });
     it('converts the checked value of a radio group to a JSON object', function() {
       var data;
       setFixtures("<form action='#'> <input type='radio' name='radioName' value='Radio 1' > <input type='radio' name='radioName' value='Radio 2' checked > <input type='radio' name='radioName' value='Radio 3' > </form>");
