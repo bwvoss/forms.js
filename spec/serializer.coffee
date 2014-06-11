@@ -1,11 +1,11 @@
 describe 'FormsJs.Serializer', ->
 
-  it 'converts a text element to an object', ->
+  it 'converts a text element to an object using the elements name as the key', ->
     setFixtures(
       "<form action='#'>
         <input type='text' name='text1' value='some value' />
       </form>")
-    data = { type: 'text', name: 'text1' }
+    data = { type: 'text', elementSelector: '[name=text1]' }
 
     expect(FormsJs.Serializer.serialize(data)).toEqual({ text1: "some value"})
 
@@ -14,7 +14,7 @@ describe 'FormsJs.Serializer', ->
       "<form action='#'>
         <input type='text' name='text1' value='some value' />
       </form>")
-    data = { type: 'text', name: 'text1', dataKey: 'textData' }
+    data = { type: 'text', elementSelector: '[name=text1]', dataKey: 'textData' }
 
     expect(FormsJs.Serializer.serialize(data)).toEqual({ textData: "some value"})
 
@@ -27,7 +27,7 @@ describe 'FormsJs.Serializer', ->
         <input type='radio' name='radioName' value='Radio 3' >
       </form>")
 
-    data = { type: 'radio', name: 'radioName' }
+    data = { type: 'radio', elementSelector: '[name=radioName]', dataKey: "radioName" }
 
     expect(FormsJs.Serializer.serialize(data)).toEqual({ radioName: "Radio 2"})
 
@@ -41,7 +41,7 @@ describe 'FormsJs.Serializer', ->
         </select>
       </form>")
 
-    data = { type: 'select', name: 'selectName' }
+    data = { type: 'select', elementSelector: '[name=selectName]', dataKey: 'selectName' }
 
     expect(FormsJs.Serializer.serialize(data)).toEqual({ selectName: "Option 3"})
 
@@ -53,7 +53,7 @@ describe 'FormsJs.Serializer', ->
         <input type='checkbox' name='checkName' value='Checkbox 3'>
       </form>")
 
-    data = { type: 'checkbox', name: 'checkName' }
+    data = { type: 'checkbox', elementSelector: '[name=checkName]', dataKey: 'checkName' }
 
     expect(FormsJs.Serializer.serialize(data)).toEqual({ checkName: ["Checkbox 1","Checkbox 2"] })
 

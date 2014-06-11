@@ -67,7 +67,7 @@
       setFixtures("<input type='text' name='password' value='P@ssword'>");
       validator = {
         type: 'matchingInput',
-        matchField: 'password'
+        matchField: '[name=password]'
       };
       value = 12345;
       return expect(validatorTest(validator, value)).toBeFalsy();
@@ -132,7 +132,7 @@
       setFixtures("<input type='text' name='password' value='P@ssword'>");
       validator = {
         type: 'matchingInput',
-        matchField: 'password'
+        matchField: '[name=password]'
       };
       value = 'P@ssword';
       return expect(validatorTest(validator, value)).toBeTruthy();

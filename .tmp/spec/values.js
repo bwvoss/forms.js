@@ -5,7 +5,7 @@
       setFixtures("<input type='text' name='email' value='me@example.com' >");
       data = {
         type: 'text',
-        name: 'email'
+        elementSelector: '[name=email]'
       };
       return expect(FormsJs.Values.get(data)).toEqual('me@example.com');
     });
@@ -14,7 +14,7 @@
       setFixtures("<select name='interest'><option value=''></option><option selected>Option 1</option></select>");
       data = {
         type: 'select',
-        name: 'interest'
+        elementSelector: '[name=interest]'
       };
       return expect(FormsJs.Values.get(data)).toEqual('Option 1');
     });
@@ -23,7 +23,7 @@
       setFixtures("<input type='radio' name='gender' value='male'><input type='radio' name='gender' value='female' checked>");
       data = {
         type: 'radio',
-        name: 'gender'
+        elementSelector: '[name=gender]'
       };
       return expect(FormsJs.Values.get(data)).toEqual('female');
     });
@@ -32,7 +32,7 @@
       setFixtures("<input type='checkbox' name='options' value='Option 1'> <input type='checkbox' name='options' value='Option 2' checked> <input type='checkbox' name='options' value='Option 3' checked>");
       data = {
         type: 'checkbox',
-        name: 'options'
+        elementSelector: '[name=options]'
       };
       return expect(FormsJs.Values.get(data)).toEqual(['Option 2', 'Option 3']);
     });
@@ -41,7 +41,7 @@
       setFixtures("<input type='radio' name='gender' value='male'><input type='radio' name='gender' value='female'>");
       data = {
         type: 'radio',
-        name: 'gender'
+        elementSelector: '[name=gender]'
       };
       return expect(FormsJs.Values.get(data)).toEqual('');
     });

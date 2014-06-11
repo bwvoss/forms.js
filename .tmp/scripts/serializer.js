@@ -8,16 +8,16 @@
       var formData, key, value;
       formData = {};
       value = FormsJs.Values.get(element, scope);
-      key = this.getKey(element);
+      key = this.getKey(element, scope);
       formData[key] = value;
       return formData;
     };
 
-    Serializer.getKey = function(element) {
+    Serializer.getKey = function(element, scope) {
       if (element.dataKey) {
         return element.dataKey;
       } else {
-        return element.name;
+        return FormsJs.Scope.getName(element, scope);
       }
     };
 

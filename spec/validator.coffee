@@ -42,7 +42,7 @@ describe 'FormsJs.Validator', ->
 
   it 'builds a matching input validator and returns false when value does not match another field', ->
     setFixtures("<input type='text' name='password' value='P@ssword'>")
-    validator = { type: 'matchingInput', matchField: 'password' }
+    validator = { type: 'matchingInput', matchField: '[name=password]' }
     value = 12345
 
     expect(validatorTest(validator, value)).toBeFalsy()
@@ -86,7 +86,7 @@ describe 'FormsJs.Validator', ->
 
   it 'builds a matching input validator and returns true when value matchs another field', ->
     setFixtures("<input type='text' name='password' value='P@ssword'>")
-    validator = { type: 'matchingInput', matchField: 'password' }
+    validator = { type: 'matchingInput', matchField: '[name=password]' }
     value = 'P@ssword'
 
     expect(validatorTest(validator, value)).toBeTruthy()

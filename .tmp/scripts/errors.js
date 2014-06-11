@@ -17,7 +17,7 @@
         }
       });
       if (errorMessages.length !== 0) {
-        fieldErrors[data.name] = errorMessages;
+        fieldErrors[data.elementSelector] = errorMessages;
       }
       return fieldErrors;
     };

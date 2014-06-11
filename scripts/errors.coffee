@@ -12,5 +12,5 @@ class FormsJs.Errors
       errorMessages.push validator.errorMessage unless valid
 
     unless errorMessages.length is 0
-      fieldErrors[data.name] = errorMessages
+      fieldErrors[data.elementSelector] = errorMessages
     fieldErrors

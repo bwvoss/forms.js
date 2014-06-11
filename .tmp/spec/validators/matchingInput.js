@@ -3,7 +3,7 @@
     var newValidator, validation;
     validation = {
       type: 'matchingInput',
-      matchField: 'password',
+      matchField: '[name=password]',
       errorMessage: 'Must match password'
     };
     newValidator = function(validation) {

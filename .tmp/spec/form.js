@@ -7,7 +7,7 @@
     testData = [
       {
         type: 'text',
-        name: 'lastName',
+        elementSelector: '[name=lastName]',
         value: 'My Last Name',
         validations: [
           {
@@ -18,7 +18,7 @@
         ]
       }, {
         type: 'radio',
-        name: 'gender',
+        elementSelector: '[name=gender]',
         value: 'male',
         validations: [
           {
@@ -28,7 +28,7 @@
         ]
       }, {
         type: 'text',
-        name: 'email',
+        elementSelector: '[name=email]',
         validations: [
           {
             type: 'email',
@@ -41,7 +41,7 @@
         ]
       }, {
         type: 'text',
-        name: 'phone',
+        elementSelector: '[name=phone]',
         validations: [
           {
             type: 'regExp',
@@ -51,7 +51,7 @@
         ]
       }, {
         type: 'text',
-        name: 'phoneType',
+        elementSelector: '[name=phoneType]',
         validations: [
           {
             type: 'customMatcher',
@@ -71,11 +71,11 @@
         ]
       }, {
         type: 'checkbox',
-        name: 'interests',
+        elementSelector: '[name=interests]',
         value: ['Ruby', 'JavaScript']
       }, {
         type: 'select',
-        name: 'browser',
+        elementSelector: '[name=browser]',
         value: 'Chrome',
         validations: [
           {
@@ -85,7 +85,7 @@
         ]
       }, {
         type: 'password',
-        name: 'password',
+        elementSelector: '[name=password]',
         validations: [
           {
             type: 'minLength',
@@ -98,7 +98,7 @@
         ]
       }, {
         type: 'password',
-        name: 'passwordConfirmation',
+        elementSelector: '[name=passwordConfirmation]',
         validations: [
           {
             type: 'matchingInput',
@@ -175,14 +175,14 @@
       testForm = createTestForm(testData, scope);
       loadFixtures('errorFormFixturesWithScope.html');
       return expect(testForm.errors()).toEqual({
-        lastName: ['Please enter at least 5 characters'],
-        gender: ['Gender is required'],
-        email: ['Please enter a valid email address'],
-        phone: ['Please enter a valid phone number as ###-###-####'],
-        phoneType: ['Phone type is required when phone is entered'],
-        browser: ['Browser is required'],
-        password: ['Password is required'],
-        passwordConfirmation: ['Password confirmation is required']
+        '[name=lastName]': ['Please enter at least 5 characters'],
+        '[name=gender]': ['Gender is required'],
+        '[name=email]': ['Please enter a valid email address'],
+        '[name=phone]': ['Please enter a valid phone number as ###-###-####'],
+        '[name=phoneType]': ['Phone type is required when phone is entered'],
+        '[name=browser]': ['Browser is required'],
+        '[name=password]': ['Password is required'],
+        '[name=passwordConfirmation]': ['Password confirmation is required']
       });
     });
     it('serializes a filled form within a given scope', function() {

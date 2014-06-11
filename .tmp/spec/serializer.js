@@ -1,11 +1,11 @@
 (function() {
   describe('FormsJs.Serializer', function() {
-    it('converts a text element to an object', function() {
+    it('converts a text element to an object using the elements name as the key', function() {
       var data;
       setFixtures("<form action='#'> <input type='text' name='text1' value='some value' /> </form>");
       data = {
         type: 'text',
-        name: 'text1'
+        elementSelector: '[name=text1]'
       };
       return expect(FormsJs.Serializer.serialize(data)).toEqual({
         text1: "some value"
@@ -16,7 +16,7 @@
       setFixtures("<form action='#'> <input type='text' name='text1' value='some value' /> </form>");
       data = {
         type: 'text',
-        name: 'text1',
+        elementSelector: '[name=text1]',
         dataKey: 'textData'
       };
       return expect(FormsJs.Serializer.serialize(data)).toEqual({
@@ -28,7 +28,8 @@
       setFixtures("<form action='#'> <input type='radio' name='radioName' value='Radio 1' > <input type='radio' name='radioName' value='Radio 2' checked > <input type='radio' name='radioName' value='Radio 3' > </form>");
       data = {
         type: 'radio',
-        name: 'radioName'
+        elementSelector: '[name=radioName]',
+        dataKey: "radioName"
       };
       return expect(FormsJs.Serializer.serialize(data)).toEqual({
         radioName: "Radio 2"
@@ -39,7 +40,8 @@
       setFixtures("<form action='#'> <select name='selectName'> <option>Option 1</option> <option>Option 2</option> <option selected>Option 3</option> </select> </form>");
       data = {
         type: 'select',
-        name: 'selectName'
+        elementSelector: '[name=selectName]',
+        dataKey: 'selectName'
       };
       return expect(FormsJs.Serializer.serialize(data)).toEqual({
         selectName: "Option 3"
@@ -50,7 +52,8 @@
       setFixtures("<form action='#'> <input type='checkbox' name='checkName' value='Checkbox 1' checked> <input type='checkbox' name='checkName' value='Checkbox 2' checked> <input type='checkbox' name='checkName' value='Checkbox 3'> </form>");
       data = {
         type: 'checkbox',
-        name: 'checkName'
+        elementSelector: '[name=checkName]',
+        dataKey: 'checkName'
       };
       return expect(FormsJs.Serializer.serialize(data)).toEqual({
         checkName: ["Checkbox 1", "Checkbox 2"]
