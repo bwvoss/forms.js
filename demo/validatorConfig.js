@@ -114,6 +114,11 @@ var validatorConfig = [
         length: 8
       },
       {
+        type: "regExp",
+        pattern: /[0-9]/,
+        errorMessage: "Password must contain a number"
+      },
+      {
         type: "required",
         errorMessage: "Password is required"
       }
