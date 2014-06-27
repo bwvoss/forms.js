@@ -165,12 +165,12 @@
       return expect(testValidator.errors()).toEqual({
         '[name=lastName]': ['Please enter at least 5 characters'],
         '[name=gender]': ['Gender is required'],
-        '[name=email]': ['Please enter a valid email address'],
+        '[name=email]': ['Please enter a valid email address', 'Email cannot be longer than 15 characters'],
         '[name=phone]': ['Please enter a valid phone number as ###-###-####'],
         '[name=phoneType]': ['Phone type is required when phone is entered'],
         '[name=browser]': ['Browser is required'],
-        '[name=password]': ['Password must be 8 or more characters', 'Password must contain a number'],
-        '[name=passwordConfirmation]': ['Password confirmation is required']
+        '[name=password]': ['Password must be 8 or more characters', 'Password must contain a number', 'Password is required'],
+        '[name=passwordConfirmation]': ['Passwords must match', 'Password confirmation is required']
       });
     });
   });

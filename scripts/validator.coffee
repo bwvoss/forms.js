@@ -7,28 +7,34 @@ class FormsJs.Validator
     @scope = scope
 
   isValid: ->
-    validationFactory = new FormsJs.Validator.Factory
     _.all @data, (element) =>
       value = FormsJs.Values.get(element, @scope)
-      _.all element.validations, (validator) =>
-        validationFactory.build(validator).isValid(value, @scope)
+      @_checkAllValidations(element.validations, value)
 
   errors: ->
     _.reduce @data, (errors, element) =>
-      _.extend(errors, @getMessages(element, @scope))
+      _.extend(errors, @_getSelectorAndErrors(element))
       errors
     , {}
 
-  getMessages: (element, scope) ->
+  _getSelectorAndErrors: (element) ->
     fieldErrors = {}
-    errorMessages = []
-    validationFactory = new FormsJs.Validator.Factory
-    value = FormsJs.Values.get(element, scope)
+    value = FormsJs.Values.get(element, @scope)
+    valid = @_checkAllValidations(element.validations, value)
 
-    _.each element.validations, (validator) ->
-      valid = validationFactory.build(validator).isValid(value, @scope)
-      errorMessages.push validator.errorMessage unless valid
+    if !valid
+      messages = @_getMessages(element)
+      fieldErrors[element.elementSelector] = messages
 
-    unless errorMessages.length is 0
-      fieldErrors[element.elementSelector] = errorMessages
     fieldErrors
+
+  _checkAllValidations: (validations, value) ->
+    validationFactory = new FormsJs.Validator.Factory
+    _.all validations, (validator) =>
+      validationFactory.build(validator).isValid(value, @scope)
+
+  _getMessages: (element) ->
+    errorMessages = []
+    _.each element.validations, (validator) ->
+      errorMessages.push validator.errorMessage
+    errorMessages
