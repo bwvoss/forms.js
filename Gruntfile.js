@@ -4,6 +4,7 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    clean: ['.tmp/scripts/', '.tmp/spec/'],
     coffee: {
       compileScripts: {
         expand: true,
@@ -40,6 +41,6 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('default', ['coffee', 'concat', 'uglify']);
+  grunt.registerTask('default', ['clean', 'coffee', 'concat', 'uglify']);
 
 }

@@ -67,7 +67,7 @@ describe 'FormsJs.Serializer', ->
         phone_type: 'Cell',
         interests : [ 'JavaScript', 'Ruby' ],
         browser : 'Chrome',
-        password: 'P@ssword',
-        password_confirmation: 'P@ssword'
+        password: 'P@ssw0rd',
+        password_confirmation: 'P@ssw0rd'
       })
 
