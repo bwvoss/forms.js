@@ -4,11 +4,11 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="FormsJs : A JavaScript library for working with forms" />
+    <meta name="description" content="Forms.js : A JavaScript library for working with forms" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>FormsJs</title>
+    <title>Forms.js</title>
   </head>
 
   <body>
@@ -18,9 +18,13 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/MikeDanaher/forms.js">View on GitHub</a>
 
-          <h1 id="project_title">FormsJs</h1>
+          <h1 id="project_title">Forms.js</h1>
           <h2 id="project_tagline">A JavaScript library for working with forms</h2>
 
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/MikeDanaher/forms.js/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/MikeDanaher/forms.js/tarball/master">Download this project as a tar.gz file</a>
+            </section>
         </header>
     </div>
 
@@ -29,86 +33,82 @@
       <section id="main_content" class="inner">
         <p>Working with web forms can be tedious and time consuming. Many of the tools that exist today require individual setup and handling for each form element. Furthermore, the current set of tools can be rigid and limiting in their functionality.</p>
 
-<p>FormsJs hopes to solve a few of these challenges. A lightweight, javascript library, FormsJs allows you to work on an entire form at once. Using a simple configuration file, you can populate a form with default values, check all validations, gather a list of error messages, and serialize all the data to be passed to the server. This configuration file also makes it simple to change functionality as your form evolves over time.</p>
+<p>FormsJs hopes to solve a few of these challenges. A lightweight, javascript library, FormsJs allows you to work on an entire form at once. Using an array of javascript objects, you can populate a form with default values, check all validations, gather a list of error messages, and serialize all the data to be passed to the server. These configuration objects also make it easy to change functionality as your form evolves over time.</p>
+
+<p>FormsJs was built with three main classes: Populator, Validator, and Serializer. Each class is instantiated with a different configuration giving you the flexibility to use the appropriate tool for the job. </p>
 
 <h3>
-<a name="basic-configuration" class="anchor" href="#basic-configuration"><span class="octicon octicon-link"></span></a>Basic Configuration</h3>
+<a name="populator" class="anchor" href="#populator"><span class="octicon octicon-link"></span></a>Populator</h3>
 
-<p>The configuration file is a JavaScript file that contains an array of objects. Each object represents a form element. Here’s the setup for an email address field:</p>
+<p>The job of the populator is, naturally, to populate forms. You you give it a list of all the elements you want populated, with the values you want, and it does the rest. Here's a sample configuration array:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">populatorConfig</span> <span class="o">=</span> <span class="p">[</span>
   <span class="p">{</span>
     <span class="nx">type</span><span class="o">:</span> <span class="s2">"text"</span><span class="p">,</span>
-    <span class="nx">name</span><span class="o">:</span> <span class="s2">"email"</span><span class="p">,</span>
+    <span class="nx">elementSelector</span><span class="o">:</span> <span class="s2">"[data-id='email']"</span><span class="p">,</span>
+    <span class="nx">value</span><span class="o">:</span> <span class="s2">"me@example.com"</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s2">"checkbox"</span><span class="p">,</span>
+    <span class="nx">elementSelector</span><span class="o">:</span> <span class="s2">"[data-id='opt-in']"</span><span class="p">,</span>
+    <span class="nx">value</span><span class="o">:</span> <span class="p">[</span><span class="s1">'Sign me up for the newsletter'</span><span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+
+<p>With this configuration, we are telling the form to autofill the email address and check the box to sign them up for newsletters. The type parameter specifies the type of element to target. Currently FormsJs supports 'text', 'radio', 'checkbox', and 'select' as strings. </p>
+
+<p>The elementSelector parameter specifies the specific element to target using a jQuery selector (i.e. '[name=email]', '#email', etc.).</p>
+
+<p>The value parameter is the value to be populated. Text boxes, radio buttons, and select lists all take strings. Checkboxes take an array of strings to account for the possibility of groups of checkboxes with the same selector.</p>
+
+<p>To use this configuration on your form, create a new Populator with the populatorConfig:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">populator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormsJs</span><span class="p">.</span><span class="nx">Populator</span><span class="p">(</span><span class="nx">populatorConfig</span><span class="p">)</span>
+</pre></div>
+
+<p>Then, when you're ready to populate the form, you just call the populate method on your populator.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">populator</span><span class="p">.</span><span class="nx">populate</span><span class="p">()</span>
+</pre></div>
+
+<h3>
+<a name="validator" class="anchor" href="#validator"><span class="octicon octicon-link"></span></a>Validator</h3>
+
+<p>Once the user has completed the form, you'll want to validate the information before submitting. The Validator class handles this for all of the form's elements. Using a configuration array similar to the populator, the validator also looks for a type and an elementSelector. Additionally, it also looks for an array of validations giving each element the ability to match several different validations (i.e. 'required' and 'minLength'). Here's a sample validator configuration:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">validatorConfig</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s2">"text"</span><span class="p">,</span>
+    <span class="nx">elementSelector</span><span class="o">:</span> <span class="s2">"[data-id='email']"</span><span class="p">,</span>
     <span class="nx">validations</span><span class="o">:</span> <span class="p">[</span>
       <span class="p">{</span>
         <span class="nx">type</span><span class="o">:</span> <span class="s2">"required"</span><span class="p">,</span>
-        <span class="nx">errorMessage</span><span class="o">:</span> <span class="s2">"Email address is required"</span>
+        <span class="nx">errorMessage</span><span class="o">:</span> <span class="s2">"Email is required"</span>
       <span class="p">},</span>
       <span class="p">{</span>
         <span class="nx">type</span><span class="o">:</span> <span class="s2">"email"</span><span class="p">,</span>
         <span class="nx">errorMessage</span><span class="o">:</span> <span class="s2">"Please enter a valid email address"</span>
       <span class="p">}</span>
     <span class="p">]</span>
-  <span class="p">}</span>
-<span class="p">]</span>
-</pre></div>
-
-<p>Each setup object requires a type (as strings). Currently, FormsJs supports the following types: ‘text’, ‘radio’, ‘checkbox’, and ‘select’.</p>
-
-<p>The name attribute is also required and must correspond to the name attribute of the HTML form element. We hope to break this dependency in future versions to allow for more customization (say if you wanted to use a data-id) as well as allow a form to contain fields with the same name.</p>
-
-<p>Validations are done with another array of objects, allowing you to have more than one validator for each field (as shown above). Each validation object requires a type and an error message. Additional data is used depending on the type of validation.</p>
-
-<p>Currently, FormsJs supports the following validations: required, email address, min length, max length, matching input between two fields, custom regular expression, or a custom validation function.</p>
-
-<h3>
-<a name="validation-and-errors" class="anchor" href="#validation-and-errors"><span class="octicon octicon-link"></span></a>Validation and Errors</h3>
-
-<p>Now that we have our config file setup, we can use it to validate our email address field. After adding FormsJs to your HTML form, you can work with it to validate and gather errors. To start, create a new form object and pass in your config:</p>
-
-<div class="highlight highlight-javascript"><pre><span class="nx">form</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormsJs</span><span class="p">.</span><span class="nx">Form</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
-</pre></div>
-
-<p>Once initialized, you can call <code>form.isValid()</code> to validate the entire form at once. This will return true or false.</p>
-
-<p>If your form is invalid, you can call <code>form.errors()</code> to get an object with the element name and a list of error messages. If our email address was left blank, this would return:</p>
-
-<div class="highlight highlight-javascript"><pre><span class="nx">form</span><span class="p">.</span><span class="nx">errors</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">email</span> <span class="o">:</span> <span class="p">[</span> <span class="s2">"Email address is required"</span> <span class="p">]</span> <span class="p">}</span>
-</pre></div>
-
-<p>If you called <code>.errors()</code> on a valid form, it would simply return an empty object { }.</p>
-
-<h3>
-<a name="pre-population" class="anchor" href="#pre-population"><span class="octicon octicon-link"></span></a>Pre-population</h3>
-
-<p>In addition to validation and errors, our config can also specify default values for use in population. We specify a default with the value keyword:</p>
-
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">},</span>
   <span class="p">{</span>
     <span class="nx">type</span><span class="o">:</span> <span class="s2">"text"</span><span class="p">,</span>
-    <span class="nx">name</span><span class="o">:</span> <span class="s2">"email"</span><span class="p">,</span>
-    <span class="nx">value</span><span class="o">:</span> <span class="s2">"me@example.com"</span><span class="p">,</span>
+    <span class="nx">elementSelector</span><span class="o">:</span> <span class="s2">"[name=phone]"</span><span class="p">,</span>
+    <span class="nx">validations</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="s2">"regExp"</span><span class="p">,</span>
+        <span class="nx">pattern</span><span class="o">:</span> <span class="sr">/(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/</span><span class="p">,</span>
+        <span class="nx">errorMessage</span><span class="o">:</span> <span class="s2">"Please enter a valid phone number as ###-###-####"</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
   <span class="p">}</span>
 <span class="p">]</span>
 </pre></div>
 
-<p>This is useful if you need to autofill information from a returning user or specify default values. You can use the populate function by calling <code>.populate()</code> on your form object.</p>
+<p>As you can see, within the validations parameter a 'type' and an 'errorMessage' are specified. Certain validations also have an additional parameter depending on their type (i.e. 'minLength' and 'maxLength' both also require a 'length'). Currently, FormsJs supports the following validation types: 'required', 'email', 'minLength', 'maxLength', 'regExp', and 'matchingInput'.</p>
 
-<h3>
-<a name="serialization" class="anchor" href="#serialization"><span class="octicon octicon-link"></span></a>Serialization</h3>
-
-<p>After you have a complete, valid form, you need to serialize the data to be passed to the server. With FormsJs, you simply call <code>.serialize()</code> on your form object. This returns an object with each element’s name as a key, and it’s submitted value as a value.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="nx">form</span><span class="p">.</span><span class="nx">serialize</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">email</span> <span class="o">:</span> <span class="s2">"me@example.com"</span> <span class="p">}</span>
-</pre></div>
-
-<p>Serialization currently defaults to the name attribute of an element but we hope to add greater flexibility in the future.</p>
-
-<h3>
-<a name="custom-validators" class="anchor" href="#custom-validators"><span class="octicon octicon-link"></span></a>Custom Validators</h3>
-
-<p>In addition to the built in validators, we also allow a custom validator. This validator requires a third parameter - a callback function that takes a value to be matched against and returns true or false.</p>
+<p>These types should cover the majority of form validation needs. However, we also included a 'customMatcher' should you need any specific validating. This validator requires a third parameter - a callback function that takes a value to be matched against and returns true or false.</p>
 
 <div class="highlight highlight-javascript"><pre><span class="nx">validations</span><span class="o">:</span> <span class="p">[</span>
   <span class="p">{</span>
@@ -127,9 +127,56 @@
 <span class="p">]</span>
 </pre></div>
 
-<p>Because FormsJs requires jQuery and Underscore, their functions are available within your custom matcher.</p>
+<p>To use the validatorConfig in your form, create a new validator with your configuration:</p>
 
-<p>Hopefully you can see the value that FormsJs brings to web forms. For more information and a complete sample config file, check out the README on the project’s home page.</p>
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">validator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormsJs</span><span class="p">.</span><span class="nx">Validator</span><span class="p">(</span><span class="nx">validatorConfig</span><span class="p">)</span>
+</pre></div>
+
+<p>The Validator Class has two methods: <code>isValid()</code> and <code>errors()</code></p>
+
+<p>Calling <code>validator.isValid()</code> will return true or false. Calling <code>validator.errors()</code> will return an object with the elementSelector and an array of its error messages. If our email address was left blank, this would return:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="p">{</span> <span class="s2">"[data-id='email']"</span> <span class="o">:</span> <span class="p">[</span> <span class="s2">"Email is required"</span><span class="p">,</span> <span class="s2">"Please enter a valid email address"</span> <span class="p">]</span> <span class="p">}</span>
+</pre></div>
+
+<p>As you can see, FormsJs gives you complete control over how to validate a form and display the errors. </p>
+
+<h3>
+<a name="serialization" class="anchor" href="#serialization"><span class="octicon octicon-link"></span></a>Serialization</h3>
+
+<p>After you have a complete, valid form, you need to serialize the data to be passed to the server. As with the other classes, FormsJs gives you complete control over how to do this. Start by creating a serializer configuration:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">serializerConfig</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s2">"text"</span><span class="p">,</span>
+    <span class="nx">elementSelector</span><span class="o">:</span> <span class="s2">"[name=firstName]"</span><span class="p">,</span>
+    <span class="nx">dataKey</span><span class="o">:</span> <span class="s2">"first_name"</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s2">"text"</span><span class="p">,</span>
+    <span class="nx">elementSelector</span><span class="o">:</span> <span class="s2">"[name=lastName]"</span><span class="p">,</span>
+    <span class="nx">dataKey</span><span class="o">:</span> <span class="s2">"last_name"</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s2">"text"</span><span class="p">,</span>
+    <span class="nx">elementSelector</span><span class="o">:</span> <span class="s2">"[name=email]"</span><span class="p">,</span>
+    <span class="nx">dataKey</span><span class="o">:</span> <span class="s2">"email"</span>
+  <span class="p">}</span>
+</pre></div>
+
+<p>In addition to the usual 'type' and 'elementSelector' parameters, the serializer has an optional 'dataKey' parameter. This allows you to specify the exact way the field should be sent to your database. If a 'dataKey' is not specified, FormsJs will use the HTML name attribute from your element.</p>
+
+<p>As with the previous classes, create a new Serializer with your configuration:  </p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">serializer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormsJs</span><span class="p">.</span><span class="nx">Serializer</span><span class="p">(</span><span class="nx">serializerConfig</span><span class="p">)</span>
+</pre></div>
+
+<p>Calling <code>serializer.serialize()</code> will return a JSON object with each key being the specified dataKey (or element name) and the current value of the form:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="p">{</span> <span class="s2">"first_name"</span> <span class="o">:</span> <span class="s2">"Mike"</span><span class="p">,</span> <span class="s2">"last_name"</span> <span class="o">:</span> <span class="s2">"Danaher"</span><span class="p">,</span> <span class="s2">"email"</span> <span class="o">:</span> <span class="s2">"miked@example.com"</span> <span class="p">}</span>
+</pre></div>
+
+<p>Hopefully you can see the value that FormsJs brings to web forms. For more information and complete sample config files, check out the README on the <a href="https://github.com/bwvoss/forms.js">project’s home page</a>.</p>
       </section>
     </div>
 
