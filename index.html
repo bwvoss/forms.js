@@ -172,7 +172,16 @@
 <div class="highlight highlight-javascript"><pre><span class="p">{</span> <span class="s2">"first_name"</span> <span class="o">:</span> <span class="s2">"Mike"</span><span class="p">,</span> <span class="s2">"last_name"</span> <span class="o">:</span> <span class="s2">"Danaher"</span><span class="p">,</span> <span class="s2">"email"</span> <span class="o">:</span> <span class="s2">"miked@example.com"</span> <span class="p">}</span>
 </pre></div>
 
+<h3>
+<a name="scope" class="anchor" href="#scope"><span class="octicon octicon-link"></span></a>Scope</h3>
+
+<p>When we first used FormsJs for one of our projects we noticed an interesting problem. We had a page with multiples of the same form (think add additional records). Because of this, our elementSelector was duplicated on our page and we couldn't properly select the form we wanted to work with. To fix this problem, we added a scope to our constructors. The populator, validator and serializer now all take an optional scope parameter on initialization. This scope paramater is a jQuery selector as a string. Here's an example:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">scope</span> <span class="o">=</span> <span class="s2">"#form1"</span>
+<span class="kd">var</span> <span class="nx">populator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormsJs</span><span class="p">.</span><span class="nx">Populator</span><span class="p">(</span><span class="nx">populatorConfig, scope</span><span class="p">)</span></pre></div>
+
 <p>Hopefully you can see the value that FormsJs brings to web forms. For more information and complete sample config files, check out the README on the <a href="https://github.com/bwvoss/forms.js">project’s home page</a>.</p>
+
       </section>
     </div>
 
