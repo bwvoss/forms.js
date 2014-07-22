@@ -332,3 +332,6 @@ var validatorConfig = [
 ]
 ````
 
+### License
+
+Copyright (c) 2014 Ben Voss and Mike Danaher. See the LICENSE file for license rights and limitations (MIT).
