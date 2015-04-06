@@ -5,6 +5,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     clean: ['.tmp/scripts/', '.tmp/spec/'],
+
     coffee: {
       compileScripts: {
         expand: true,
@@ -23,6 +24,7 @@ module.exports = function (grunt) {
         ext: '.js'
       }
     },
+
     concat: {
       options: {
         seperator: ';'
@@ -32,6 +34,7 @@ module.exports = function (grunt) {
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
+
     uglify: {
       dist: {
         files: {
@@ -41,6 +44,7 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.registerTask('spec', ['clean', 'coffee']);
   grunt.registerTask('default', ['clean', 'coffee', 'concat', 'uglify']);
 
 }

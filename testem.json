@@ -1,6 +1,6 @@
 {
   "framework": "jasmine2",
-  "before_tests": "grunt",
+  "before_tests": "grunt spec",
   "src_files": [
     "bower_components/underscore/underscore.js",
     "namespace.js",
