@@ -1,0 +1,52 @@
+#serializiation
+ testData = [
+		new FormsJs.Serializers.TextInput('[name=lastName]', 'last_name'),
+		new FormsJs.Serializers.RadioInput('[name=gender]'),
+		new FormsJs.Serializers.TextInput('[name=email]'),
+		new FormsJs.Serializers.TextInput('[name=phone]'),
+		new FormsJs.Serializers.TextInput('[name=phoneType]', 'phone_type'),
+		new FormsJs.Serializers.CheckboxInput('[name=interests]'),
+		new FormsJs.Serializers.SelectInput('[name=browser]'),
+		new FormsJs.Serializers.PasswordInput('[name=password]'),
+		new FormsJs.Serializers.PasswordInput('[name=passwordConfirmation]', 'password_confirmation')
+]
+
+
+#population
+  testData = [
+		new FormsJs.Populators.TextInput('[name=lastName]', 'Doe'),
+		new FormsJs.Populators.RadioInput('[name=gender]', 'Male'),
+		new FormsJs.Populators.TextInput('[name=email]', 'jd@example.com'),
+		new FormsJs.Populators.TextInput('[name=phone]', '1234567890'),
+		new FormsJs.Populators.TextInput('[name=phoneType]', 'Mobile'),
+		new FormsJs.Populators.CheckboxInput('[name=interests]', ['programming', 'coffee']),
+		new FormsJs.Populators.SelectInput('[name=browser]', 'Chrome'),
+  ]
+
+myFunction = (value, serializedForm) ->
+  if serializedForm.phoneValue is ''
+    true
+  else if value isnt ''
+    true
+  else
+    false
+
+  testData = [
+		new FormsJs.Validations.MinLength('[name=lastName]', 5, 'Please enter at least 5 characters.')
+		new FormsJs.Validations.Required('[name=gender]', 'Gender is required.')
+		new FormsJs.Validations.Email('[name=email]', 'Please Enter a valid email address.')
+		new FormsJs.Validations.MaxLength('[name=email]', 15, 'Email cannot be longer than 15 characters.')
+		new FormsJs.Validations.RegExp('[name=phone]', /(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/, 'Please enter a valid phone number as ###-###-####')
+		new FormsJs.Validations.Custom('[name=phoneType]', myFunction, 'Phone type is required when phone is entered')
+		new FormsJs.Validations.Required('[name=browser]', 'Browser is required')
+  ]
+
+advantages:
+* much less messy API
+* will result in cleaner codebase -- I think
+* Leaks a little less for the consumer (like passing in the type to the validator...)
+
+disadvantages: 
+* not key based, so a bit more obscure what the arguments are
+* validator is now order based, instead of putting all validations in the same object (like email having email and max length)
+
